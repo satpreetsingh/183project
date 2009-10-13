@@ -38,12 +38,7 @@
      </UML:Namespace.ownedElement>
      <XMI.extension xmi.extender="umbrello" >
       <diagrams>
-       <diagram showopsig="1" linecolor="#ff0000" snapx="10" showattribassocs="1" snapy="10" linewidth="0" showattsig="1" showpackage="1" showstereotype="1" name="class diagram" font="DejaVu Sans,9,-1,0,50,0,0,0,0,0" canvasheight="584" canvaswidth="1050" localid="" snapcsgrid="0" showgrid="0" showops="1" usefillcolor="1" fillcolor="#ffff00" zoom="100" xmi.id="1IvxoosiGWUn" documentation="" showscope="1" snapgrid="0" showatts="1" type="1" >
-        <widgets/>
-        <messages/>
-        <associations/>
-       </diagram>
-       <diagram showopsig="1" linecolor="#ff0000" snapx="10" showattribassocs="1" snapy="10" linewidth="0" showattsig="1" showpackage="1" showstereotype="1" name="sequence diagram" font="DejaVu Sans,9,-1,0,50,0,0,0,0,0" canvasheight="584" canvaswidth="1050" localid="1DHiFafxFc2y" snapcsgrid="0" showgrid="0" showops="1" usefillcolor="1" fillcolor="#ffff00" zoom="100" xmi.id="c2iugYz9fHwg" documentation="" showscope="1" snapgrid="0" showatts="1" type="3" >
+       <diagram showopsig="1" linecolor="#ff0000" snapx="10" showattribassocs="1" snapy="10" linewidth="0" showattsig="1" showpackage="1" showstereotype="1" name="sequence diagram" font="DejaVu Sans,9,-1,0,50,0,0,0,0,0" canvasheight="598" canvaswidth="966" localid="1DHiFafxFc2y" snapcsgrid="0" showgrid="0" showops="1" usefillcolor="1" fillcolor="#ffff00" zoom="100" xmi.id="c2iugYz9fHwg" documentation="" showscope="1" snapgrid="0" showatts="1" type="3" >
         <widgets>
          <objectwidget linecolor="#ff0000" usesdiagramfillcolor="0" linewidth="none" usesdiagramusefillcolor="1" instancename="" x="226" decon="0" showstereotype="1" y="48" font="DejaVu Sans,9,-1,0,50,0,1,0,0,0" localid="qD9THFtuXVjM" width="154" isinstance="0" multipleinstance="0" usefillcolor="1" fillcolor="#ffff00" xmi.id="eShfTffcGuhV" height="25" drawasactor="0" />
          <objectwidget linecolor="#ff0000" usesdiagramfillcolor="0" linewidth="none" usesdiagramusefillcolor="1" instancename="" x="491" decon="0" showstereotype="1" y="48" font="DejaVu Sans,9,-1,0,50,0,1,0,0,0" localid="nwdUIl8QRIhQ" width="178" isinstance="0" multipleinstance="0" usefillcolor="1" fillcolor="#ffff00" xmi.id="nXxS2ndCFvP8" height="25" drawasactor="0" />
@@ -87,7 +82,6 @@
   <listview>
    <listitem open="1" type="800" label="Views" >
     <listitem open="1" type="801" id="Logical View" >
-     <listitem open="0" type="807" id="1IvxoosiGWUn" label="class diagram" />
      <listitem open="0" type="810" id="c2iugYz9fHwg" label="sequence diagram" />
      <listitem open="1" type="813" id="O4RYLUJsQmsB" />
      <listitem open="1" type="813" id="eShfTffcGuhV" />
