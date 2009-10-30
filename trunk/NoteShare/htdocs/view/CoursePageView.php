@@ -6,8 +6,6 @@
 	include $_SERVER['DOCUMENT_ROOT'] . 'controllers/CourseHomePage.Controller.php';
 	include $_SERVER['DOCUMENT_ROOT'] . 'view/xsltView.php';
 	
-	$user_id = $facebook->require_login();
-	
 ?>
 
 
