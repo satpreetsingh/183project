@@ -21,7 +21,7 @@
 	
 	$membersXML = getSessionMembers($user_id, $sessionId);
 	
-	echo "<h3>Course Partisipants:</h3>";
+	echo "<h3>Course Participants:</h3>";
 	echo XSLTransform($memberXML,'coursePageView.xsl');
 	
 ?>

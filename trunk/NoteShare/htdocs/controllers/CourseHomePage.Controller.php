@@ -22,23 +22,24 @@ function getSessionMembers( $userid, $sessionid )
 // out how to show friend thumbnail photos etc.
 
 	return "<?xml version=\"1.0\"?>	
+	
 	<memberList>
-	<member id=\"11111\" 
-		friend=\"True\">
-		Joe Trapani
-	</member>
-	<member id=\"11211\" 
-		friend=\"True\">
-		Nathan D!
-	</member>
-	<member id=\"12221\" 
-		friend=\"True\">
-		Nathan F!
-	</member>
-	<member id=\"12121\" 
-		friend=\"False\">
-        Jack Black
-	</member>	
+		<member id=\"11111\" 
+			friend=\"True\">
+			Joe Trapani
+		</member>
+		<member id=\"11211\" 
+			friend=\"True\">
+			Nathan D!
+		</member>
+		<member id=\"12221\" 
+			friend=\"True\">
+			Nathan F!
+		</member>
+		<member id=\"12121\" 
+			friend=\"False\">
+		    Jack Black
+		</member>	
 	</memberList>
 	";
 }
