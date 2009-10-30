@@ -10,8 +10,6 @@
 	include '../controllers/UserHomePage.Controller.php';
 	include './xsltView.php';
 	
-	$user_id = $facebook->require_login();
-	
 ?>
 
 

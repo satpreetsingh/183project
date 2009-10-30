@@ -11,7 +11,7 @@
  Notes:         Quick initial creation of session controller.
 -----------------------------------------------------------------------------*/
 
-  require_once '../php/facebook.php';
+  require_once '../../php/facebook.php';
 
 // API key for our application, needed for facebook session
 $appapikey = '20f5b69813b87ffd25e42744b326a112';
