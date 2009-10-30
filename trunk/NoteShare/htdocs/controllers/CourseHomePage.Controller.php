@@ -1,6 +1,6 @@
 <?php
 
-include '/var/www/localhost/htdocs/model/DataAbstractionLayer.php';
+include $_SERVER['DOCUMENT_ROOT'] . 'model/DataAbstractionLayer.php';
 
 function getSessionMetadata( $sessionid )
 {

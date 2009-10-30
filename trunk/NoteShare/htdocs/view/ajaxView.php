@@ -1,7 +1,7 @@
 <?php
 
-include '../model/NoteshareDatabase.php';
-include 'xsltView.php';
+include $_SERVER['DOCUMENT_ROOT'] . 'model/NoteshareDatabase.php';
+include $_SERVER['DOCUMENT_ROOT'] . 'view/xsltView.php';
 
 /*
 * Function:     Ajax response (not really a function per say)

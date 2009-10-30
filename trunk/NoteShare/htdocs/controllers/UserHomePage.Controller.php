@@ -1,6 +1,6 @@
 <?php
 
-include '/var/www/localhost/htdocs/model/NoteshareDatabase.php';
+include $_SERVER['DOCUMENT_ROOT'] . 'model/NoteshareDatabase.php';
 
 function GetCourseList()
 {
