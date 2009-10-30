@@ -1,0 +1,199 @@
+<?php
+/*-----------------------------------------------------------------------------
+ File:         addcourse.php
+ Description:  An example mockup of how the Add Course dialog could look.
+ UseCases:     <Later>
+ Requirements: <Later>
+ Components:   <Later>
+-------------------------------------------------------------------------------
+ Last Modified: N.Fritze
+ Modified On:   10/07/09
+ Notes:         Quick initial creation of add course page.  Used for an
+                example of FBML, a little Facebook API, and a little php.
+-----------------------------------------------------------------------------*/
+
+/*******************************************************************************
+!!!!!!!!!!!!!!!!!!!!!!!!!!! IMPORTANT DON'T SKIP ME     !!!!!!!!!!!!!!!!!!!!!!!!
+  I'm not sure that this file will make sense if you don't read it straight
+  through.  I'd recommend skipping around in the document, but obviously...
+  you'll do what you want.
+*******************************************************************************/
+
+//---------<Generic configuation probably for all pages>-----------------------
+// Include Facebook API (path relative to current document location)
+//   Could probably use an absolute path...but don't quote me on that -Fritze
+require_once '../php/facebook.php';
+
+// API key for our application, needed for facebook session
+$appapikey = '20f5b69813b87ffd25e42744b326a112';
+
+// Secret key that's also needed for a facebook session
+$appsecret = '9c30a702413dccd1856b58d2fab4c992';
+
+// Create the facebook session
+$facebook = new Facebook($appapikey, $appsecret);
+
+// Require that the user be logged in to use the page
+//  Probably all pages should have this
+$user_id = $facebook->require_login();
+
+// Begin with a link back to the index page
+//   When using quotes within an echo line...you need the escape character \
+//   before the quote (see below)
+echo "<a href=\"index.php\">Back to Main Page</a>";
+?>
+
+<!--------------------------- Actual Page Content ----------------------------->
+<!- NOTE: This could be HTML and/or php.  If you want php remember to include
+          the (less_than)?php ?(greater_than) tags
+->
+
+<!- NOTE: ->
+
+
+<!- NOTE: I obviously can't cover all the different input types.  Consult
+          the facebook developer wiki.  The input types are under FBML.
+          fb:editor-something...
+->
+
+
+<br>
+<br>
+<H1>Add A Course</H1>
+<br>
+<br>
+
+<span style="display:none"><fb:editor action=""></fb:editor></span>
+
+<form>
+Select your favorite fruit:
+<select id="mySelect">
+  <option>Apple</option>
+  <option>Orange</option>
+  <option>Pineapple</option>
+  <option>Banana</option>
+</select>
+<br /><br />
+<input type="button" onclick="do_ajax(Ajax.JSON);" value="Alert index of selected option"></form>
+</form>
+
+<form action="" method=""><table class="editorkit" border="0" cellspacing="0" style="width:425px"><tr class="width_setter"><th style="width:75px"></th><td></td></tr> 
+  <tr><th class="detached_label"><label>University:</label></th><td class="editorkit_row"> 
+    <select name="university" id="universityID"
+    onchange="do_ajax(Ajax.JSON); return false;">
+      <option selected=""></option>
+      <option>(Add new...)</option>
+      <option>UIowa</option>
+      <option>UNI</option>
+      <option>Purdue</option>
+      <option>ISU</option>
+    </select>
+  </td><td class="right_padding"></td></tr>
+</form>
+
+<!- This is the actual add course form ->
+<!- Values for most of these variables don't matter as of yet.->
+<fb:editor action="?addCourse#" >
+
+  <!- This is the university select box->
+  <fb:editor-custom label="University" id="dbx_uni" >
+    <select name="universitything">
+    <?php
+      echo "<option value=\"0\" selected>university</option>";
+      echo "<option value=\"1\">(Add new...)</option>";
+    ?>
+    </select>
+  </fb:editor-custom>
+
+  <!- This is the new University field->
+  <fb:editor-text label="New University" name="newUniversity" value="Enter university name"/>
+
+  <!- This is the department select box->
+  <fb:editor-custom label="Department" id="dbx_dept">
+    <select name="department">
+    <?php
+      echo "<option value=\"0\" selected>department</option>";
+      echo "<option value=\"1\">(Add new...)</option>";
+    ?>
+    </select>
+  </fb:editor-custom>
+
+  <!- This is the new Department field->
+  <fb:editor-text label="New Department" name="newDepartment" value="Enter department name"/>
+
+  <!- This is the course select box->
+  <fb:editor-custom label="Course" id="dbx_course">
+    <select name="course">
+    <?php
+      echo "<option value=\"0\" selected>course</option>";
+      echo "<option value=\"1\">(Add new...)</option>";
+    ?>
+    </select>
+  </fb:editor-custom>
+
+  <!- This is the new Course field->
+  <fb:editor-text label="New Course" name="newCourse" value="Enter course number"/>
+
+  These links demonstrate the Ajax object:<br />
+  <a href="#" onclick="do_ajax(Ajax.JSON); return false;">JSON</a><br />
+  <a href="#" onclick="do_ajax(Ajax.RAW); return false;">RAW</a><br />
+  <a href="#" onclick="do_ajax(Ajax.FBML); return false;">FBML</a><br />
+  <label>
+    <input type="checkbox" id="requirelogin" checked="checked" /><span>Require Login?</span></label><br />
+    <div><span id="ajax1"></span><br>
+         <span id="ajax2"></span><br>
+         <span id="debugOutput"></span></div>
+    <script>
+      <!--
+      function do_ajax(type) {
+        var UniversityOption = document.getElementById("universityID");
+        var DebugOutput = document.getElementById("debugOutput");
+        if( UniversityOption != null ) {
+          var toShow = document.getElementById("universityID").selectedIndex;
+          DebugOutput.setTextValue( toShow );
+        } else {
+          document.getElementById('debugOutput').setTextValue( 'Null pointer' );
+        }
+        var ajax = new Ajax();
+        ajax.responseType = type;
+        ajax.requireLogin = document.getElementById('requirelogin').getChecked();
+        ajax.post('http://noteshare.homelinux.net/dataAbstractionLayer.php?t='+type);
+
+        switch (type)
+        { case Ajax.JSON: ajax.ondone = function(data) {
+            document.getElementById('ajax1').setTextValue(data.message + ' The current time is: ' + data.time + '. ');
+            document.getElementById('ajax2').setInnerFBML(data.fbml_test);
+            }
+            break;
+
+          case Ajax.FBML: ajax.ondone = function(data) {
+            document.getElementById('ajax1').setInnerFBML(data);
+            document.getElementById('ajax2').setTextValue('');
+          }
+          break;
+
+          case Ajax.RAW: ajax.ondone = function(data) {
+            document.getElementById('ajax1').setTextValue(data);
+            document.getElementById('ajax2').setTextValue('');
+          }
+          break;
+        }
+      }
+      //-->
+    </script> 
+
+  <!- Bottom display buttons, don't forget the / ->
+  <fb:editor-buttonset>
+    <fb:editor-button value="Add"/>
+    <fb:editor-cancel />
+  </fb:editor-buttonset>
+</fb:editor>
+<br>
+
+
+<?php
+  // This is included just to show all of the $_POST variables
+  // Not really needed.
+  var_dump( $_POST );
+?>
+

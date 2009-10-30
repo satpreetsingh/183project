@@ -1,0 +1,27 @@
+<html>
+<head>
+<title>Select</title>
+<script language="JavaScript">
+function displayOption(divName)
+{
+ document.getElementById(divName).innerText=divName;
+ //document.getElementById(divName).innerText=document.form1.select1.options[document.form1.select1.selectedIndex].value;
+}
+</script>
+</head>
+<body bgcolor="#FFFFFF">
+
+<!--BEGIN FORM-->
+<form name="form1">
+   <select name="select1" onChange="displayOption('div1');">
+      <option value="India">India</option>
+      <option value="USA">USA</option>
+      <option value="UK">UK</option>
+   </select>
+</form>
+<!--END FORM-->
+
+<div id="div1" style="font-family:verdana,arial,helvetica; font-weight:bold; color:#FF0000">BOB</div>
+
+</body>
+</html>
