@@ -12,7 +12,7 @@ function getSessionMetadata( $sessionid )
 		department=\"Electrical and Computer Engineering\"
 		university=\"University of Iowa\">
 		This course is required for the SE Subtrack
-	</session>
+	</sessionMetadata>
 	
 	";
 }
