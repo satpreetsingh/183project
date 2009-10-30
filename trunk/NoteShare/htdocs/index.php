@@ -13,7 +13,7 @@
 -----------------------------------------------------------------------------*/
 
 //---------<Generic configuation probably for all pages>-----------------------
-require_once $_SERVER['DOCUMENT_ROOT'] . 'htdocs/controllers/Session.Controller.php';
+require_once $_SERVER['DOCUMENT_ROOT'] . 'controllers/Session.Controller.php';
 
 include './controllers/UserHomePage.Controller.php';    // controller
 
