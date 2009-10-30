@@ -15,7 +15,7 @@
 //---------<Generic configuation probably for all pages>-----------------------
 require_once $_SERVER['DOCUMENT_ROOT'] . 'controllers/Session.Controller.php';
 
-include './controllers/UserHomePage.Controller.php';    // controller
+include $_SERVER['DOCUMENT_ROOT'] . 'controllers/UserHomePage.Controller.php';    // controller
 
 // Require that the user be logged in to use the page
 //  Probably all pages should have this

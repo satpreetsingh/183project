@@ -4,11 +4,11 @@
 
 <?php
 
-	require_once '../../php/facebook.php';
-	require_once '../controllers/Session.Controller.php';
+	require_once $_SERVER['DOCUMENT_ROOT'] . '../php/facebook.php';
+	require_once $_SERVER['DOCUMENT_ROOT'] . 'controllers/Session.Controller.php';
 	
-	include '../controllers/UserHomePage.Controller.php';
-	include './xsltView.php';
+	include $_SERVER['DOCUMENT_ROOT'] . 'controllers/UserHomePage.Controller.php';
+	include $_SERVER['DOCUMENT_ROOT'] . 'view/xsltView.php';
 	
 ?>
 

@@ -1,10 +1,10 @@
 <?php
 
-	require_once '../../php/facebook.php';
-	require_once '../controllers/Session.Controller.php';
+	require_once $_SERVER['DOCUMENT_ROOT'] . '../php/facebook.php';
+	require_once $_SERVER['DOCUMENT_ROOT'] . 'controllers/Session.Controller.php';
 	
-	include '../controllers/CourseHomePage.Controller.php';
-	include './xsltView.php';
+	include $_SERVER['DOCUMENT_ROOT'] . 'controllers/CourseHomePage.Controller.php';
+	include $_SERVER['DOCUMENT_ROOT'] . 'view/xsltView.php';
 	
 	$user_id = $facebook->require_login();
 	
