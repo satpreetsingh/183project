@@ -22,7 +22,7 @@
 	$membersXML = getSessionMembers($user_id, $sessionId);
 	
 	echo "<h3>Course Participants:</h3>";
-	echo XSLTransform($memberXML,'coursePageView.xsl');
+	echo XSLTransform($membersXML,'coursePageView.xsl');
 	
 ?>
 
