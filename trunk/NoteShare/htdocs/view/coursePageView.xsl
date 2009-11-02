@@ -2,7 +2,7 @@
 
 <xsl:stylesheet version="1.0"
 xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
-xmlns:fb="http://apps.facebook.com/ns/1.0" 
+xmlns:fb="http://www.facebook.com/2008/fbml" 
 >
 
 <xsl:template match="/">
@@ -19,17 +19,19 @@ xmlns:fb="http://apps.facebook.com/ns/1.0"
 <xsl:template match="memberList">
 	<div>
 		<xsl:for-each select="member">
-			<div>
-				<xsl:attribute name="class">
-					<xsl:choose>
-						<xsl:when test="@friend='True'">friend</xsl:when>
-						<xsl:otherwise>notFriend</xsl:otherwise>
-					</xsl:choose>
-				</xsl:attribute>
-				<fb:profile-pic linked="true">
-					<xsl:attribute name="uid"><xsl:value-of select="@id"/></xsl:attribute>
-				</fb:profile-pic>
-			</div>
+			<xsl:sort select="@friend" order="descending">
+				<div>
+					<xsl:attribute name="class">
+						<xsl:choose>
+							<xsl:when test="@friend='True'">friend</xsl:when>
+							<xsl:otherwise>notFriend</xsl:otherwise>
+						</xsl:choose>
+					</xsl:attribute>
+					<fb:profile-pic linked="true">
+						<xsl:attribute name="uid"><xsl:value-of select="@id"/></xsl:attribute>
+					</fb:profile-pic>
+				</div>
+			</xsl:sort>
 		</xsl:for-each> 
 	</div>
 </xsl:template>

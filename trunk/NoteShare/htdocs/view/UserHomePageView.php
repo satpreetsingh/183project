@@ -27,7 +27,7 @@ Provides a portal to other aspects of our site. Course participation and course 
 	
 		$coursesXML = GetCourseListXML($user_id);
 	
-		echo "<h2>Your Course Participation:</h2>";
+		echo "<h2>Course Enrollment:</h2>";
 		echo "<ul>";
 		echo XSLTransform($coursesXML,'userHomePageView.xsl');
 		echo "</ul>";
