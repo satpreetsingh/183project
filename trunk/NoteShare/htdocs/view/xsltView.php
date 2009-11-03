@@ -6,7 +6,7 @@ function XSLTransform($xmlString,$xslFileName)
 
 	$xslt = new XSLTProcessor();
 	$xsl = new DOMDocument('1.0');
-	$xsl->load($xslFileName);
+	$xsl->load( $_SERVER['DOCUMENT_ROOT'] . $xslFileName);
 
 	$xslt->importStylesheet( $xsl );
 
