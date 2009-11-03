@@ -22,8 +22,8 @@ xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
 					</button>
 				</form>
 				<form action="DropCourse.php" method="post">
-					<button class="drop" name="sesison">
-					<xsl:attribute name="href">/courseDropView.php?session=<xsl:value-of select="@id"/></xsl:attribute>
+					<button class="drop" name="sesison" onclick="return confirm('Really? Drop the course?');">
+					<xsl:attribute name="value"><xsl:value-of select="@id"/></xsl:attribute>
 					Drop
 					</button>
 				</form>
