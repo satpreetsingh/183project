@@ -34,8 +34,14 @@ Provides information and functionality of a course session. Right now, partisipa
 		echo "<h3>Classmates:</h3>";
 		echo XSLTransform($membersXML,'coursePageView.xsl');
 	
+	
+		echo "<form action=\"DropCourse.php?from=CoursePageView.php\" method=\"post\">"
+		. "			<button class=\"drop\" name=\"session\" value=\"$sessionId\" onclick=\"return confirm(\'Really? Drop the course?\');\">"
+		. "			Drop"
+		. "	</button>"
+		. "</form>";
+		
 	?>
-
 		<script type="text/javascript">  
 			FB_RequireFeatures(["XFBML"], 
 				function(){ FB.Facebook.init("20f5b69813b87ffd25e42744b326a112", 
