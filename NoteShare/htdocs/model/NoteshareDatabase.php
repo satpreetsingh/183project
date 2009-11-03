@@ -10,7 +10,7 @@
 
     // Connect to the MySQL service.
     $conn = mysql_connect ($dbhost, $dbuser, $dbpass) or die ('Error connecting to mysql' . mysql_error());
-  
+
     // Select the database NoteShareSEP.
     mysql_select_db ($dbname);
 
@@ -26,9 +26,9 @@
     mysql_close($conn);
   }
 
-  function getUniversityDAL() 
+  function getUniversityDAL()
   {
-    $conn = openDB();    
+    $conn = openDB();
 
     $query = "SELECT * FROM University";
     $result = mysql_query($query);
@@ -45,13 +45,13 @@
     {
       $university = $doc->createElement('University');
       $list->appendChild($university);
-	
+
       $id_attr = $doc->createAttribute('Id');
       $university->appendChild($id_attr);
-	
+
       $id_text = $doc->createTextNode($row['ID']);
       $id_attr->appendChild($id_text);
-	
+
       $univ_name = $doc->createTextNode($row['NAME']);
       $university->appendChild($univ_name);
     }
@@ -81,13 +81,13 @@
     {
       $dept = $doc->createElement('Dept');
       $list->appendChild($dept);
-	
+
       $id_attr = $doc->createAttribute('Id');
       $dept->appendChild($id_attr);
 
       $id_text = $doc->createTextNode($row['ID']);
       $id_attr->appendChild($id_text);
-	
+
       $dept_name = $doc->createTextNode($row['NAME']);
       $dept->appendChild($dept_name);
     }

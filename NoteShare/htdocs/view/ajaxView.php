@@ -27,7 +27,7 @@ include $_SERVER['DOCUMENT_ROOT'] . 'view/xsltView.php';
   {
       // functions directed towards noteshare database
       case getUniversity:
-        $XML = getUniversityDAL(); 
+        $XML = getUniversityDAL();
         $HTML = XSLTransform( $XML, 'AddCourse.View.xsl' );
         if( $HTML == null )
         {
@@ -41,7 +41,7 @@ include $_SERVER['DOCUMENT_ROOT'] . 'view/xsltView.php';
         $HTML = XSLTransform( $XML, 'AddCourse.View.xsl' );
         if( $HTML == null )
         {
-          echo "ERR: FAILED PARSE.";
+          echo "ERR: FAILED PARSE." . $XML;
         }
         else
         {

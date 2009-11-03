@@ -1,6 +1,7 @@
+<head>
 <?php
   include "./controllers/Session.Controller.php";
-  include "./controllers/AddCourse.Controller.php";
+  //include "./controllers/AddCourse.Controller.php";
   include "./model/NoteshareDatabase.php";
   include "./view/xsltView.php";
 
@@ -13,13 +14,14 @@
 
   function genCmbBox( $label, $name, $action, $optionString )
   {
+//            <select id="' . $name . '" name="' . $name . '" onchange="'.$action.'( this )">';
     echo '' .
     '   <tr>
           <th class="detached_label">
             <label>' . $label . ' : </label>
           </th>
           <td class="editorkit_row">
-            <select id="' . $name . '" name="' . $name . '" onchange="'.$action.'()">';
+            <select id="' . $name . '" name="' . $name . '" onchange="'.$action.'(); return false;">';
     if( $optionString != null )
     {
       echo $optionString;
@@ -40,123 +42,14 @@
 ?>
 
 <!-----------------------------Actual Content---------------------------------->
-<head>
-<script src="http://static.ak.facebook.com/js/api_lib/v0.4/FeatureLoader.js.php" type="text/javascript"></script>
+<script src="http://static.ak.facebook.com/js/api_lib/v0.4/FeatureLoader.js.php" type="text/javascript">
+</script>
+<script src="./controllers/AddCourse.Controller.js" type="text/javascript">
+</script>
+
 <script type="text/javascript">
    FB.init("20f5b69813b87ffd25e42744b326a112", "/xd_receiver.htm");
 </script>
-
-<!----- Controller portion ------->
-<script type="text/javascript">
-  function getDepartments()
-  {
-    var cmbUni = document.getElementById( 'university' );
-    var selUni = cmbUni.selectedIndex;
-    var universityID = cmbUni.options[ selUni ].value;
-    //document.getElementById( 'testBox' ).innerHTML = universityID;
-
-    var xmlhttp;
-    if( window.XMLHttpRequest)
-    {
-      xmlhttp = new XMLHttpRequest();
-    }
-    else if ( window.ActiveXObject )
-    {
-      xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
-    }
-    else
-    {
-      alert( "XMLHTTP!?" );
-    }
-
-    if( xmlhttp == null )
-      document.getElementById( 'testBox' ).innerHTML = "NULL!";
-
-    xmlhttp.onreadystatechange=function()
-    {
-      if( xmlhttp.readyState == 4 )
-      {
-        document.getElementById( 'department' ).innerHTML = xmlhttp.responseText;
-      }
-    }
-    xmlhttp.open( "GET", "./view/ajaxView.php?function_name=getDepartments&universityID="+universityID, true );
-    xmlhttp.send( null );
-  }
-
-  function getCourses()
-  {
-    var cmbDept = document.getElementById( 'department' );
-    var selDept = cmbDept.selectedIndex;
-    var deptID = cmbDept.options[ selDept ].value;
-    //document.getElementById( 'testBox' ).innerHTML = universityID;
-
-    var xmlhttp;
-    if( window.XMLHttpRequest)
-    {
-      xmlhttp = new XMLHttpRequest();
-    }
-    else if ( window.ActiveXObject )
-    {
-      xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
-    }
-    else
-    {
-      alert( "XMLHTTP!?" );
-    }
-
-    if( xmlhttp == null )
-      document.getElementById( 'testBox' ).innerHTML = "NULL!";
-
-    xmlhttp.onreadystatechange=function()
-    {
-      if( xmlhttp.readyState == 4 )
-      {
-        document.getElementById( 'course' ).innerHTML = xmlhttp.responseText;
-      }
-    }
-    xmlhttp.open( "GET", "./view/ajaxView.php?function_name=getCourses&departmentID="+deptID, true );
-    xmlhttp.send( null );
-  }
-
-
-  function getSessions()
-  {
-    var cmbCourse = document.getElementById( 'course' );
-    var selCourse = cmbCourse.selectedIndex;
-    var sessionID = cmbCourse.options[ selCourse ].value;
-    //document.getElementById( 'testBox' ).innerHTML = universityID;
-
-    var xmlhttp;
-    if( window.XMLHttpRequest)
-    {
-      xmlhttp = new XMLHttpRequest();
-    }
-    else if ( window.ActiveXObject )
-    {
-      xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
-    }
-    else
-    {
-      alert( "XMLHTTP!?" );
-    }
-
-    if( xmlhttp == null )
-      document.getElementById( 'testBox' ).innerHTML = "NULL!";
-
-    xmlhttp.onreadystatechange=function()
-    {
-      if( xmlhttp.readyState == 4 )
-      {
-        document.getElementById( 'session' ).innerHTML = xmlhttp.responseText;
-      }
-    }
-    xmlhttp.open( "GET", "./view/ajaxView.php?function_name=getSessions&courseID="+courseID, true );
-    xmlhttp.send( null );
-  }
-
-</script>
-
-
 
 </head>
 
