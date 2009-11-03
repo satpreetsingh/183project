@@ -12,7 +12,8 @@
 	
 	$host  = $_SERVER['HTTP_HOST'];
 	$uri   = rtrim(dirname($_SERVER['PHP_SELF']), '/\\');
-	$extra = "view/" . $_GET['from'];
+	
+	$extra = $_GET['from'];
 	
 	header("Location:http://$host$uri/$extra");
 	exit();
