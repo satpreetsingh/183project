@@ -22,14 +22,12 @@ Provides information and functionality of a course session. Right now, partisipa
 		include $_SERVER['DOCUMENT_ROOT'] . 'controllers/CourseHomePage.Controller.php';
 		include $_SERVER['DOCUMENT_ROOT'] . 'view/xsltView.php';
 	
-		$sessionId = $_POST['session'];
+		$sessionId = $_GET['session'];
 		$metaXML = getSessionMetadata($sessionId);
 		
-		echo "</br>";
-	
-		echo XSLTransform($metaXML,'coursePageView.xsl');
+		echo XSLTransform($metaXML,'view/coursePageView.xsl');
 		
-		echo "<form action=\"DropCourse.php\" method=\"post\">"
+		echo "<form action=\"DropCourse.php\" method=\"GET\">"
 		. "			<button class=\"drop\" name=\"session\" value=\"$sessionId\" onclick=\"return confirm(\'Really? Drop the course?\');\">"
 		. "			Drop"
 		. "	</button>"
@@ -40,10 +38,14 @@ Provides information and functionality of a course session. Right now, partisipa
 		$membersXML = getSessionMembers($user_id, $sessionId);
 	
 		echo "<h3>Classmates:</h3>";
-		echo XSLTransform($membersXML,'coursePageView.xsl');
+		echo XSLTransform($membersXML,'view/coursePageView.xsl');
 	
 	
-		
+		echo "GET DUMP:</br>";
+    echo var_dump( $_GET );
+    echo "POST DUMP:</br>";
+    echo var_dump( $_POST );
+
 		
 	?>
 		<script type="text/javascript">  

@@ -1,7 +1,7 @@
 <?php
 
-include $_SERVER['DOCUMENT_ROOT'] . 'model/NoteshareDatabase.php';
-include $_SERVER['DOCUMENT_ROOT'] . 'view/xsltView.php';
+include $_SERVER['DOCUMENT_ROOT'] . '/model/NoteshareDatabase.php';
+include $_SERVER['DOCUMENT_ROOT'] . '/view/xsltView.php';
 
 /*
 * Function:     Ajax response (not really a function per say)
@@ -28,50 +28,58 @@ include $_SERVER['DOCUMENT_ROOT'] . 'view/xsltView.php';
       // functions directed towards noteshare database
       case getUniversity:
         $XML = getUniversityDAL();
-        $HTML = XSLTransform( $XML, 'AddCourse.View.xsl' );
+        $HTML = XSLTransform( $XML, 'view/AddCourse.View.xsl' );
         if( $HTML == null )
         {
           echo "ERR:FAIL PARSE.";
         } else {
-          echo $HTML;
+          echo '<option value="-1"></option>
+                <option value="0">Add University</option>'
+                . $HTML;
         }
         break;
       case getDepartments:
         $XML = getDepartmentsDAL( $_GET['universityID'] );
-        $HTML = XSLTransform( $XML, 'AddCourse.View.xsl' );
+        $HTML = XSLTransform( $XML, 'view/AddCourse.View.xsl' );
         if( $HTML == null )
         {
           echo "ERR: FAILED PARSE." . $XML;
         }
         else
         {
-          echo $HTML;
+          echo '<option value="-1"></option>
+                <option value="0">Add Department...</option>'
+                . $HTML;
         }
         break;
 
       case getCourses:
         $XML = getCoursesDAL( $_GET['departmentID'] );
-        $HTML = XSLTransform( $XML, 'AddCourse.View.xsl' );
+        $HTML = XSLTransform( $XML, 'view/AddCourse.View.xsl' );
         if( $HTML == null )
         {
           echo "ERR: FAILED PARSE.";
         }
         else
         {
-          echo $HTML;
+          echo '<option values="-1"></option>
+                <option values="0">Add Course...</option>'
+                . $HTML;
         }
         break;
 
       case getSessions:
         $XML = getSessionsDAL( $_GET['courseID'] );
-        $HTML = XSLTransform( $XML, 'AddCourse.View.xsl' );
+        $HTML = XSLTransform( $XML, 'view/AddCourse.View.xsl' );
         if( $HTML == null )
         {
           echo "ERR: FAILED PARSE.";
         }
         else
         {
-          echo $HTML;
+          echo '<option value="-1"></option>
+                <option value="0">Add Session...</option>'
+                . $HTML;
         }
         break;
 
