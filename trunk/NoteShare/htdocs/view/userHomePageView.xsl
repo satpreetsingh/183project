@@ -15,7 +15,7 @@ xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
 		<xsl:for-each select="session">
 			<li>
 				<form action="CoursePageView.php" method="post">
-					<button class="course" name="sesison">
+					<button class="course" name="session">
 					<xsl:attribute name="value"><xsl:value-of select="@id"/></xsl:attribute>
 					<xsl:value-of select="@course"/>: <xsl:value-of select="."/>, 
 					<xsl:value-of select="@department"/>, <xsl:value-of select="@university"/>
