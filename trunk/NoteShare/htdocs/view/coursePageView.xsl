@@ -30,6 +30,9 @@ xmlns:fb="http://www.facebook.com/2008/fbml"
 				<fb:profile-pic linked="true">
 					<xsl:attribute name="uid"><xsl:value-of select="@id"/></xsl:attribute>
 				</fb:profile-pic>
+				<fb:name>
+					<xsl:attribute name="uid"><xsl:value-of select="@id"/></xsl:attribute>
+				</fb:name>
 				</div>
 		</xsl:for-each> 
 	</div>

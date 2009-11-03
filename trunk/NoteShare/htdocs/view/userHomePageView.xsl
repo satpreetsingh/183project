@@ -21,7 +21,7 @@ xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
 					<xsl:value-of select="@department"/>, <xsl:value-of select="@university"/>
 					</button>
 				</form>
-				<form action="DropCourse.php?from=UserHomePageView.php" method="post">
+				<form action="DropCourse.php" method="post">
 					<button class="drop" name="sesison" onclick="return confirm('Really? Drop the course?');">
 					<xsl:attribute name="value"><xsl:value-of select="@id"/></xsl:attribute>
 					Drop
