@@ -19,19 +19,18 @@ xmlns:fb="http://www.facebook.com/2008/fbml"
 <xsl:template match="memberList">
 	<div>
 		<xsl:for-each select="member">
-			<xsl:sort select="@friend" order="descending">
-				<div>
-					<xsl:attribute name="class">
-						<xsl:choose>
-							<xsl:when test="@friend='True'">friend</xsl:when>
-							<xsl:otherwise>notFriend</xsl:otherwise>
-						</xsl:choose>
-					</xsl:attribute>
-					<fb:profile-pic linked="true">
-						<xsl:attribute name="uid"><xsl:value-of select="@id"/></xsl:attribute>
-					</fb:profile-pic>
+			<xsl:sort select="@friend" order="descending" />
+			<div>
+				<xsl:attribute name="class">
+					<xsl:choose>
+						<xsl:when test="@friend='True'">friend</xsl:when>
+						<xsl:otherwise>notFriend</xsl:otherwise>
+					</xsl:choose>
+				</xsl:attribute>
+				<fb:profile-pic linked="true">
+					<xsl:attribute name="uid"><xsl:value-of select="@id"/></xsl:attribute>
+				</fb:profile-pic>
 				</div>
-			</xsl:sort>
 		</xsl:for-each> 
 	</div>
 </xsl:template>
