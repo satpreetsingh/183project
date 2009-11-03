@@ -24,6 +24,12 @@ Provides information and functionality of a course session. Right now, partisipa
 	
 		$sessionId = $_POST['session'];
 		$metaXML = getSessionMetadata($sessionId);
+		
+		echo "<form action=\"DropCourse.php\" method=\"post\">"
+		. "			<button class=\"drop\" name=\"session\" value=\"$sessionId\" onclick=\"return confirm(\'Really? Drop the course?\');\">"
+		. "			Drop"
+		. "	</button>"
+		. "</form>";
 	
 		echo XSLTransform($metaXML,'coursePageView.xsl');
 	
@@ -35,11 +41,7 @@ Provides information and functionality of a course session. Right now, partisipa
 		echo XSLTransform($membersXML,'coursePageView.xsl');
 	
 	
-		echo "<form action=\"DropCourse.php?from=CoursePageView.php\" method=\"post\">"
-		. "			<button class=\"drop\" name=\"session\" value=\"$sessionId\" onclick=\"return confirm(\'Really? Drop the course?\');\">"
-		. "			Drop"
-		. "	</button>"
-		. "</form>";
+		
 		
 	?>
 		<script type="text/javascript">  
