@@ -26,5 +26,5 @@ $facebook = new Facebook($appapikey, $appsecret);
 //  Probably all pages should have this
 $user_id = $facebook->require_login();
 
-$user = isset( $_POST['fb_sig_user']) ? $_POST['fb_sig_user'] : null;
+$user = isset( $_GET['fb_sig_user']) ? $_GET['fb_sig_user'] : null;
 ?>

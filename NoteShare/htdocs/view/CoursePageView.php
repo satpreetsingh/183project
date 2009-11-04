@@ -22,9 +22,13 @@ Provides information and functionality of a course session. Right now, partisipa
 		include $_SERVER['DOCUMENT_ROOT'] . 'controllers/CourseHomePage.Controller.php';
 		include $_SERVER['DOCUMENT_ROOT'] . 'view/xsltView.php';
 	
+    echo '<a href="http://apps.facebook.com/notesharesep/index.php" target="_top">Main Page</a>';
+    echo ' > ';
+    echo '<a href="http://apps.facebook.com/notesharesep/view/CoursePageView.php" target="_top">Course Page</a>';
+    echo '</br></br>';
+
 		$sessionId = $_GET['session'];
 		$metaXML = getSessionMetadata($sessionId);
-		
 		echo XSLTransform($metaXML,'view/coursePageView.xsl');
 		
 		echo "<form action=\"DropCourse.php\" method=\"GET\">"
@@ -40,13 +44,7 @@ Provides information and functionality of a course session. Right now, partisipa
 		echo "<h3>Classmates:</h3>";
 		echo XSLTransform($membersXML,'view/coursePageView.xsl');
 	
-	
-		echo "GET DUMP:</br>";
-    echo var_dump( $_GET );
-    echo "POST DUMP:</br>";
-    echo var_dump( $_POST );
 
-		
 	?>
 		<script type="text/javascript">  
 			FB_RequireFeatures(["XFBML"], 

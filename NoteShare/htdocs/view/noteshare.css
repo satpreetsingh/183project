@@ -1,0 +1,66 @@
+.facebookText
+{
+  font-family:"lucida grande",tahoma,verdana,arial,sans-serif;
+  color: #333333;
+}
+
+h1.title
+{
+  font-size:20px;
+  color: #333333;
+}
+
+table
+{
+  width: 100%;
+  padding: 0px;
+}
+
+td
+{
+  width: 100%;
+  padding:0px;
+}
+
+td.header
+{
+  background-color: #D8DFEA;
+  border-top:       1px solid #3B5998;
+  color:            #3B5998;
+  font-size:        11px;
+  padding:          0px;
+  margin:           0em;
+  font-weight:      bold;
+}
+/* Facebook Box Header 
+td h2
+{
+  background-color:#D8DFEA;
+  border-top:1px solid #3B5998;
+  color:#3B5998;
+  font-size:11px;
+  padding:1px 6px;
+  margin:0;
+  font-weight:bold;
+}
+*/
+
+/* Subheader, e.g. "Displaing 10 of 100 items"
+.subtitle
+{
+  background-color:#EEEEEE;
+  border-bottom:1px solid #CCCCCC;
+  color:#000000;
+  font-size:11px;
+  font-weight:normal;
+  padding:3px 5px 2px;
+}
+*/
+
+/*
+h2.sectionHeading
+{
+  color: #3B5998;
+
+}
+*/
