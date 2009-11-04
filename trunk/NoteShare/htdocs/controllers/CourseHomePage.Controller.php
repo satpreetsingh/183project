@@ -1,10 +1,11 @@
 <?php
 
-include $_SERVER['DOCUMENT_ROOT'] . 'model/DataAbstractionLayer.php';
+  include $_SERVER['DOCUMENT_ROOT'] . 'model/NoteshareDatabase.php';
 
 function getSessionMetadata( $sessionid )
 {
-	return "<?xml version=\"1.0\"?>
+	return getSessionMetadataDAL( $sessionid );
+  /*"<?xml version=\"1.0\"?>
 	
 	<sessionMetadata id=\"11111\" 
 		course=\"Software Engineering Project\"
@@ -13,7 +14,7 @@ function getSessionMetadata( $sessionid )
 		This course is required for the SE Subtrack
 	</sessionMetadata>
 	
-	";
+	";*/
 }
 
 function getSessionMembers( $userid, $sessionid )

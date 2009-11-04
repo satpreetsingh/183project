@@ -52,7 +52,7 @@
 */
 // START: AJAX CODE RESPONSE
   // grab user id
-  $user = isset($_POST['fb_sig_user']) ? $_POST['fb_sig_user'] : null;
+  $user = isset($_GET['fb_sig_user']) ? $_GET['fb_sig_user'] : null;
 
   // only act if user is logged in
   if( isset( $user ))

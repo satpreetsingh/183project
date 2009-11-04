@@ -1,5 +1,19 @@
 <?php
 
+/**
+ * NoteshareDatabase.php
+ *
+ * This file contains all of the functions to interact with our own SQL database.
+ * The results from these functions are strings of XML data to be interpeted in the view.
+ *
+ */
+ 
+/**
+ * This function opens the database connection
+ * @author Nathan Denklau
+ * @version 1.0
+ * @return string connection
+ */
   function openDB()
   {
     // Set the MySQL information.
@@ -16,7 +30,14 @@
 
     return $conn;
   }
-
+  
+/**
+ * This function closes the database connection
+ * @author Nathan Denklau
+ * @version 1.0
+ * @param string $result results from SQL querey to release
+ * @param string $conn connection to close
+ */
   function closeDB($result, $conn)
   {
     // Free the result memory.
@@ -25,7 +46,13 @@
     // Close the database connection.
     mysql_close($conn);
   }
-
+  
+/**
+ * This function gets all of the universities within the database and returns them in XML
+ * @author Nathan Denklau
+ * @version 1.0
+ * @return XML university data
+ */
   function getUniversityDAL()
   {
     $conn = openDB();
@@ -62,7 +89,14 @@
 
     return $out;
   }
-
+  
+/**
+ * This function gets all the departments at a given university
+ * @author Nathan Denklau
+ * @version 1.0
+ * @param integer $univ_id university ID number
+ * @return XML department data
+ */
   function getDepartmentsDAL($univ_id)
   {
     $conn = openDB();
@@ -99,6 +133,13 @@
     return $out;
   }
 
+/**
+ * This function gets all the courses in a given department
+ * @author Nathan Denklau
+ * @version 1.0
+ * @param integer $dept_id department ID number
+ * @return XML course data
+ */
   function getCoursesDAL($dept_id)
   {
     $conn = openDB();
@@ -135,6 +176,13 @@
     return $out;
   }
 
+/**
+ * This function gets all the sessions for a given course
+ * @author Nathan Denklau
+ * @version 1.0
+ * @param integer $course_id course ID number
+ * @return XML session data
+ */  
   function getSessionsDAL($course_id)
   {
     $conn = openDB();
@@ -203,12 +251,10 @@
     $list = $doc->createElement('UserSessionList');
     $doc->appendChild($list);
 
-
-
     while($row = mysql_fetch_assoc($result))
     {
       $sessionuseritem = $doc->createElement('SessionUserItem');
-      $doc->appendChild($sessionuseritem);
+      $list->appendChild($sessionuseritem);
 	
       $id_attr = $doc->createAttribute('Id');
       $sessionuseritem->appendChild($id_attr);
@@ -266,7 +312,7 @@
     while($row = mysql_fetch_assoc($result))
     {
       $sessionmetadata= $doc->createElement('SessionMetaData');
-      $doc->appendChild($sessionmetadata);
+      $EndResult->appendChild($sessionmetadata);
 	
       $id_attr = $doc->createAttribute('Id');
       $sessionmetadata->appendChild($id_attr);
