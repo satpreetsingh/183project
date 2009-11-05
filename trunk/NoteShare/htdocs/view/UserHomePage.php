@@ -27,35 +27,35 @@
   require_once $_SERVER['DOCUMENT_ROOT'] . 'model/NoteshareDatabase.php';
 	require_once $_SERVER['DOCUMENT_ROOT'] . 'view/xsltView.php';
 
-/*
+  echo '<h1 class="title fbFont">NoteShare (Beta)</h1>';
+
   $userDetails = $facebook->api_client->users_getInfo( $user_id, 'last_name, first_name');
   if( $userDetails != null )
   {
-    echo "<p>Hello, " . $userDetails[0]['first_name'] . "!</p>";
+    echo '<p class="fbFont greeting">Hello, '
+         . $userDetails[0]['first_name'] . ' ' 
+         . $userDetails[0]['last_name']
+         . '!</p>';
   } else {
-    echo $user_id;
   }
-*/
-    echo '<h1 class="title facebookText">NoteShare (Beta)</h1>';
-		echo '<div xmlns:fb="http://www.facebook.com/2008/fbml"><fb:name uid="' . $user_id . '" useyou="false"></fb:name></div>';
-	
-		$coursesXML = getHomePageSessionListDAL( $user_id );
-	
-    echo '<table><tr><td><h2 class="sectionHeading">Course Enrollment:</h2></td></tr></table>';
-		echo '<ul>';
-    //echo $coursesXML;
-		echo XSLTransform($coursesXML,'view/userHomePageView.xsl');
-		echo "</ul>";
+//		echo '<fb:name uid="' . $user_id . '" useyou="false"></fb:name><br>';
+//		echo '<div xmlns:fb="http://www.facebook.com/2008/fbml"><fb:name uid="' . $user_id . '" useyou="false"></fb:name></div>';
 
-		?>
-		
-		<a href="http://apps.facebook.com/notesharesep/view/AddCourse.php" target="_top">Join Another Course</a>
-		
+	$coursesXML = getHomePageSessionListDAL( $user_id );
 
-	<script type="text/javascript">  
-		FB_RequireFeatures(["XFBML"], 
-			function(){ FB.Facebook.init("20f5b69813b87ffd25e42744b326a112",
-				"xd_receiver.htm"); }); 
-  </script> 
+  echo '<table><tr><td class="header">Course Enrollment:</td></tr></table>';
+	echo '<ul>';
+  //echo $coursesXML;
+	echo XSLTransform($coursesXML,'view/userHomePageView.xsl');
+	echo "</ul>";
+
+?>
+	<a href="http://apps.facebook.com/notesharesep/view/AddCourse.php" target="_top">Join Another Course</a>
+
+  <script type="text/javascript">
+	  FB_RequireFeatures(["XFBML"],
+		  function(){ FB.Facebook.init("20f5b69813b87ffd25e42744b326a112",
+			  "xd_receiver.htm"); });
+  </script>
 	</body>
 </html>

@@ -1,7 +1,46 @@
-.facebookText
+/*General styles that can be applied to anything */
+.fbFont     /* Gives text the "Facebook" font face */
 {
-  font-family:"lucida grande",tahoma,verdana,arial,sans-serif;
-  color: #333333;
+  font-family:        "lucida grande",tahoma,verdana,arial,sans-serif;
+  font-size:          11px; 
+  color:              #333333;
+}
+
+/*Tag specific styles*/
+a
+{
+  color:              #3b5998;
+  text-decoration:    none;
+}
+
+a:visited
+{
+  color:              #3b5998;
+}
+
+a:hover
+{
+  color:              #3b5998;
+  text-decoration:    underline;
+}
+
+button
+{
+  padding:            1px 3px 1px 4px;
+  font-size:          1em;
+  cursor:             pointer; 
+  background:         #3b5998; 
+  color:              #fff; 
+  border:             1px solid #0e1f5b; 
+  border-left-color:  #D9DFEA; 
+  border-top-color:   #D9DFEA;
+} 
+
+button.drop
+{
+  padding:            1px 3px 1px 4px;
+  font-size:          1em;
+  cursor:             pointer;
 }
 
 h1.title
@@ -10,57 +49,74 @@ h1.title
   color: #333333;
 }
 
+option.empty
+{
+
+}
+
 table
 {
   width: 100%;
   padding: 0px;
 }
 
-td
+table.sessionMetadata
 {
-  width: 100%;
-  padding:0px;
+  cellpadding:        0px;
+  cellspacing:        0px;
 }
 
 td.header
 {
-  background-color: #D8DFEA;
-  border-top:       1px solid #3B5998;
-  color:            #3B5998;
-  font-size:        11px;
-  padding:          0px;
-  margin:           0em;
-  font-weight:      bold;
+  background-color:   #ECEFF5;
+  border-top:         1px solid #94A3C4;
+  color:              #333333;
+  font-size:          11px;
+  padding:            5px 0px 5px 6px;
+  margin:             0em;
+  font-weight:        bold;
 }
-/* Facebook Box Header 
-td h2
-{
-  background-color:#D8DFEA;
-  border-top:1px solid #3B5998;
-  color:#3B5998;
-  font-size:11px;
-  padding:1px 6px;
-  margin:0;
-  font-weight:bold;
-}
-*/
 
-/* Subheader, e.g. "Displaing 10 of 100 items"
-.subtitle
+td.sessionTitleBar
 {
-  background-color:#EEEEEE;
-  border-bottom:1px solid #CCCCCC;
-  color:#000000;
-  font-size:11px;
-  font-weight:normal;
-  padding:3px 5px 2px;
+  color:              #333333;
+  font-size:          11px;
+  margin:             0em;
+  padding:            0em;
+  font-weight:        bold;
+  border-bottom:      1px solid #D4DAE8;
+  width:              100%;
 }
-*/
 
-/*
-h2.sectionHeading
+td.combo
 {
-  color: #3B5998;
-
+  width:              50%;
 }
-*/
+
+th
+{
+  padding:          10px 0px 0px 10px;
+  width:            20%;
+  text-align:       left;
+}
+
+select.combo
+{
+  padding: 0px 0px 0px 0px;
+  border-style: solid;
+  border-top-width: 1px;
+  border-left-width: 1px;
+  border-bottom-width: 1px;
+  border-right-width: 1px;
+  border-top-color: #D9DFEA;
+  border-left-color: #D9DFEA;
+  border-bottom-color: #0e1f5b;
+  border-right-color: #0e1f5b;
+  background-color: #3b5998;
+  color: #FFFFFF;
+  font-size: 11px;
+  font-family: "lucida grande", tahoma, verdana, arial, sans-serif;
+  text-align: center;
+  width:  50%;
+}
+
