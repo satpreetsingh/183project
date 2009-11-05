@@ -16,5 +16,6 @@
                 should serve as an example of how to create screen mockups
                 for our architecture document.
 -----------------------------------------------------------------------------*/
-include $_SERVER['DOCUMENT_ROOT'] . 'view/UserHomePage.php';
+ header( 'Location: http://apps.facebook.com/notesharesep/view/UserHomePage.php' );
+ //include $_SERVER['DOCUMENT_ROOT'] . 'view/UserHomePage.php';
 ?>
