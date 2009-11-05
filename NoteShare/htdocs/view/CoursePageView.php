@@ -11,6 +11,7 @@ Provides information and functionality of a course session. Right now, partisipa
 	<head>
 		<title>NoteShare Course Hompage</fb:title>
 		<script src="http://static.ak.connect.facebook.com/js/api_lib/v0.4/FeatureLoader.js.php" type="text/javascript"></script>
+    <link rel="stylesheet" type="text/css" href="/view/noteshare.css" />
 	</head>
 	<body>
 
@@ -22,15 +23,19 @@ Provides information and functionality of a course session. Right now, partisipa
 		include $_SERVER['DOCUMENT_ROOT'] . 'controllers/CourseHomePage.Controller.php';
 		include $_SERVER['DOCUMENT_ROOT'] . 'view/xsltView.php';
 	
-    echo '<a href="http://apps.facebook.com/notesharesep/index.php" target="_top">Main Page</a>';
-    echo ' > ';
-    echo '<a href="http://apps.facebook.com/notesharesep/view/CoursePageView.php" target="_top">Course Page</a>';
-    echo '</br></br>';
+    echo '<p class="heading"><a class="fbFont" href="http://apps.facebook.com/notesharesep/view/UserHomePage.php" target="_top">Main Page</a>';
+    echo ' | ';
+    echo '<a class="fbFont" href="http://apps.facebook.com/notesharesep/view/CoursePageView.php" target="_top">Course Page</a></p>';
+
+    echo '<table class="sessionMetadata">';
+    echo '  <tr><td class="fbFont sessionTitleBar">Course Info</td></tr>';
+    echo '</table>';
 
 		$sessionId = $_GET['session'];
 		$metaXML = getSessionMetadata($sessionId);
 		echo XSLTransform($metaXML,'view/coursePageView.xsl');
-		
+		echo '</br></br>';
+
 		echo "<form action=\"DropCourse.php\" method=\"GET\">"
 		. "			<button class=\"drop\" name=\"session\" value=\"$sessionId\" onclick=\"return confirm(\'Really? Drop the course?\');\">"
 		. "			Drop"
@@ -41,7 +46,9 @@ Provides information and functionality of a course session. Right now, partisipa
 	
 		$membersXML = getSessionMembers($user_id, $sessionId);
 	
-		echo "<h3>Classmates:</h3>";
+		echo '<table><tr><td class="header fbFont">News</td></tr></table>';
+//		echo '<table><tr><td class="header fbFont">Classmates:</td></tr></table>';
+    //echo $membersXML;
 		echo XSLTransform($membersXML,'view/coursePageView.xsl');
 	
 
