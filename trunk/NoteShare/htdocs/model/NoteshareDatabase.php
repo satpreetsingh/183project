@@ -8,9 +8,10 @@
  *
  */
  
+
 /**
  * This function opens the database connection
- * @author Nathan Denklau
+ * @author(s) Joseph Trapani/Nathan Denklau
  * @version 1.0
  * @return string connection
  */
@@ -31,9 +32,10 @@
     return $conn;
   }
   
+
 /**
  * This function closes the database connection
- * @author Nathan Denklau
+ * @author(s) Joseph Trapani/Nathan Denklau
  * @version 1.0
  * @param string $result results from SQL querey to release
  * @param string $conn connection to close
@@ -47,6 +49,7 @@
     mysql_close($conn);
   }
   
+
 /**
  * This function gets all of the universities within the database and returns them in XML
  * @author Nathan Denklau
@@ -57,7 +60,7 @@
   {
     $conn = openDB();
 
-    $query = "SELECT * FROM University";
+    $query = "Select * From University";
     $result = mysql_query($query);
 
 
@@ -89,6 +92,7 @@
 
     return $out;
   }
+
   
 /**
  * This function gets all the departments at a given university
@@ -101,7 +105,7 @@
   {
     $conn = openDB();
 
-    $query = "SELECT * FROM Department WHERE UNIVERSITY_PTR = ".$univ_id;
+    $query = "Select * From Department Where University_Ptr = ".$univ_id;
     $result = mysql_query($query);
 
     $doc = new DOMDocument('1.0');
@@ -133,6 +137,7 @@
     return $out;
   }
 
+
 /**
  * This function gets all the courses in a given department
  * @author Nathan Denklau
@@ -144,7 +149,7 @@
   {
     $conn = openDB();
 
-    $query = "SELECT * FROM Course WHERE DEPARTMENT_PTR = ".$dept_id;
+    $query = "Select * From Course Where Department_Ptr = ".$dept_id;
     $result = mysql_query($query);
 
     $doc = new DOMDocument('1.0');
@@ -176,6 +181,7 @@
     return $out;
   }
 
+
 /**
  * This function gets all the sessions for a given course
  * @author Nathan Denklau
@@ -187,7 +193,7 @@
   {
     $conn = openDB();
 
-    $query = "SELECT * FROM Session WHERE COURSE_PTR = ".$course_id;
+    $query = "Select * From Session Where COURSE_PTR = ".$course_id;
     $result = mysql_query($query);
 
     $doc = new DOMDocument('1.0');
@@ -220,14 +226,18 @@
   }
 
 
-
-
+/**
+ * This function gets all the courses which the given user is currently enrolled in.
+ * @author Joseph Trapani
+ * @version 1.0
+ * @param integer $user_id user ID number
+ * @return XML user's current enrolled session list
+ */ 
   function getHomePageSessionListDAL($user_id)
   {
     
     $conn = openDB();
 
-    // Select all the courses which the given user is currently enrolled in.
     $query = "Select Session.Id   As Session_Id, " .
 		      "Session.Name As Session_Name, " .
                     "Course.Name  As Course_Name " .  
@@ -274,15 +284,19 @@
   }
   
 
-
-
+/**
+ * This function returns all the details of the session (specific term/semester course information) 
+ * and course (general course information).
+ * @author Joseph Trapani
+ * @version 1.0
+ * @param integer $session_id session ID number
+ * @return XML session meta data
+ */ 
   function getSessionMetadataDAL($session_id)
   {
     
     $conn = openDB();
 
-    // For a session, return all the details of the session (specific term/semester course information) 
-    // and course (general course information).
     $query = "Select Session.Id          As Session_Id,        " .
 		      "Session.Name        As Session_Name,      " .
                     "Session.Start_Date  As Start_Date,        " .
@@ -355,12 +369,18 @@
   }
  
 
+/**
+ * This function gets all the users from a given course's session.
+ * @author Joseph Trapani
+ * @version 1.0
+ * @param integer $session_id sessionID number
+ * @return XML user's current enrolled session list
+ */
   function getSessionMembersDAL($session_id)
   {
     
     $conn = openDB();
 
-    // Select ALL the users from a given course's session.
     $query = "Select Session.Id                 As Session_Id,  " .
                     "SessionEnrollment.User_Ptr As User_Ptr     " .
 
@@ -406,12 +426,19 @@
   }
 
 
+/**
+ * This function returns the result of adding a user to a session's enrollment.   
+ * @author Joseph Trapani
+ * @version 1.0
+ * @param integer $user_id user ID number, integer $session_id session ID number
+ * @return XML adding of user sessionenrollment data
+ */ 
   function addUserSessionDAL($user_id, $session_id)
   {
     
     $conn = openDB();
 
-    // Remove the user from a given course's session.
+    // Add the user from a given course's session.
     $query = "Insert SessionEnrollment (SessionEnrollment.User_Ptr, " . 
 					    "SessionEnrollment.Session_Ptr, " .
  					    "SessionEnrollment.Join_Date " .
@@ -445,14 +472,17 @@
   }
 
 
-
-
-  function removeUserSessionDAL($user_id, $session_id)
+/**
+ * This function returns the result after removing a user from a given course's session.
+ * @author Joseph Trapani
+ * @version 1.0
+ * @param integer $user_id user ID number, integer $session_id session ID number
+ * @return XML removal of user sessionenrollment data
+ */   function removeUserSessionDAL($user_id, $session_id)
   {
     
     $conn = openDB();
-
-    // Remove the user from a given course's session.
+ 
     $query = "Update SessionEnrollment Set " . 
 		      "SessionEnrollment.Left_Date = '" . date("Y-m-d") . "' " .
 
@@ -484,4 +514,6 @@
 
     return $out;
   }
+
+
 ?>
