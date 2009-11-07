@@ -1,8 +1,34 @@
 <?php
+
+/**
+ * AddCourse.php
+ *
+ * Responsible for displaying the add course view.  Most of the visual content
+ * is driven by a combination of php functions.  The combo boxes where the
+ * user can select the universities, depts, courses, etc. are driven by AJAX
+ * calls.  The XML response is converted to options within the combo boxes
+ * via XSLT.
+ *
+ * The expect way to generate an add course form is this sequence:
+ *  openEditor() -- once, first
+ *  genCmbBox() -- several
+ *  genButtons() -- once, after the combo boxes
+ *  closeEditor() -- once, last
+ *
+ * See ajaxView.php for the AJAX implementation.
+**/
+
   require_once $_SERVER['DOCUMENT_ROOT'] . 'controllers/Session.Controller.php';
   require_once $_SERVER['DOCUMENT_ROOT'] . 'model/NoteshareDatabase.php';
   require_once $_SERVER['DOCUMENT_ROOT'] . 'view/xsltView.php';
 
+  /**
+   * Prints the initial opening tags for the add course form.  Function posts
+   * to itself for actual course registration.
+   *
+   * @version 1.0
+   * @return prints open form tags, and starts form table
+  **/
   function openEditor( )
   {
     echo '' .
@@ -10,6 +36,19 @@
        <table class="formTable">';
   }
 
+  /**
+   * Generates a combo box with the specified label, name, action
+   * and option string (optional).
+   *
+   * @version 1.0
+   * @param $label the label to display left of the combo box
+   * @param $name the name AND id to give the combo box
+   * @param $action the function to call when a combo box option is selected
+   * @param $optionString (optional) options within the combo box, must be
+   *          HTML formatted <option>'s
+   * @return prints one form table row with a combo box with the specified
+   *          parameters
+  **/
   function genCmbBox( $label, $name, $action, $optionString )
   {
     echo '' .
@@ -30,6 +69,13 @@
         </tr>';
   }
 
+  /**
+   * Prints the closing submission button and cancel link.  This in turn
+   * submits to the location specified by openEditor()
+   *
+   * @version 1.0
+   * @return prints the closing submission buttons
+  **/
   function genButtons()
   {
     echo '' .
@@ -48,11 +94,27 @@
     ';
   }
 
+  /**
+   * Closes the form table and the form itself.
+   *
+   * @version 1.0
+   * @return prints close form table and close form tag
+  **/
   function closeEditor()
   {
     echo '</table></form>';
   }
 
+  /**
+   * This section of code runs once the add course button has been selected.
+   * This is referenced on the first page load, but the function shouldn't be
+   * entered.
+   *
+   * The hanging else is to allow the page to generate view content if the
+   * user hasn't posted.  However, if the user has posted...since we're using
+   * a redirect, it was important to ensure no html content would be generated.
+   * Plus, that would just be a waste anyways since no one will see it.
+  **/
   if( isset( $_POST['Add'] ))
   {
     if( isset( $_POST['session'] ))
@@ -76,7 +138,7 @@
 </head>
 
 <a href="http://apps.facebook.com/notesharesep/view/UserHomePage.php" target="_top" id="mainPage">Main Page</a>
-&gt;
+ | 
 <a href="http://apps.facebook.com/notesharesep/view/AddCourse.php" target="_top">
    Add Course</a>
 <br>

@@ -478,7 +478,8 @@
  * @version 1.0
  * @param integer $user_id user ID number, integer $session_id session ID number
  * @return XML removal of user sessionenrollment data
- */   function removeUserSessionDAL($user_id, $session_id)
+ */   
+  function removeUserSessionDAL($user_id, $session_id)
   {
     
     $conn = openDB();
@@ -514,6 +515,51 @@
 
     return $out;
   }
+
+/**
+ * This function returns the result of checking is a user is a preexisting member of a given course's session.
+ * @author Joseph Trapani
+ * @version 1.0
+ * @param integer $user_id user ID number, integer $session_id session ID number
+ * @return XML boolean result.  1 = user is a preexisting member.  
+ */   
+  function checkUserInSessionDAL($user_id, $session_id)
+  {
+    
+    $conn = openDB();
+ 
+    $query = "Select SessionEnrollment.ID " . 
+	      "From SessionEnrollment " .
+
+	      "Where (SessionEnrollment.User_Ptr    = " . $user_id    . ") And " . 
+		     "(SessionEnrollment.Session_Ptr = " . $session_id . ") And " .
+		     "(SessionEnrollment.Left_Date Is Null);";	
+
+
+    $result = mysql_query($query);
+
+
+
+    $doc = new DOMDocument('1.0');
+
+    $style = $doc->createProcessingInstruction('xml-stylesheet', 'type="text/xsl" href="test.xsl"');
+    $doc->appendChild($style);
+    $EndResult = $doc->createElement('UserSessionResult');
+    $doc->appendChild($EndResult);
+
+
+    $UserSessionResult= $doc->createElement('UserSessionResult');
+    $doc->appendChild($RemoveUserSessionResult);
+	
+    $UserSessionResult_Name = $doc->createTextNode($result);
+    $UserSessionResult->appendChild($UserSessionResult_Name);
+    
+
+    $out = $doc->saveXML();
+
+    return $out;
+  }
+
 
 
 ?>
