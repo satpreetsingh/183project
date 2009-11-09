@@ -561,5 +561,38 @@
   }
 
 
+/**
+ * This function adds a user to the app.
+ * @author Jon Hall
+ * @version 1.0
+ * @param integer $user_id userID number
+ */
+	function addUserDAL($user_id)
+	{
+		$conn = openDB();
+ 
+    	$query = "insert into User (User_ID) values($user_id);";
+    	
+    	mysql_query($query);
+    	
+    	return;
+	}
+	
+/**
+ * This function removes a user from the app.
+ * @author Jon Hall
+ * @version 1.0
+ * @param integer $user_id userID number
+ */
+	function removeUserDAL($user_id)
+	{
+		$conn = openDB();
+ 
+    	$query = "delete from User where User_ID=\'$user_id\'";
+    	
+    	mysql_query($query);
+    	
+    	return;
+	}
 
 ?>
