@@ -16,6 +16,9 @@
                 should serve as an example of how to create screen mockups
                 for our architecture document.
 -----------------------------------------------------------------------------*/
- header( 'Location: http://apps.facebook.com/notesharesep/view/UserHomePage.php' );
+  require_once $_SERVER['DOCUMENT_ROOT'] . 'controllers/Session.Controller.php';
+
+  $facebook->redirect( 'http://apps.facebook.com/notesharesep/view/UserHomePage.php' );
+ //header( 'Location: http://apps.facebook.com/notesharesep/view/UserHomePage.php' );
  //include $_SERVER['DOCUMENT_ROOT'] . 'view/UserHomePage.php';
 ?>

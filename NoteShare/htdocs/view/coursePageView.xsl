@@ -12,7 +12,7 @@ xmlns:fb="http://www.facebook.com/2008/fbml"
 <xsl:template match="SessionMetaData">
   <table class="sessionMetaData">
     <tr><td class="fbFont sessionName"><xsl:value-of select='.' /></td></tr>
-    <tr><td class="fbFont sessionTime">Start Date: <xsl:value-of select="@Start_Date"/></td><td class="sessionTime">End Date: <xsl:value-of select="@End_Date" /></td></tr>
+<!--    <tr><td class="fbFont sessionTime">Start Date: <xsl:value-of select="@Start_Date"/></td><td class="sessionTime">End Date: <xsl:value-of select="@End_Date" /></td></tr> -->
 	  <tr><td class="fbFont sessionDescr">Description:<p><xsl:value-of select="@Desc"/></p></td></tr>
   </table>
 </xsl:template>
