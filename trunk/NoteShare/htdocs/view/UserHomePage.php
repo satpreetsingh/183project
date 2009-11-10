@@ -49,7 +49,7 @@
 	$coursesXML = getHomePageSessionListDAL( $user_id );
 
   genHeadingBar( "Course Enrollment" );
-//  echo $coursesXML;
+  echo $coursesXML;
 	echo '<ul>';
   echo XSLTransform($coursesXML,'view/userHomePageView.xsl');
 	echo '</ul>';
