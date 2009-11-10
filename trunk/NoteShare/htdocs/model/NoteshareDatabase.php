@@ -247,7 +247,7 @@
 	      "From SessionEnrollment " . 
 
 	      "Inner Join Session On Session.Id = SessionEnrollment.Session_Ptr " . 
-	      "Inner Join Course On Course.Id = Session.Course_Ptr " 
+	      "Inner Join Course On Course.Id = Session.Course_Ptr " .
 	      "Where (SessionEnrollment.User_Ptr = " . $user_id . ") And " .
 		     "(SessionEnrollment.Left_Date Is Null)";	
 
