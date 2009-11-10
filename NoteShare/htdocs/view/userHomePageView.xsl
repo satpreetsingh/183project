@@ -12,35 +12,38 @@ xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
 	to the course page with a short description with a drop button -->
 <xsl:template match="UserSessionList">
 	<ul>  
-		<xsl:for-each select="SessionUserItem">
-			<li>
-				<!-- <xsl:attribute name="id"><xsl:value-of select="@Id"/></xsl:attribute> -->
-				<a target="_top">
-					<xsl:attribute name="href">
-						http://apps.facebook.com/notesharesep/view/CoursePageView.php?session=<xsl:value-of select="@Id" />
-					</xsl:attribute>
-					<xsl:value-of select="." />
-				</a>
-				<!--
-					<form action="http://apps.facebook.com/notesharesep/view/CoursePageView.php" method="GET" target="_top">
-					<button class="course" name="session">
-						<xsl:attribute name="value"><xsl:value-of select="@Id"/></xsl:attribute>
-						<xsl:value-of select="." />
-					</button>
-					</form>
-				-->
-          [
-					<a target="_top">
-	        	<xsl:attribute name="href">
-          		http://apps.facebook.com/notesharesep/view/DropCourse.php?session=<xsl:value-of select="@Id" />
-         		</xsl:attribute>
-          	<xsl:attribute name="onclick">
-         			return confirm('Really? Drop the course?');
-          	</xsl:attribute>
-						X
-          </a>
-          ]
-      </li>
+		<xsl:for-each select="SessionUserItem/@university">
+				<table><tr><td class="headingBar"><xsl:value-of select"." /></td></tr></table>
+				<xsl:for-each select="../">
+					<li>
+						<!-- <xsl:attribute name="id"><xsl:value-of select="@Id"/></xsl:attribute> -->
+						<a target="_top">
+							<xsl:attribute name="href">
+								http://apps.facebook.com/notesharesep/view/CoursePageView.php?session=<xsl:value-of select="@Id" />
+							</xsl:attribute>
+							<xsl:value-of select="." />
+						</a>
+						<!--
+							<form action="http://apps.facebook.com/notesharesep/view/CoursePageView.php" method="GET" target="_top">
+							<button class="course" name="session">
+								<xsl:attribute name="value"><xsl:value-of select="@Id"/></xsl:attribute>
+								<xsl:value-of select="." />
+							</button>
+							</form>
+						-->
+				      [
+							<a target="_top">
+					    	<xsl:attribute name="href">
+				      		http://apps.facebook.com/notesharesep/view/DropCourse.php?session=<xsl:value-of select="@Id" />
+				     		</xsl:attribute>
+				      	<xsl:attribute name="onclick">
+				     			return confirm('Really? Drop the course?');
+				      	</xsl:attribute>
+								X
+				      </a>
+				      ]
+				  </li>
+      </xsl:for-each>
 		</xsl:for-each>
 	</ul>
 </xsl:template>
