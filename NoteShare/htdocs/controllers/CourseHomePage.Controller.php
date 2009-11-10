@@ -55,4 +55,63 @@ function removeSession($sessionID)
 	";
 }
 
+function getSessionBBS( $sessionID )
+{
+  return '' .
+  '<?xml version="1.0" encoding="UTF-8"?>
+   <SessionBBS>
+     <Post Header="Example Header"
+           Date="11-09-09"
+           User="14821122">Body1
+     </Post>
+     <Post Header="Example Header2"
+           Date="11-09-09"
+           User="14821122">Body2
+     </Post>
+   </SessionBBS>';
+}
+
+function getSessionBBS1( $sessionID )
+{
+  return '' .
+  '<?xml version="1.0" encoding="UTF-8"?>
+   <SessionBBS>
+     <Thread Header="Example Thread Header1"
+           DateTime="11-09-09 12:00:00"
+		   ThreadID="1243541"
+           User="14821122">
+		   This thread discusses topic #1
+     </Thread>
+     <Thread Header="Example Thread Header2"
+           DateTime="11-09-09 12:00:05"
+		   ThreadID="2243541"
+           User="14821122">
+			This thread discusses topic #1     
+	</Thread>
+   </SessionBBS>';
+}
+
+function getSessionWall( $sessionID )
+{
+  return '' .
+  '<?xml version="1.0" encoding="UTF-8"?>
+   <SessionWall>
+     <Post Header="Example Header"
+           Date="11-09-09 12:00:01"
+           User="14821122">
+		   Test next week everyone!
+     </Post>
+		 <Comment Header="Example Header"
+			   Date="11-09-09 12:00:02"
+			   User="14821222">
+			   Just 7 days!
+		 </Comment>		
+     <Post Header="Example Header2"
+           Date="11-09-09 12:00:05"
+           User="14821122">
+		   Welcome to the new semester!
+     </Post>
+   </SessionWall>';
+}
+
 ?>

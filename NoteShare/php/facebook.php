@@ -144,6 +144,7 @@ class Facebook {
     // if no Facebook parameters were found in the GET or POST variables,
     // then fall back to cookies, which may have cached user information
     // Cookies are also used to receive session data via the Javascript API
+
     else if ($cookies =
              $this->get_valid_fb_params($_COOKIE, null, $this->api_key)) {
 
@@ -159,6 +160,7 @@ class Facebook {
                       $cookies['session_key'],
                       $expires);
     }
+
     // finally, if we received no parameters, but the 'auth_token' GET var
     // is present, then we are in the middle of auth handshake,
     // so go ahead and create the session

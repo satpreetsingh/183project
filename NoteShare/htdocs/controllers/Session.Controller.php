@@ -13,18 +13,18 @@
 
   require_once $_SERVER['DOCUMENT_ROOT'] . '../php/facebook.php';
 
-// API key for our application, needed for facebook session
-$appapikey = '20f5b69813b87ffd25e42744b326a112';
+  // API key for our application, needed for facebook session
+  $appapikey = '20f5b69813b87ffd25e42744b326a112';
 
-// Secret key that's also needed for a facebook session
-$appsecret = '9c30a702413dccd1856b58d2fab4c992';
+  // Secret key that's also needed for a facebook session
+  $appsecret = '9c30a702413dccd1856b58d2fab4c992';
 
-// Create the facebook session
-$facebook = new Facebook($appapikey, $appsecret);
+  // Create the facebook session
+  $facebook = new Facebook($appapikey, $appsecret, true);
 
-// Require that the user be logged in to use the page
-//  Probably all pages should have this
-$user_id = $facebook->require_login();
+  // Require that the user be logged in to use the page
+  //  Probably all pages should have this
+  $user_id = $facebook->require_login();
 
-$user = isset( $_GET['fb_sig_user']) ? $_GET['fb_sig_user'] : null;
+  //$user = isset( $_GET['fb_sig_user']) ? $_GET['fb_sig_user'] : null;
 ?>

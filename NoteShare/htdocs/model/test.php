@@ -9,8 +9,9 @@ include '/var/www/localhost/htdocs/model/NoteshareDatabase.php';
 //getSessionMetadataDAL(1);
 //getSessionMembersDAL(1);
 //removeUserSessionDAL(2,1);
-addUserSessionDAL(66000948,2);
+//addUserSessionDAL(66000948,2);
 
+getHomePageSessionListDAL(66000948);
 
 
 //addUserDAL(34234);

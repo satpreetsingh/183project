@@ -39,4 +39,20 @@ xmlns:fb="http://www.facebook.com/2008/fbml"
 	</div>
 </xsl:template>
 
+<xsl:template match="SessionBBS">
+  <xsl:for-each select="Post">
+    <table class="sessionBBS">
+      <tr>
+        <td class="userImage" rowspan="2">
+          <fb:profile-pic linked="true">
+            <xsl:attribute name="uid">
+              <xsl:value-of select="@User" />
+            </xsl:attribute>
+          </fb:profile-pic>
+        </td>
+      </tr>
+    </table>
+  </xsl:for-each>
+</xsl:template>
+
 </xsl:stylesheet>

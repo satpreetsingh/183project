@@ -9,7 +9,7 @@ function XSLTransform($xmlString,$xslFileName)
 	$xsl->load( $_SERVER['DOCUMENT_ROOT'] . $xslFileName);
 
 	$xslt->importStylesheet( $xsl );
-
 	return str_replace( "<?xml version=\"1.0\"?>", "", $xslt->transformToXML( $xml ));
+
 }
 ?>

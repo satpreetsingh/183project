@@ -129,6 +129,12 @@ td.combo
   width:              50%;
 }
 
+textarea.sessionBBS
+{
+  width:              100%;
+  border:             1px dashed  #AAAAAA;
+}
+
 th
 {
   padding:          10px 0px 0px 10px;
