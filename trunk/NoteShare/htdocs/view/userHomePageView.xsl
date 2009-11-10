@@ -3,19 +3,19 @@
 <xsl:stylesheet version="1.0"
 xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
 
-<xsl:key name="session-by-uni" match="SessionUserItem" use="University_Name" />
+<xsl:key name="session-by-uni" match="SessionUserItem" use="@University_Name" />
 
 <xsl:template match="/">
 	<xsl:apply-templates/>
 </xsl:template>
 
 <xsl:template match="UserSessionList">
-	<xsl:for-each select="UserSessionItem[count(. | key('session-by-uni', University_Name)[1]) = 1]">
+	<xsl:for-each select="UserSessionItem[count(. | key('session-by-uni', @University_Name)[1]) = 1]">
 		<div>
-			<xsl:sort select="University_Name" />
-	   		<h3><xsl:value-of select="University_Name" /></h3>
+			<xsl:sort select="@University_Name" />
+	   		<h3><xsl:value-of select="@University_Name" /></h3>
 	   		<ul>
-		   		<xsl:for-each select="key('session-by-uni', University_Name)">
+		   		<xsl:for-each select="key('session-by-uni', @University_Name)">
 		   			<li>
 			   			<a target="_top">
 							<xsl:attribute name="href">
