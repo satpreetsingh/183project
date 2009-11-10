@@ -38,7 +38,7 @@ xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
 						X
           </a>
           ]
-        </form>      
+        <!-- </form>     -->
       </li>
 		</xsl:for-each>
 	</ul>
