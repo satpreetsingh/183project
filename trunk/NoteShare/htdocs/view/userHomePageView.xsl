@@ -13,7 +13,7 @@ xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
 <xsl:template match="UserSessionList">
 	<ul>  
 		<xsl:for-each select="SessionUserItem/@university">
-				<table><tr><td class="headingBar"><xsl:value-of select"." /></td></tr></table>
+				<table><tr><td class="headingBar"><xsl:value-of select="." /></td></tr></table>
 				<xsl:for-each select="../">
 					<li>
 						<!-- <xsl:attribute name="id"><xsl:value-of select="@Id"/></xsl:attribute> -->
