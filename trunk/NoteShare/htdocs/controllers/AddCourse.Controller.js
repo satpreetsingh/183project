@@ -1,3 +1,5 @@
+  var AJAX_URL_BASE = '/controllers/AddCourse.Controller.php';
+
   function resetBackground( obj )
   {
     obj.style.background = "#3b5998";
@@ -48,9 +50,10 @@
           document.getElementById( 'department' ).style.background = "#eceff6";
           document.getElementById( 'course' ).innerHTML = "";
           document.getElementById( 'session' ).innerHTML = "";
+          document.getElementById( 'debug' ).innerHTML = xmlhttp.responseText;
         }
       }
-      xmlhttp.open( "GET", "/view/ajaxView.php?function_name=getDepartments&universityID="+universityID);
+      xmlhttp.open( "GET", AJAX_URL_BASE + "?function_name=getDepartments&universityID="+universityID);
       xmlhttp.send( null );
     }
   }
@@ -66,6 +69,7 @@
     {
       document.getElementById( 'course' ).innerHTML = "";
       document.getElementById( 'session' ).innerHTML = "";
+      document.getElementById( 'department' ).style.background = "#FF0000";
     }
     // user selected add course
     else if( deptID == 0 )
@@ -98,7 +102,7 @@
           document.getElementById( 'session' ).innerHTML = "";
         }
       }
-      xmlhttp.open( "GET", "/view/ajaxView.php?function_name=getCourses&departmentID="+deptID );
+      xmlhttp.open( "GET", AJAX_URL_BASE + "?function_name=getCourses&departmentID="+deptID );
       xmlhttp.send( null );
     }
   }
@@ -113,6 +117,7 @@
     if( courseID == -1 )
     {
       document.getElementById( 'session' ).innerHTML = "";
+      document.getElementById( 'course' ).style.background = "#FF0000";
     }
     else if( courseID == 0 )
     {
@@ -142,7 +147,7 @@
           document.getElementById( 'session' ).style.background = "#eceff6";
         }
       }
-      xmlhttp.open( "GET", "/view/ajaxView.php?function_name=getSessions&courseID="+courseID );
+      xmlhttp.open( "GET", AJAX_URL_BASE + "?function_name=getSessions&courseID="+courseID );
       xmlhttp.send( null );
     }
   }

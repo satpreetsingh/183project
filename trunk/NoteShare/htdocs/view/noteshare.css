@@ -3,24 +3,22 @@
 {
   font-family:        "lucida grande",tahoma,verdana,arial,sans-serif;
   font-size:          11px; 
-  color:              #333333;
+}
+
+.large
+{
+  font-size:          15px;
 }
 
 /*Tag specific styles*/
 a
 {
-  color:              #3b5998;
+  color:              #3B5998;
   text-decoration:    none;
-}
-
-a:visited
-{
-  color:              #3b5998;
 }
 
 a:hover
 {
-  color:              #3b5998;
   text-decoration:    underline;
 }
 
@@ -41,6 +39,7 @@ button.drop
   padding:            1px 3px 1px 4px;
   font-size:          1em;
   cursor:             pointer;
+  font-weight:        bold;
 }
 
 h1.title
@@ -49,9 +48,27 @@ h1.title
   color: #333333;
 }
 
+input.add
+{
+  padding:            1px 3px 1px 4px;
+  font-size:          1em;
+  cursor:             pointer; 
+  background:         #3b5998; 
+  color:              #fff; 
+  border:             1px solid #0e1f5b; 
+  border-left-color:  #D9DFEA; 
+  border-top-color:   #D9DFEA;
+}
+
 option.empty
 {
 
+}
+
+p.greeting
+{
+  font-size:                  12px;
+  color:                      #333333;
 }
 
 table
@@ -67,6 +84,16 @@ table.sessionMetadata
 }
 
 td.header
+{
+  border-top:         1px solid #AAAAAA;
+  color:              #333333;
+  font-size:          11px;
+  font-weight:        bold;
+  padding:            0px 0px 0px 0px;
+  margin:             0px;
+}
+
+td.headingBar
 {
   background-color:   #ECEFF5;
   border-top:         1px solid #94A3C4;
@@ -86,6 +113,15 @@ td.sessionTitleBar
   font-weight:        bold;
   border-bottom:      1px solid #D4DAE8;
   width:              100%;
+}
+
+td.title
+{
+  color:              #333333;
+  font-size:          20px;
+  margin:             0em;
+  padding:            0em;
+  font-weight:        bold;
 }
 
 td.combo

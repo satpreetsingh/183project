@@ -36,7 +36,7 @@
 					</div>
 		<div class="info-box-body">	
 			<a name="_$_SERVER[DOCUMENT_ROOT]_controllers/Session_Controller_php"><!-- --></a>
-<div class="oddrow">
+<div class="evenrow">
 	
 	<div>
 		<span class="include-title">
@@ -52,7 +52,7 @@
 	
 </div>
 <a name="_$_SERVER[DOCUMENT_ROOT]_view/xsltView_php"><!-- --></a>
-<div class="evenrow">
+<div class="oddrow">
 	
 	<div>
 		<span class="include-title">
@@ -66,13 +66,27 @@
 	
 </div>
 <a name="_$_SERVER[DOCUMENT_ROOT]_model/NoteshareDatabase_php"><!-- --></a>
-<div class="oddrow">
+<div class="evenrow">
 	
 	<div>
 		<span class="include-title">
 			<span class="include-type">require_once</span>
 			(<span class="include-name">$_SERVER['DOCUMENT_ROOT'].'model/NoteshareDatabase.php'</span>)
 			(line <span class="line-number">22</span>)
+		</span>
+	</div>
+
+	<!-- ========== Info from phpDoc block ========= -->
+	
+</div>
+<a name="_$_SERVER[DOCUMENT_ROOT]_view/View_php"><!-- --></a>
+<div class="oddrow">
+	
+	<div>
+		<span class="include-title">
+			<span class="include-type">require_once</span>
+			(<span class="include-name">$_SERVER['DOCUMENT_ROOT'].'view/View.php'</span>)
+			(line <span class="line-number">24</span>)
 		</span>
 	</div>
 
@@ -93,11 +107,36 @@
 				|												<span class="disabled">Functions</span>
 		</div>
 		<div class="info-box-body">	
-			<a name="functiongenButtons" id="functiongenButtons"><!-- --></a>
+			<a name="functioncloseEditor" id="functioncloseEditor"><!-- --></a>
 <div class="evenrow">
 	
 	<div>
-		<span class="method-title">genButtons</span> (line <span class="line-number">79</span>)
+		<span class="method-title">closeEditor</span> (line <span class="line-number">104</span>)
+	</div> 
+
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">Closes the form table and the form itself.</p>
+	<ul class="tags">
+				<li><span class="field">return:</span> close form table and close form tag</li>
+				<li><span class="field">version:</span> 1.0</li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result">prints</span>
+		<span class="method-name">
+			closeEditor
+		</span>
+				()
+			</div>
+
+		
+	
+</div>
+<a name="functiongenButtons" id="functiongenButtons"><!-- --></a>
+<div class="oddrow">
+	
+	<div>
+		<span class="method-title">genButtons</span> (line <span class="line-number">80</span>)
 	</div> 
 
 	<!-- ========== Info from phpDoc block ========= -->
@@ -118,11 +157,75 @@
 		
 	
 </div>
+<a name="functiongenCmbBox" id="functiongenCmbBox"><!-- --></a>
+<div class="evenrow">
+	
+	<div>
+		<span class="method-title">genCmbBox</span> (line <span class="line-number">53</span>)
+	</div> 
+
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">Generates a combo box with the specified label, name, action  and option string (optional).</p>
+	<ul class="tags">
+				<li><span class="field">return:</span> one form table row with a combo box with the specified           parameters</li>
+				<li><span class="field">version:</span> 1.0</li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result">prints</span>
+		<span class="method-name">
+			genCmbBox
+		</span>
+					(<span class="var-type">$label</span>&nbsp;<span class="var-name">$label</span>, <span class="var-type">$name</span>&nbsp;<span class="var-name">$name</span>, <span class="var-type">$action</span>&nbsp;<span class="var-name">$action</span>, <span class="var-type">$optionString</span>&nbsp;<span class="var-name">$optionString</span>)
+			</div>
+
+			<ul class="parameters">
+					<li>
+				<span class="var-type">$label</span>
+				<span class="var-name">$label</span><span class="var-description">: the label to display left of the combo box</span>			</li>
+					<li>
+				<span class="var-type">$name</span>
+				<span class="var-name">$name</span><span class="var-description">: the name AND id to give the combo box</span>			</li>
+					<li>
+				<span class="var-type">$action</span>
+				<span class="var-name">$action</span><span class="var-description">: the function to call when a combo box option is selected</span>			</li>
+					<li>
+				<span class="var-type">$optionString</span>
+				<span class="var-name">$optionString</span><span class="var-description">: (optional) options within the combo box, must be           HTML formatted &lt;option&gt;'s</span>			</li>
+				</ul>
+		
+	
+</div>
+<a name="functionopenEditor" id="functionopenEditor"><!-- --></a>
+<div class="oddrow">
+	
+	<div>
+		<span class="method-title">openEditor</span> (line <span class="line-number">33</span>)
+	</div> 
+
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">Prints the initial opening tags for the add course form.  Function posts  to itself for actual course registration.</p>
+	<ul class="tags">
+				<li><span class="field">return:</span> open form tags, and starts form table</li>
+				<li><span class="field">version:</span> 1.0</li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result">prints</span>
+		<span class="method-name">
+			openEditor
+		</span>
+				()
+			</div>
+
+		
+	
+</div>
 		</div>
 	</div>
 	
 	<p class="notes" id="credit">
-		Documentation generated on Sat, 07 Nov 2009 05:59:55 -0600 by <a href="http://www.phpdoc.org" target="_blank">phpDocumentor 1.4.1</a>
+		Documentation generated on Mon, 09 Nov 2009 13:50:24 -0600 by <a href="http://www.phpdoc.org" target="_blank">phpDocumentor 1.4.1</a>
 	</p>
 	</div></body>
 </html>

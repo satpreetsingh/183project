@@ -21,13 +21,15 @@
 -----------------------------------------------------------------------------*/
 
 // All pages require the session controller
-	require_once $_SERVER['DOCUMENT_ROOT'] . 'controllers/Session.Controller.php';
+ 	require_once $_SERVER['DOCUMENT_ROOT'] . 'controllers/Session.Controller.php';
 
 	require_once $_SERVER['DOCUMENT_ROOT'] . 'controllers/UserHomePage.Controller.php';
   require_once $_SERVER['DOCUMENT_ROOT'] . 'model/NoteshareDatabase.php';
 	require_once $_SERVER['DOCUMENT_ROOT'] . 'view/xsltView.php';
+  require_once $_SERVER['DOCUMENT_ROOT'] . 'view/View.php';
 
-  echo '<h1 class="title fbFont">NoteShare (Beta)</h1>';
+  genHeader( array( "Main Page" ),
+             array( "view/UserHomePage.php" ));
 
   $userDetails = $facebook->api_client->users_getInfo( $user_id, 'last_name, first_name');
   if( $userDetails != null )
@@ -43,14 +45,14 @@
 
 	$coursesXML = getHomePageSessionListDAL( $user_id );
 
-  echo '<table><tr><td class="header">Course Enrollment:</td></tr></table>';
-	echo '<ul>';
+  genHeadingBar( "Course Enrollment" );
   //echo $coursesXML;
+	echo '<ul>';
 	echo XSLTransform($coursesXML,'view/userHomePageView.xsl');
 	echo "</ul>";
 
 ?>
-	<a href="http://apps.facebook.com/notesharesep/view/AddCourse.php" target="_top">Join Another Course</a>
+	<a class="fbFont" href="http://apps.facebook.com/notesharesep/view/AddCourse.php" target="_top">Join Another Course</a>
 
   <script type="text/javascript">
 	  FB_RequireFeatures(["XFBML"],

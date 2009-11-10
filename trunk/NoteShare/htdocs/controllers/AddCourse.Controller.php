@@ -1,178 +1,93 @@
 <?php
-/*-----------------------------------------------------------------------------
- File:         addcourseController.php
- Description:  An example of how the addcourse controller might work.
- UseCases:     <Later>
- Requirements: <Later>
- Components:   <Later>
--------------------------------------------------------------------------------
- Modified On:   10/25/09
- Notes:         Beginning implementations of javascript responses to user
-                interactions. AJAX querrying seems to be working well.
 
- Modified On:   10/20/09
- Notes:         Quick initial creation of addcourse controller.
------------------------------------------------------------------------------*/
+include $_SERVER['DOCUMENT_ROOT'] . '/model/NoteshareDatabase.php';
+include $_SERVER['DOCUMENT_ROOT'] . '/view/xsltView.php';
 
-// AJAX
+/*
+* Function:     Ajax response (not really a function per say)
+* Description:  This code segment is responsible for taking in the ajax querries
+*               of the various controllers and making the appropriate ajax
+*               response.
+* Parameters:   (Note: NOT traditional parameters)
+*               $_POST:
+*                 fb_sig_user -- facebook user id
+*                   (automatically posted by facebook if the user is logged in)
+*               $_GET:
+*                 function_name -- name of function that sent the ajax querry
+*                   (typically directed to response function of same name)
+* Return: Appropriate response will come from a "response" function call, i.e.
+*           a function with function_name that processes $_POST parameters
+*         ERR: UNKNOWN FUNCTION -- if the receieved function_name parameter does
+*           not match any defined function
+*         ERR: REQUIRE LOGIN -- if the user is not currently logged in
+*/
+// START: AJAX CODE RESPONSE
+    // pass control to functions as dictated by function_name parameter
+  switch( $_GET['function_name'] )
+  {
+      // functions directed towards noteshare database
+      case getUniversity:
+        $XML = getUniversityDAL();
+        $HTML = XSLTransform( $XML, 'view/AddCourse.View.xsl' );
+        if( $HTML == null )
+        {
+          echo "ERR:FAIL PARSE.";
+        } else {
+          echo '<option value="-1"></option>
+                <option value="0">Add University</option>'
+                . $HTML;
+        }
+        break;
+      case getDepartments:
+        $XML = getDepartmentsDAL( $_GET['universityID'] );
+        $HTML = XSLTransform( $XML, 'view/AddCourse.View.xsl' );
+        if( $HTML == null )
+        {
+          echo "ERR: FAILED PARSE." . $XML;
+        }
+        else
+        {
+          echo '<option value="-1"></option>
+                <option value="0">Add Department...</option>'
+                . $HTML;
+        }
+        break;
 
+      case getCourses:
+        $XML = getCoursesDAL( $_GET['departmentID'] );
+        $HTML = XSLTransform( $XML, 'view/AddCourse.View.xsl' );
+        if( $HTML == null )
+        {
+          echo "ERR: FAILED PARSE.";
+        }
+        else
+        {
+          echo '<option values="-1"></option>
+                <option values="0">Add Course...</option>'
+                . $HTML;
+        }
+        break;
 
+      case getSessions:
+        $XML = getSessionsDAL( $_GET['courseID'] );
+        $HTML = XSLTransform( $XML, 'view/AddCourse.View.xsl' );
+        if( $HTML == null )
+        {
+          echo "ERR: FAILED PARSE.";
+        }
+        else
+        {
+          echo '<option value="-1"></option>
+                <option value="0">Add Session...</option>'
+                . $HTML;
+        }
+        break;
 
-// END AJAX
+      // functions directed towards facebook database
 
-function getDepartmentsXML( $univName )
-{
-	return "
-	<?xml version=\"1.0\"?>
-    <deptList>
-    <dept id=\"0001\">Computer Science</dept>
-    <dept id=\"0002\">Electrical & Computer Engineering</dept>
-    <dept id=\"0003\">Mechanical Engineering (we make weapons)</dept>
-    <dept id=\"0004\">Civil Engineering (we make targets)</dept>
-    <dept id=\"0005\">Philosophy</dept>
-    <dept id=\"0006\">Music</dept>
-    <dept id=\"0007\">Spanish (No por que!)</dept>
-    </deptList>
-    ";
-}
-
-function getCoursesXML( $deptName )
-{
-	return "
-	<?xml version=\"1.0\"?>
-    <courseList>
-    <course id=\"0001\">Operating Systems </course>
-    <course id=\"0002\">Defunct Systems </course>
-    <course id=\"0003\">Distributed Systems </course>
-    <course id=\"0004\">Concentrated Systems </course>
-    <course id=\"0005\">Ad-hoc Systems </course>
-    <course id=\"0006\">Deliberate(d) Systems </course>
-    </courseList>
-    ";
-}
-
-function getSessionsXML( $courseName )
-{
-	return "
-	<?xml version=\"1.0\"?>
-    <sessionList>
-    <session id=\"0001\">(Fall 2009)</session>
-    <session id=\"0002\">(Spring 2009)</session>
-    <session id=\"0003\">(Summer 2009)</session>
-    <session id=\"0004\">(Fall 2008)</session>
-    <session id=\"0005\">(Spring 2008)</session>
-    <session id=\"0006\">(Summer 2008)</session>
-    </sessionList>
-    ";
-}
-
+      // error condition ( function not found )
+      default:
+        echo "ERR: UNKNOWN FUNCTION - " . $_GET['function_name'];
+  }  
+// END: AJAX CODE RESPONSE
 ?>
-
-<!----- Controller portion ------->
-<script type="text/javascript">
-  function getDepartments()
-  {
-    var cmbUni = document.getElementById( 'university' );
-    var selUni = cmbUni.selectedIndex;
-    var universityID = cmbUni.options[ selUni ].value;
-    //document.getElementById( 'testBox' ).innerHTML = universityID;
-
-    var xmlhttp;
-    if( window.XMLHttpRequest)
-    {
-      xmlhttp = new XMLHttpRequest();
-    }
-    else if ( window.ActiveXObject )
-    {
-      xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
-    }
-    else
-    {
-      alert( "XMLHTTP!?" );
-    }
-
-    if( xmlhttp == null )
-      document.getElementById( 'testBox' ).innerHTML = "NULL!";
-
-    xmlhttp.onreadystatechange=function()
-    {
-      if( xmlhttp.readyState == 4 )
-      {
-        document.getElementById( 'department' ).innerHTML = xmlhttp.responseTex$
-      }
-    }
-    xmlhttp.open( "GET", "./view/ajaxView.php?function_name=getDepartments&univ$
-    xmlhttp.send( null );
-  }
-
-  function getCourses()
-  {
-    var cmbDept = document.getElementById( 'department' );
-    var selDept = cmbDept.selectedIndex;
-    var deptID = cmbDept.options[ selDept ].value;
-    //document.getElementById( 'testBox' ).innerHTML = universityID;
-
-    var xmlhttp;
-    if( window.XMLHttpRequest)
-    {
-      xmlhttp = new XMLHttpRequest();
-    }
-    else if ( window.ActiveXObject )
-    {
-      xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
-    }
-    else
-    {
-      alert( "XMLHTTP!?" );
-    }
-
-    if( xmlhttp == null )
-      document.getElementById( 'testBox' ).innerHTML = "NULL!";
-
-    xmlhttp.onreadystatechange=function()
-    {
-      if( xmlhttp.readyState == 4 )
-      {
-        document.getElementById( 'course' ).innerHTML = xmlhttp.responseText;
-      }
-    }
-    xmlhttp.open( "GET", "./view/ajaxView.php?function_name=getCourses&departme$
-    xmlhttp.send( null );
-  }
-
-  function getSessions()
-  {
-    var cmbCourse = document.getElementById( 'course' );
-    var selCourse = cmbCourse.selectedIndex;
-    var sessionID = cmbCourse.options[ selCourse ].value;
-    //document.getElementById( 'testBox' ).innerHTML = universityID;
-
-    var xmlhttp;
-    if( window.XMLHttpRequest)
-    {
-      xmlhttp = new XMLHttpRequest();
-    }
-    else if ( window.ActiveXObject )
-    {
-      xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
-    }
-    else
-    {
-      alert( "XMLHTTP!?" );
-    }
-
-    if( xmlhttp == null )
-      document.getElementById( 'testBox' ).innerHTML = "NULL!";
-
-    xmlhttp.onreadystatechange=function()
-    {
-      if( xmlhttp.readyState == 4 )
-      {
-        document.getElementById( 'session' ).innerHTML = xmlhttp.responseText;
-      }
-    }
-    xmlhttp.open( "GET", "./view/ajaxView.php?function_name=getSessions&courseI$
-    xmlhttp.send( null );
-  }
-
-</script>

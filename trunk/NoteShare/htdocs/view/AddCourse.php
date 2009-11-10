@@ -21,6 +21,7 @@
   require_once $_SERVER['DOCUMENT_ROOT'] . 'controllers/Session.Controller.php';
   require_once $_SERVER['DOCUMENT_ROOT'] . 'model/NoteshareDatabase.php';
   require_once $_SERVER['DOCUMENT_ROOT'] . 'view/xsltView.php';
+  require_once $_SERVER['DOCUMENT_ROOT'] . 'view/View.php';
 
   /**
    * Prints the initial opening tags for the add course form.  Function posts
@@ -41,11 +42,11 @@
    * and option string (optional).
    *
    * @version 1.0
-   * @param $label the label to display left of the combo box
-   * @param $name the name AND id to give the combo box
-   * @param $action the function to call when a combo box option is selected
-   * @param $optionString (optional) options within the combo box, must be
-   *          HTML formatted <option>'s
+   * @param string $label the label to display left of the combo box
+   * @param string $name the name AND id to give the combo box
+   * @param string $action the function to call when a combo box option is selected
+   * @param string $optionString (optional) options within the combo box, must be
+   *               HTML formatted <option>'s
    * @return prints one form table row with a combo box with the specified
    *          parameters
   **/
@@ -54,7 +55,7 @@
     echo '' .
     '   <tr class="combo">
           <th class="combo">
-            <label class="combo facebookText">' . $label . ' : </label>
+            <label class="fbFont large">' . $label . ' : </label>
           </th>
           <td class="combo">
             <select class="combo" id="' . $name . '" name="' . $name . '" onchange="'.$action.'(); return false;" onmouseover="resetBackground(this); return false;">';
@@ -82,7 +83,7 @@
     '  <tr>
          <th></th>
            <td class="editorkit_buttonset">
-             <input type="submit" class="editorkit_button action" value="Add" name="Add"/>   
+             <input type="submit" class="add action" value="Add" name="Add"/>   
              <span class="cancel_link">
                <span>or</span>
                <a href="http://apps.facebook.com/notesharesep/view/UserHomePage.php" target="_top">Cancel</a>
@@ -125,6 +126,8 @@
   }
   else {
 ?>
+
+
 <html>
 <head>
   <script src="http://static.ak.facebook.com/js/api_lib/v0.4/FeatureLoader.js.php" type="text/javascript"></script>
@@ -137,20 +140,22 @@
   </script>
 </head>
 
-<a href="http://apps.facebook.com/notesharesep/view/UserHomePage.php" target="_top" id="mainPage">Main Page</a>
- | 
-<a href="http://apps.facebook.com/notesharesep/view/AddCourse.php" target="_top">
-   Add Course</a>
-<br>
-<br>
-<br>
-
 <?php
+  // Generate the heading of the page
+  genHeader( array( "Main Page",
+                    "AddCourse" ),
+             array( "view/UserHomePage.php",
+                    "view/AddCourse.php" ));
+  echo '<br>';
+
+  // Get the universities and shove the two additional options in there
   $XML = getUniversityDAL( );
   $universities = XSLTransform( $XML, 'view/AddCourse.View.xsl' );
   $universities = '<option value="-1" class="empty"></option>
                    <option value="0" class="new">Add University...</option>'
                   . $universities;
+
+  // Begin the form for the combo boxes
   echo openEditor( );
   echo genCmbBox( "University", university, getDepartments, $universities );
   echo genCmbBox( "Department", department, getCourses, null);
@@ -158,6 +163,7 @@
   echo genCmbBox( "Session", session, "", null);
   echo genButtons();
   echo closeEditor();
+
   }
 ?>
 </body>
