@@ -14,7 +14,6 @@ xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
 	<ul>  
 		<xsl:for-each select="SessionUserItem/@university">
 				<table><tr><td class="headingBar"><xsl:value-of select="." /></td></tr></table>
-				<xsl:for-each select="../">
 					<li>
 						<!-- <xsl:attribute name="id"><xsl:value-of select="@Id"/></xsl:attribute> -->
 						<a target="_top">
@@ -43,7 +42,6 @@ xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
 				      </a>
 				      ]
 				  </li>
-      </xsl:for-each>
 		</xsl:for-each>
 	</ul>
 </xsl:template>
