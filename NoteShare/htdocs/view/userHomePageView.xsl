@@ -19,13 +19,16 @@ xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
 					<xsl:attribute name="href">
 						http://apps.facebook.com/notesharesep/view/CoursePageView.php?session=<xsl:value-of select="@Id" />
 					</xsl:attribute>
+					<xsl:value-of select="." />
 				</a>
+				<!--
 					<form action="http://apps.facebook.com/notesharesep/view/CoursePageView.php" method="GET" target="_top">
 					<button class="course" name="session">
 						<xsl:attribute name="value"><xsl:value-of select="@Id"/></xsl:attribute>
 						<xsl:value-of select="." />
 					</button>
 					</form>
+				-->
           [
 					<a target="_top">
 	        	<xsl:attribute name="href">
