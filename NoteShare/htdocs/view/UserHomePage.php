@@ -49,10 +49,10 @@
 	$coursesXML = getHomePageSessionListDAL( $user_id );
 
   genHeadingBar( "Course Enrollment" );
-  echo $coursesXML;
-	echo '<ul>';
+//  echo $coursesXML;
+//	echo '<ul>';
   echo XSLTransform($coursesXML,'view/userHomePageView.xsl');
-	echo '</ul>';
+//	echo '</ul>';
 
 ?>
 	<a class="fbFont" href="http://apps.facebook.com/notesharesep/view/AddCourse.php" target="_top">Join Another Course</a>
