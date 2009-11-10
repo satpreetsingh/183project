@@ -242,12 +242,15 @@
 
     $query = "Select Session.Id   As Session_Id, " .
 		      "Session.Name As Session_Name, " .
-                    "Course.Name  As Course_Name " .  
+                    "Course.Name  As Course_Name " .
+                    "University.Name As Uni_Name" .  
 
 	      "From SessionEnrollment " . 
 
 	      "Inner Join Session On Session.Id = SessionEnrollment.Session_Ptr " . 
 	      "Inner Join Course On Course.Id = Session.Course_Ptr " .
+	      "Inner Join Department On Department.Id = Course.Department_Ptr" .
+	      "Inner Join University On University.Id = Department.University_Ptr" .
 	      "Where (SessionEnrollment.User_Ptr = " . $user_id . ") And " .
 		     "(SessionEnrollment.Left_Date Is Null)";	
 
@@ -276,6 +279,12 @@
 	
       $SessionItem_Name = $doc->createTextNode($row['Course_Name'] . " - " . $row['Session_Name']);
       $sessionuseritem->appendChild($SessionItem_Name);
+     
+      $uni_attr = $doc->createAttribute('university');
+      $sessionuseritem->appendChild($uni_attr);
+	
+      $uni_text = $doc->createTextNode($row['Uni_Name']);
+      $uni_attr->appendChild($uni_text);
     }
 
     $out = $doc->saveXML();
