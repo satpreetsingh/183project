@@ -242,8 +242,7 @@
 
     $query = "Select Session.Id   As Session_Id, " .
 		      "Session.Name As Session_Name, " .
-                    "Course.Name  As Course_Name " .
-                    "University.Name As Uni_Name" .  
+                    "Course.Name  As Course_Name " . 
 
 	      "From SessionEnrollment " . 
 
