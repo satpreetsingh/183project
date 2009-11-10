@@ -12,7 +12,7 @@ xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
 <xsl:template match="UserSessionList">
 	<xsl:for-each select="UserSessionItem[count(. | key('session-by-uni', @University_Name)[1]) = 1]">
 		<div>
-			<xsl:sort select="@University_Name" />
+			<!--<xsl:sort select="@University_Name" />-->
 	   		<h3><xsl:value-of select="@University_Name" /></h3>
 	   		<ul>
 		   		<xsl:for-each select="key('session-by-uni', @University_Name)">
