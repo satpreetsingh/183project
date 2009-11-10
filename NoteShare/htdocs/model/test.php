@@ -9,9 +9,11 @@ include '/var/www/localhost/htdocs/model/NoteshareDatabase.php';
 //getSessionMetadataDAL(1);
 //getSessionMembersDAL(1);
 //removeUserSessionDAL(2,1);
-//addUserSessionDAL(3,1);
+addUserSessionDAL(66000948,2);
 
 
+
+//addUserDAL(34234);
 //include '/var/www/localhost/htdocs/model/dbcon.php';
 //$dbData = new DBData("localhost","root","b4n4n4s","NoteShareSEP");
 

@@ -22,14 +22,12 @@ Provides information and functionality of a course session. Right now, partisipa
 	
 		include $_SERVER['DOCUMENT_ROOT'] . 'controllers/CourseHomePage.Controller.php';
 		include $_SERVER['DOCUMENT_ROOT'] . 'view/xsltView.php';
-	
-    echo '<p class="heading"><a class="fbFont" href="http://apps.facebook.com/notesharesep/view/UserHomePage.php" target="_top">Main Page</a>';
-    echo ' | ';
-    echo '<a class="fbFont" href="http://apps.facebook.com/notesharesep/view/CoursePageView.php" target="_top">Course Page</a></p>';
+	  include $_SERVER['DOCUMENT_ROOT'] . 'view/View.php';
 
-    echo '<table class="sessionMetadata">';
-    echo '  <tr><td class="fbFont sessionTitleBar">Course Info</td></tr>';
-    echo '</table>';
+    genHeader( array( "Main Page", "Course View" ),
+                array( "view/UserHomePage.php", "view/CoursePageView.php?session=" . $_GET['session'] ));
+
+    echo '<table><tr><td class="fbFont sessionTitleBar">Course Info</td></tr></table>';
 
 		$sessionId = $_GET['session'];
 		$metaXML = getSessionMetadata($sessionId);
@@ -37,7 +35,7 @@ Provides information and functionality of a course session. Right now, partisipa
 		echo '</br></br>';
 
 		echo "<form action=\"DropCourse.php\" method=\"GET\">"
-		. "			<button class=\"drop\" name=\"session\" value=\"$sessionId\" onclick=\"return confirm(\'Really? Drop the course?\');\">"
+		. "			<button class=\"drop fbFont\" name=\"session\" value=\"$sessionId\" onclick=\"return confirm(\'Really? Drop the course?\');\">"
 		. "			Drop"
 		. "	</button>"
 		. "</form>";
