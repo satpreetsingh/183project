@@ -43,8 +43,6 @@
   function closeDB($result, $conn)
   {
     // Free the result memory.
-//$answer=mysql_free_result($result) or die("Error: ". mysql_error(). " with ". $result);
-//Echo $answer;
     mysql_free_result($result);
 
     // Close the database connection.
@@ -240,16 +238,21 @@
     
     $conn = openDB();
 
-    $query = "Select Session.Id   As Session_Id, " .
-		      "Session.Name As Session_Name, " .
-                    "Course.Name  As Course_Name " . 
+    $query = "Select Session.Id   		   As Session_Id,             " .
+		      "Session.Name            As Session_Name,           " . 
+                    "Course.Name             As Course_Name,            " .  
+		      "University.Name         As University_Name         " .
+
 
 	      "From SessionEnrollment " . 
 
 	      "Inner Join Session On Session.Id = SessionEnrollment.Session_Ptr " . 
 	      "Inner Join Course On Course.Id = Session.Course_Ptr " .
+	      "Inner Join Department On Department.Id = Course.Department_Ptr " . 
+	      "Inner Join University On University.ID = Department.University_Ptr " . 
 	      "Where (SessionEnrollment.User_Ptr = " . $user_id . ") And " .
-		     "(SessionEnrollment.Left_Date Is Null)";	
+		     "(SessionEnrollment.Left_Date Is Null) " . 
+	      "Order By University.Name, Course.Name, Session.Name";	
 
 
     $result = mysql_query($query);
@@ -273,8 +276,14 @@
 	
       $id_text = $doc->createTextNode($row['Session_Id']);
       $id_attr->appendChild($id_text);
+
+      $uni_attr = $doc->createAttribute('University_Name');
+      $sessionuseritem->appendChild($uni_attr);
 	
-      $SessionItem_Name = $doc->createTextNode($row['Course_Name'] . " - " . $row['Session_Name']);
+      $uni_text = $doc->createTextNode($row['University_Name']);
+      $uni_attr->appendChild($uni_text);
+	
+      $SessionItem_Name = $doc->createTextNode($row['University_Name'] . " - " . $row['Course_Name'] . " - " . $row['Session_Name']);
       $sessionuseritem->appendChild($SessionItem_Name);
    
     }
