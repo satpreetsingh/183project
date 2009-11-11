@@ -319,7 +319,8 @@
 	      "From Session " . 
 	      "Inner Join Course On Course.Id = Session.Course_Ptr " . 
 
-	      "Where Session.Id = " . $session_id;	
+	      "Where (Session.Id = " . $session_id . ");";	
+
 
 
     $result = mysql_query($query);

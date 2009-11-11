@@ -22,7 +22,7 @@ xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
 		   			<li>
 			   			<a target="_top">
 							<xsl:attribute name="href">
-								http://apps.facebook.com/notesharesep/view/CoursePageView.php?session=<xsl:value-of select="@Id" />
+								http://apps.facebook.com/notesharesep/view/CoursePageView.php?noteshare_session=<xsl:value-of select="@Id" />
 							</xsl:attribute>
 							<xsl:value-of select="." />
 						</a>
