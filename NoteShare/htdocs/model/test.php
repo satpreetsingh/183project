@@ -11,7 +11,7 @@ include '/var/www/localhost/htdocs/model/NoteshareDatabase.php';
 //removeUserSessionDAL(2,1);
 //addUserSessionDAL(66000948,2);
 
-getHomePageSessionListDAL(66000948);
+echo getHomePageSessionListDAL(66000948);
 
 
 //addUserDAL(34234);
