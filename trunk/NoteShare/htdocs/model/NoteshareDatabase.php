@@ -283,7 +283,7 @@
       $uni_text = $doc->createTextNode($row['University_Name']);
       $uni_attr->appendChild($uni_text);
 	
-      $SessionItem_Name = $doc->createTextNode($row['University_Name'] . " - " . $row['Course_Name'] . " - " . $row['Session_Name']);
+      $SessionItem_Name = $doc->createTextNode($row['Course_Name'] . " - " . $row['Session_Name']);
       $sessionuseritem->appendChild($SessionItem_Name);
    
     }
