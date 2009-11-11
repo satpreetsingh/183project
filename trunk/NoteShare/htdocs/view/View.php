@@ -14,7 +14,10 @@
    * necessary styling.  It is also expected that the view has already
    * connected to Facebook via the SessionController.
    *
-   * @param string[] navChain array of navigation strings from main page down
+   * @param string[] $titles titles of the nav links,
+   *                         in order from main page to current page
+   * @param string[] $links  web addresses of the nav links
+   *                          in order from main page to current page
    *
   **/
   function genHeader( $titles, $links )

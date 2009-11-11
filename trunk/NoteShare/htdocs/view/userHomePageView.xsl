@@ -14,9 +14,9 @@ xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
 	to the course page with a short description with a drop button -->
 <xsl:template match="UserSessionList">
 	<xsl:for-each select="SessionUserItem[count(. | key('session-by-uni', @University_Name)[1]) = 1]">
-		<div>
+		<div class="university">
 			
-	   		<h3><xsl:value-of select="@University_Name" /></h3>
+	   		<h3 class="university"><xsl:value-of select="@University_Name" /></h3>
 	   		<ul>
 		   		<xsl:for-each select="key('session-by-uni', @University_Name)">
 		   			<li>
@@ -26,12 +26,12 @@ xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
 							</xsl:attribute>
 							<xsl:value-of select="." />
 						</a>
-						[<a target="_top" onclick="Really? Drop the course?">
+						[<a target="_top" onclick="confirm('Really? Drop the course?');">
 					    	<xsl:attribute name="href">
 				      			http://apps.facebook.com/notesharesep/view/DropCourse.php?session=<xsl:value-of select="@Id" />
 				     		</xsl:attribute>
 							X
-				</a>]
+						</a>]
 					</li>
 		   		</xsl:for-each>
 		   	</ul>
