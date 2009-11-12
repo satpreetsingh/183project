@@ -19,7 +19,7 @@
 			<stop offset="0.0" stop-color="#333333" />
 			<stop offset="1.0" stop-color="#BBBBBB" />
 		</linearGradient>
-		<linearGradient id="hoverFieldGradient"
+		<linearGradient id="pressFieldGradient"
 			gradientUnits="userSpaceOnUse"
 			x1="55.4541" y1="42.7529"
 			x2="9.54710" y2="16.2485">
@@ -36,7 +36,7 @@
 		fill="url(#shadowGradient)"
 		transform="matrix(1.0648,0.0,0.0,1.064822,-2.1,1.0864)" />
 	<circle id="field" r="25.8" cx="31" cy="31"
-		fill="url(#fieldGradient)" stroke="url(#edgeGradient)" stroke-width="2" />
+		fill="url(#fieldGradient)" stroke="url(#edgeGradient)" stroke-width="2" opacity="0.3" />
 	<g id="info" fill="white">
 		<polygon points="23,25 35,25 35,44 39,44 39,48 23,48 23,44 27,44 27,28 23,28 23,25" />
 		<circle r="4" cx="31" cy="17" />
