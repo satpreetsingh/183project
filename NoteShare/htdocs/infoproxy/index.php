@@ -1,8 +1,8 @@
 <?php
 
 	// the host where the script lives
-//	$proxy = "noteshare.homelinux.net";
-	$proxy = "localhost";
+	$proxy = "noteshare.homelinux.net";
+//	$proxy = "localhost";
 	
 	// extract oringinal url from get query
 	$url = urldecode($_GET['IPS_Orig_Host']);
