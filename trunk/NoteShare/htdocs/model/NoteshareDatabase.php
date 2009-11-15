@@ -91,10 +91,9 @@ function getUniversityDAL ()
   closeDB ($result, $conn);
 
   return $out;
-
 }
 
-  
+
 /**
  * This function gets all the departments at a given university
  * @author Nathan Denklau
@@ -136,7 +135,6 @@ function getDepartmentsDAL ($univ_id)
   closeDB ($result, $conn);
 
   return $out;
-
 }
 
 
@@ -181,7 +179,6 @@ function getCoursesDAL ($dept_id)
   closeDB ($result, $conn);
 
   return $out;
-
 }
 
 
@@ -226,7 +223,6 @@ function getSessionsDAL($course_id)
   closeDB ($result, $conn);
 
   return $out;
-
 }
 
 
@@ -295,9 +291,8 @@ function getHomePageSessionListDAL ($user_id)
   closeDB($result, $conn);
 
   return $out;
-
 }
-  
+
 
 /**
  * This function returns all the details of the session (specific term/semester course information) 
@@ -338,7 +333,6 @@ function getSessionMetadataDAL ($session_id)
   $doc->appendChild($EndResult);
 
 
-
   while($row = mysql_fetch_assoc($result)) {
     
     $sessionmetadata= $doc->createElement('SessionMetaData');
@@ -350,13 +344,11 @@ function getSessionMetadataDAL ($session_id)
     $id_text = $doc->createTextNode($row['Session_Id']);
     $id_attr->appendChild($id_text);
 
-
     $startdate_attr = $doc->createAttribute('Start_Date');
     $sessionmetadata->appendChild($startdate_attr);
 	
     $startdate_text = $doc->createTextNode($row['Start_Date']);
     $startdate_attr->appendChild($startdate_text);
-
 
     $enddate_attr = $doc->createAttribute('End_Date');
     $sessionmetadata->appendChild($enddate_attr);
@@ -374,7 +366,6 @@ function getSessionMetadataDAL ($session_id)
 
     $SessionMetaData_Name = $doc->createTextNode($row['Course_Name'] . " - " . $row['Session_Name']);
     $sessionmetadata->appendChild($SessionMetaData_Name);
-
   }
 
   $out = $doc->saveXML();
@@ -382,9 +373,8 @@ function getSessionMetadataDAL ($session_id)
   closeDB($result, $conn);
 
   return $out;
-
 }
- 
+
 
 /**
  * This function gets all the users from a given course's session.
@@ -520,7 +510,8 @@ function checkFirstUserInteractionDAL ($user_id)
 
 
     $result = mysql_query($query);
-      
+
+    closeDB($result, $conn );
     return 1;
 
   }
@@ -605,8 +596,8 @@ function addUserSessionDAL ($user_id, $session_id)
     $out = $doc->saveXML();
   }
 
+  closeDB( $result, $conn);
   return $out;
-
 }
 
 
@@ -650,8 +641,9 @@ function removeUserSessionDAL ($user_id, $session_id)
 
   $out = $doc->saveXML();
 
-  return $out;
+  closeDB( $result, $conn );
 
+  return $out;
 }
 
 
@@ -692,7 +684,6 @@ function removeUserDAL ($user_id)
 
   return;
 }
-
 
 /**
  * This function adds a note posting and physical upload location.
@@ -738,7 +729,9 @@ function addSessionNoteDAL ($user_id, $session_id, $header, $body, $file_path, $
    
 
   $out = $doc->saveXML();
-  
+
+  closeDB( $result, $conn );
+
   return $out;
 
 }
@@ -832,7 +825,7 @@ function getSessionNoteDAL ($session_id, $id)
 
   $out = $doc->saveXML();
 
-  mysql_close ($conn);  
+  mysql_close ($result, $conn);
 
   return $out;
 
@@ -887,7 +880,7 @@ function addSessionBBSPostDAL ($user_id, $session_id, $header, $body, $parentID)
 
   $out = $doc->saveXML();
 
-  mysql_close ($conn);
+  closeDB( $result, $conn );
 
   return $out;
 
@@ -962,7 +955,7 @@ function getSessionBBSTopicsDAL ($session_id)
 
   $out = $doc->saveXML();
 
-  mysql_close ($conn);
+  closeDB( $result, $conn );
 
   return $out;
 }
@@ -978,7 +971,8 @@ function getSessionBBSPostsDAL ($parentId)
 {
   $conn = openDB();
 
-  // Add the user from a given course's session.
+  // Query for threads that are either the parent thread or decend from the
+  //  parent thread
   $query = "Select * From SessionBBS" .
            " Where (SessionBBS.Session_Ptr = " . $parentId . ") " .
            " OR (SessionBBS.ID = " . $parentId . " );";
@@ -989,51 +983,58 @@ function getSessionBBSPostsDAL ($parentId)
 
   $style = $doc->createProcessingInstruction('xml-stylesheet', 'type="text/xsl" href="test.xsl"');
   $doc->appendChild($style);
-  $EndResult = $doc->createElement('AddSessionBBSPostResult');
-  $doc->appendChild($EndResult);
+  $sessionBBSThread = $doc->createElement('SessionBBSThread');
+  $doc->appendChild($sessionBBSThread);
 
   while($row = mysql_fetch_assoc($result)) {
 
+    // Attach header attribute to SessionBBSThread from the first post.
+    if( !$row['Prev_Post_Ptr'] )
+    {
+      $sessionBBSThread_header = $doc->createAttribute('Header');
+      $sessionBBSThread->appendChild($sessionBBSThread_header);
+      $sessionBBSThread_header_text = $doc->createTextNode($row['HEADER']);
+      $sessionBBSThread_header->appendChild($sessionBBSThread_header_text);
+    }
+
     // create the SessionBBSTopic Tag <SessionBBSTopic>
-    $sessionBBSTopic = $doc->createElement('SessionBBSTopic');
-    $EndResult ->appendChild($sessionBBSTopic);
+    $sessionBBSPost = $doc->createElement('SessionBBSPost');
+    $sessionBBSThread->appendChild($sessionBBSPost);
 
     // Add the Id attribute Id=""
-    $sessionBBSTopic_id = $doc->createAttribute('Id');
-    $sessionBBSTopic->appendChild($sessionBBSTopic_id);
-    $sessionBBSTopic_id_text = $doc->createTextNode($row['ID']);
-    $sessionBBSTopic_id->appendChild($sessionBBSTopic_id_text);
+    $sessionBBSPost_id = $doc->createAttribute('Id');
+    $sessionBBSPost->appendChild($sessionBBSPost_id);
+    $sessionBBSPost_id_text = $doc->createTextNode($row['ID']);
+    $sessionBBSPost_id->appendChild($sessionBBSPost_id_text);
 
     // Add the PostDate attribute PostDate=""
-    $sessionBBSTopic_date = $doc->createAttribute('PostDate');
-    $sessionBBSTopic->appendChild($sessionBBSTopic_date);
-    $sessionBBSTopic_date_text = $doc->createTextNode($row['POST_DATE']);
-    $sessionBBSTopic_date->appendChild($sessionBBSTopic_date_text);
+    $sessionBBSPost_date = $doc->createAttribute('PostDate');
+    $sessionBBSPost->appendChild($sessionBBSPost_date);
+    $sessionBBSPost_date_text = $doc->createTextNode($row['POST_DATE']);
+    $sessionBBSPost_date->appendChild($sessionBBSPost_date_text);
 
     // Add the UserId attribute UserId=""
-    $sessionBBSTopic_user = $doc->createAttribute('UserId');
-    $sessionBBSTopic->appendChild($sessionBBSTopic_user);
-    $sessionBBSTopic_user_text = $doc->createTextNode($row['User_Ptr']);
-    $sessionBBSTopic_user->appendChild($sessionBBSTopic_user_text);
+    $sessionBBSPost_user = $doc->createAttribute('UserId');
+    $sessionBBSPost->appendChild($sessionBBSPost_user);
+    $sessionBBSPost_user_text = $doc->createTextNode($row['User_Ptr']);
+    $sessionBBSPost_user->appendChild($sessionBBSPost_user_text);
 
     // Add the SessionId attribute SessionId
-    $sessionBBSTopic_session = $doc->createAttribute('SessionId');
-    $sessionBBSTopic->appendChild($sessionBBSTopic_session);
-    $sessionBBSTopic_session_text = $doc->createTextNode($row['Session_Ptr']);
-    $sessionBBSTopic_session->appendChild($sessionBBSTopic_session_text);
+    $sessionBBSPost_session = $doc->createAttribute('SessionId');
+    $sessionBBSPost->appendChild($sessionBBSPost_session);
+    $sessionBBSPost_session_text = $doc->createTextNode($row['Session_Ptr']);
+    $sessionBBSPost_session->appendChild($sessionBBSPost_session_text);
 
-    // Fill in the topic sessionBBSTopic (subject) <>sessionBBSTopic</>
-    $sessionBBSTopic_text = $doc->createTextNode($row['HEADER']);
-    $sessionBBSTopic->appendChild($sessionBBSTopic_text);
+    // Fill in the Post sessionBBSPost (subject) <>sessionBBSPost</>
+    $sessionBBSPost_text = $doc->createTextNode($row['BODY']);
+    $sessionBBSPost->appendChild($sessionBBSPost_text);
   }
 
   $out = $doc->saveXML();
 
-  mysql_close ($conn);
+  closeDB( $result, $conn );
 
-  return $result;
+  return $out;
 
 }
-
-
 ?>

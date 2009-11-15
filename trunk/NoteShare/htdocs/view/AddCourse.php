@@ -86,7 +86,7 @@
              <input type="submit" class="add action" value="Add" name="Add"/>   
              <span class="cancel_link">
                <span>or</span>
-               <a href="http://apps.facebook.com/notesharesep/view/UserHomePage.php" target="_top">Cancel</a>
+               <a href="http://apps.facebook.com/notesharesep/view/UserHomePage.php" target="iframe_canvas">Cancel</a>
              </span>
            </td>
            <td class="right_padding">
@@ -142,10 +142,10 @@
 
 <?php
   // Generate the heading of the page
-  genHeader( array( "Main Page",
-                    "AddCourse" ),
-             array( "view/UserHomePage.php",
-                    "view/AddCourse.php" ));
+  genPageHeader( array( "Main Page",
+                        "AddCourse" ),
+                 array( "view/UserHomePage.php",
+                        "view/AddCourse.php" ));
   echo '<br>';
 
   // Get the universities and shove the two additional options in there
