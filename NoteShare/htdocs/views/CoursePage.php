@@ -56,7 +56,7 @@
 
   genViewHeader( "Course View Page" );
   genPageHeader( array( "Main Page", "Course View" ),
-                 array( "view/UserHomePage.php", "view/CoursePageView.php?session=" . $_GET['session'] ));
+                 array( "/view/UserHomePage.php", "/view/CoursePageView.php?session=" . $_GET['session'] ));
 
   // Course information
   genHeadingBar( "Course Info" );

@@ -1,4 +1,4 @@
-  var AJAX_URL_BASE = '/controllers/AddCourse.Controller.php';
+  var AJAX_URL_BASE = '/controllers/AddCourse.php';
 
   function resetBackground( obj )
   {

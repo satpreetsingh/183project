@@ -1,8 +1,7 @@
 <?php
 
-include $_SERVER['DOCUMENT_ROOT'] . '/model/NoteshareDatabase.php';
-include $_SERVER['DOCUMENT_ROOT'] . '/view/xsltView.php';
-
+  require_once $_SERVER['DOCUMENT_ROOT'] . '/model/NoteshareDatabase.php';
+  require_once $_SERVER['DOCUMENT_ROOT'] . '/views/View.php';
 /*
 * Function:     Ajax response (not really a function per say)
 * Description:  This code segment is responsible for taking in the ajax querries
@@ -22,72 +21,46 @@ include $_SERVER['DOCUMENT_ROOT'] . '/view/xsltView.php';
 *         ERR: REQUIRE LOGIN -- if the user is not currently logged in
 */
 // START: AJAX CODE RESPONSE
-    // pass control to functions as dictated by function_name parameter
+  $XML = "";
+
+  // pass control to functions as dictated by function_name parameter
   switch( $_GET['function_name'] )
   {
-      // functions directed towards noteshare database
+      case null:
+        return;
+
       case getUniversity:
         $XML = getUniversityDAL();
-        $HTML = XSLTransform( $XML, 'view/AddCourse.View.xsl' );
-        if( $HTML == null )
-        {
-          echo "ERR:FAIL PARSE.";
-        } else {
-          echo '<option value="-1"></option>
-                <option value="0">Add University</option>'
-                . $HTML;
-        }
         break;
+
       case getDepartments:
         $XML = getDepartmentsDAL( $_GET['universityID'] );
-        $HTML = XSLTransform( $XML, 'view/AddCourse.View.xsl' );
-        if( $HTML == null )
-        {
-          echo "ERR: FAILED PARSE." . $XML;
-        }
-        else
-        {
-          echo '<option value="-1"></option>
-                <option value="0">Add Department...</option>'
-                . $HTML;
-        }
         break;
 
       case getCourses:
         $XML = getCoursesDAL( $_GET['departmentID'] );
-        $HTML = XSLTransform( $XML, 'view/AddCourse.View.xsl' );
-        if( $HTML == null )
-        {
-          echo "ERR: FAILED PARSE.";
-        }
-        else
-        {
-          echo '<option values="-1"></option>
-                <option values="0">Add Course...</option>'
-                . $HTML;
-        }
         break;
 
       case getSessions:
         $XML = getSessionsDAL( $_GET['courseID'] );
-        $HTML = XSLTransform( $XML, 'view/AddCourse.View.xsl' );
-        if( $HTML == null )
-        {
-          echo "ERR: FAILED PARSE.";
-        }
-        else
-        {
-          echo '<option value="-1"></option>
-                <option value="0">Add Session...</option>'
-                . $HTML;
-        }
         break;
-
-      // functions directed towards facebook database
 
       // error condition ( function not found )
       default:
         echo "ERR: UNKNOWN FUNCTION - " . $_GET['function_name'];
-  }  
+  }
+
+  $HTML = XSLTransform( $XML, "AddCourse.xsl" );
+  if( $HTML == null )
+  {
+    echo "ERR:FAIL PARSE.";
+  } else {
+    return $HTML;
+  }
 // END: AJAX CODE RESPONSE
+
+  function getUniversity()
+  {
+    return getUniversityDAL();
+  }
 ?>

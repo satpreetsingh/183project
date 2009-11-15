@@ -8,6 +8,8 @@
  <!--Specific format for populating the course combo box with the XML
       reponse from the controller. -->
 <xsl:template match="universityList">
+  <option value="-1"></option>
+  <option value="0">Add New University...</option>
 	<xsl:for-each select="University">
 		<option>
 			<xsl:attribute name="value">
