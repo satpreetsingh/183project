@@ -708,7 +708,6 @@ function addSessioBBSPostDAL( $header, $body, $user_id, $session_id, $prev_post)
 	mysql_close($conn);
 }
 
-<<<<<<< .mine
 /**
  * This function is designed to get the parent of a session wall
  * @author Jon Hall
@@ -828,7 +827,6 @@ function getSessionWallPostsDAL($session_id)
 	return $doc->saveXML();
 }
 
-=======
 /**
  * This function adds a note posting and physical upload location.
  * @author Joseph Trapani
@@ -1168,5 +1166,4 @@ function getSessionBBSPostsDAL( $parentId )
   return $out;
 
 }
->>>>>>> .r111
 ?>
