@@ -685,7 +685,150 @@ function removeUserDAL ($user_id)
 
   return;
 }
+	
+/**
+ * This function is designed to post a message to a session BBS
+ * @author Jon Hall
+ * @version 1.0
+ * @param string $header, string $body, integer $user_id userID number, integer $session_id sessionID number, integer $prev_post id of parent post
+ */
+function addSessioBBSPostDAL( $header, $body, $user_id, $session_id, $prev_post)
+{
+	$conn = openDB();
+	
+	// Escape header and body
+	$header = mysql_real_escape_string($header);
+	$body = mysql_real_escape_string($body);
+	
+	$query = "Insert into SessionBBS (Header, Body, Post_Date, User_ptr, Session_ptr, Prev_Post_ptr) " .
+			"Values (\'$header\', \'$body\', ". date("Y-m-d H:m:s") .", $user_id, $session_id, $prev_post)";
+			
+	mysql_query($query);
+	
+	mysql_close($conn);
+}
 
+<<<<<<< .mine
+/**
+ * This function is designed to get the parent of a session wall
+ * @author Jon Hall
+ * @version 1.0
+ * @param integer $session_id sessionID number
+ * @return integer
+ */
+function getSessionWallParentDAL($session_id)
+{
+	$conn = openDB();
+	
+	/****** Get the session wall parent ******/
+	$wall_parent = '0';
+	
+	$query = "Select ID From SessionBBS Where (Session_ptr=$session_id and " .
+			"User_ptr=null and Header=\'#SESSION WALL#\')";
+			
+	$result = mysql_query($query);
+	
+	// Check existance
+	if( $row = mysql_fetch_assoc($result) )
+	{
+		$wall_parent = $row(ID);
+		mysql_free_result($result);
+	}
+	// No session wall parent
+	else
+	{
+		// Insert one
+		$query = "Insert into SessionBBS (Header, Body, Post_Date, Session_ptr) " .
+				"Values (\'#SESSION WALL#\', \'Here be dragons\', ". date("Y-m-d H:m:s") .",$session_id)";
+				
+		mysql_query($query);
+		
+		// Get the Id that was generated
+		$query = "Select ID From SessionBBS Where (Session_ptr=\'$session_id\' and " .
+			"User_ptr=null and Header=\'#SESSION WALL#\')";
+			
+		$result = mysql_query($query);
+		
+		$row = mysql_fetch_assoc($result);
+		$wall_parent = $row(ID);
+		
+		mysql_free_result($result);
+	}
+	
+	 mysql_close($conn);
+	 
+	 return $wall_parent;
+}
+/**
+ * This function is designed to post a message to a wall
+ * @author Jon Hall
+ * @version 1.0
+ * @param integer $user_id userID number, integer $session_id sessionID number, string $body post contents
+ */
+function addSessionWallPostDAL($user_id, $session_id, $body)
+{
+	
+	$wall_parent = getSessionWallParentDAL($session_id);
+	
+	addSessioBBSPostDAL('', $body, $user_id, $session_id, $wall_parent);
+}
+
+/**
+ * This function is designed to get posts that are on a session wall
+ * @author Jon Hall
+ * @version 1.0
+ * @param interger $session_id sessionID number
+ * @return string XML WallPosts
+ */
+function getSessionWallPostsDAL($session_id)
+{
+	// Get parent
+	$wall_parent = getSessionWallParentDAL($session_id)
+	
+	$conn = openDB();
+	
+	$query = "Select * From SessionBBS Where (Session_ptr=$session_id and Prev_Post_ptr=$wall_parent) " .
+			"Order By POST_DATE DESC";
+	
+	$result =  mysql_query($query);
+	
+	$doc = new DOMDocument('1.0');
+	$wall_posts = $doc->createElement("sessionWallPosts");
+	
+	
+	while($row = mysql_fetch_assoc($result))
+	{
+		$post = $doc->createElement("post");
+		
+		// Add user attribute
+		$user_id = $doc->createAttribute("user");
+		$user_id->appendChild($doc->createTextNode($row['User_ptr'])));
+		$post->appendChild($user_id);
+		
+		// Add time attribute
+		$date_Array = strptime(row['POST_DATE'],"Y-m-d H:m:s");
+		$time_Stamp = mktime($date_Array['tm_hour'], $date_Array['tm_min'],
+				$date_Array['tm_sec'], $date_Array['tm_mon'], 
+				$date_Array['tm_mday'], $date_Array['tm_year'] );
+		$time = $doc->createAttribute("time");
+		$time->appendChild($doc->createTextNode($time_Stamp)));
+		$post->appendChild($time);
+		
+		// Add the post body
+		$post->appendChild($doc->createTextNode($row['BODY']));
+		
+		// Append the post to wall_posts
+		$wall_posts->appendChild($post);
+	}
+	
+	$doc->appendChild($wall_posts);
+	
+	$closeDB($result,$conn);
+	
+	return $doc->saveXML();
+}
+
+=======
 /**
  * This function adds a note posting and physical upload location.
  * @author Joseph Trapani
@@ -1025,4 +1168,5 @@ function getSessionBBSPostsDAL( $parentId )
   return $out;
 
 }
+>>>>>>> .r111
 ?>
