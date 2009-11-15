@@ -18,10 +18,9 @@
  * See ajaxView.php for the AJAX implementation.
 **/
 
-  require_once $_SERVER['DOCUMENT_ROOT'] . 'controllers/Session.Controller.php';
-  require_once $_SERVER['DOCUMENT_ROOT'] . 'model/NoteshareDatabase.php';
-  require_once $_SERVER['DOCUMENT_ROOT'] . 'view/xsltView.php';
-  require_once $_SERVER['DOCUMENT_ROOT'] . 'view/View.php';
+  require_once $_SERVER['DOCUMENT_ROOT'] . 'views/View.php';
+  require_once $_SERVER['DOCUMENT_ROOT'] . 'controllers/Session.php';
+  require_once $_SERVER['DOCUMENT_ROOT'] . 'controllers/AddCourse.php';
 
   /**
    * Prints the initial opening tags for the add course form.  Function posts
@@ -33,7 +32,7 @@
   function openEditor( )
   {
     echo '' .
-    '<form action="' . $PHP_SELF . '" method="post" target="_self">
+    '<form action="/controllers/AddCourse.php" method="GET" target="iframe_canvas">
        <table class="formTable">';
   }
 
@@ -86,7 +85,7 @@
              <input type="submit" class="add action" value="Add" name="Add"/>   
              <span class="cancel_link">
                <span>or</span>
-               <a href="http://apps.facebook.com/notesharesep/view/UserHomePage.php" target="iframe_canvas">Cancel</a>
+               <a href="/view/UserHomePage.php" target="iframe_canvas">Cancel</a>
              </span>
            </td>
            <td class="right_padding">
@@ -125,35 +124,21 @@
     $facebook->redirect( 'http://apps.facebook.com/notesharesep/view/UserHomePage.php' );
   }
   else {
-?>
 
+  // generate standard view header
+  genViewHeader( "Add Course" );
 
-<html>
-<head>
-  <script src="http://static.ak.facebook.com/js/api_lib/v0.4/FeatureLoader.js.php" type="text/javascript"></script>
-  <link rel="stylesheet" type="text/css" href="/view/noteshare.css">
-  <script src="/controllers/AddCourse.Controller.js" type="text/javascript">
-  </script>
-
-  <script type="text/javascript">
-    FB.init("20f5b69813b87ffd25e42744b326a112", "xd_receiver.htm");
-  </script>
-</head>
-
-<?php
   // Generate the heading of the page
   genPageHeader( array( "Main Page",
                         "AddCourse" ),
-                 array( "view/UserHomePage.php",
-                        "view/AddCourse.php" ));
+                 array( "/views/UserHomePage.php",
+                        "/views/AddCourse.php" ));
   echo '<br>';
+  echo '<script src="/controllers/AddCourse.js" type="text/javascript"></script>';
 
   // Get the universities and shove the two additional options in there
-  $XML = getUniversityDAL( );
-  $universities = XSLTransform( $XML, 'view/AddCourse.View.xsl' );
-  $universities = '<option value="-1" class="empty"></option>
-                   <option value="0" class="new">Add University...</option>'
-                  . $universities;
+  $XML = getUniversity( );
+  $universities = XSLTransform( $XML, 'AddCourse.xsl' );
 
   // Begin the form for the combo boxes
   echo openEditor( );
@@ -164,6 +149,8 @@
   echo genButtons();
   echo closeEditor();
 
+
+  echo '<div name="debug" id="debug">DEBUG</div>';
   }
 ?>
 </body>
