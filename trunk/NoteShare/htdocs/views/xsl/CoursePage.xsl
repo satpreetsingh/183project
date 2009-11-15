@@ -51,7 +51,7 @@ xmlns:fb="http://www.facebook.com/2008/fbml"
       <td class="sessionBBSTopic fbFont">
         <a target="iframe_canvas">
           <xsl:attribute name="href">
-            http://apps.facebook.com/notesharesep/view/SessionBBS.View.php?noteshare_session=<xsl:value-of select="@SessionId" />&amp;parentId=<xsl:value-of select="@Id" />
+            /views/SessionBBS.php?ns_session=<xsl:value-of select="@SessionId" />&amp;parentId=<xsl:value-of select="@Id" />
           </xsl:attribute>
           <xsl:value-of select="." />
         </a>

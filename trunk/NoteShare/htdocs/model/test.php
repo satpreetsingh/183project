@@ -58,7 +58,7 @@ function memTest_getUniversityDAL( $bruteTest )
 //addUserSessionDAL(66000948,2);
 //addSessionBBSPostDAL( 66000948, 2, 'testing header', 'testing body', null );
 //echo getSessionBBSTopicsDAL( 2 );
-echo getSessionBBSPostsDAL( 2 );
+echo getSessionBBSPostsDAL( 11 );
 
 //echo getHomePageSessionListDAL(66000948);
 

@@ -32,7 +32,7 @@
   function openEditor( )
   {
     echo '' .
-    '<form action="/controllers/AddCourse.php" method="GET" target="iframe_canvas">
+    '<form action="/controllers/AddCourse.php" method="GET" target="iframe_canvas"
        <table class="formTable">';
   }
 
@@ -57,14 +57,9 @@
             <label class="fbFont large">' . $label . ' : </label>
           </th>
           <td class="combo">
-            <select class="combo" id="' . $name . '" name="' . $name . '" onchange="'.$action.'(); return false;" onmouseover="resetBackground(this); return false;">';
-    if( $optionString != null )
-    {
-      echo $optionString;
-      echo '<option value="-1"></option>';
-    }
-    echo ''.
-    '       </select>
+            <select class="combo" id="' . $name . '" name="' . $name . '" onchange="'.$action.'(); return false;" onmouseover="resetBackground(this); return false;">'
+            . $optionString .
+            '</select>
           </td>
         </tr>';
   }
@@ -85,7 +80,7 @@
              <input type="submit" class="add action" value="Add" name="Add"/>   
              <span class="cancel_link">
                <span>or</span>
-               <a href="/view/UserHomePage.php" target="iframe_canvas">Cancel</a>
+               <a href="/views/UserHomePage.php" target="iframe_canvas">Cancel</a>
              </span>
            </td>
            <td class="right_padding">
@@ -105,26 +100,6 @@
     echo '</table></form>';
   }
 
-  /**
-   * This section of code runs once the add course button has been selected.
-   * This is referenced on the first page load, but the function shouldn't be
-   * entered.
-   *
-   * The hanging else is to allow the page to generate view content if the
-   * user hasn't posted.  However, if the user has posted...since we're using
-   * a redirect, it was important to ensure no html content would be generated.
-   * Plus, that would just be a waste anyways since no one will see it.
-  **/
-  if( isset( $_POST['Add'] ))
-  {
-    if( isset( $_POST['session'] ))
-    {
-      $out = addUserSessionDAL( $user_id, $_POST['session'] );
-    }
-    $facebook->redirect( 'http://apps.facebook.com/notesharesep/view/UserHomePage.php' );
-  }
-  else {
-
   // generate standard view header
   genViewHeader( "Add Course" );
 
@@ -142,17 +117,13 @@
 
   // Begin the form for the combo boxes
   echo openEditor( );
-  echo genCmbBox( "University", university, getDepartments, $universities );
-  echo genCmbBox( "Department", department, getCourses, null);
-  echo genCmbBox( "Course", course, getSessions, null);
-  echo genCmbBox( "Session", session, "", null);
+  echo genCmbBox( "University", ns_university, getDepartments, $universities );
+  echo genCmbBox( "Department", ns_department, getCourses, null);
+  echo genCmbBox( "Course", ns_course, getSessions, null);
+  echo genCmbBox( "Session", ns_session, "", null);
   echo genButtons();
   echo closeEditor();
 
-
-  echo '<div name="debug" id="debug">DEBUG</div>';
-  }
+  genViewFooter();
 ?>
-</body>
-</html>
 
