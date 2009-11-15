@@ -81,7 +81,7 @@ h3.university
   font-size:          16px; 
 }
 
-input
+input.submit
 {
   padding:            1px 3px 1px 4px;
   font-size:          1em;
@@ -91,6 +91,12 @@ input
   border:             1px solid #0e1f5b; 
   border-left-color:  #D9DFEA; 
   border-top-color:   #D9DFEA;
+}
+
+input.text
+{
+  width:              100%;
+  border:             1px dashed  #AAAAAA;
 }
 
 option.empty
@@ -179,7 +185,7 @@ td.combo
   width:              50%;
 }
 
-textarea.sessionBBS
+textarea
 {
   width:              100%;
   border:             1px dashed  #AAAAAA;

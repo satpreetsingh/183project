@@ -43,7 +43,10 @@ function openDB ()
 function closeDB ($result, $conn)
 {
   // Free the result memory.
-  mysql_free_result($result);
+  if( $result )
+  {
+    mysql_free_result($result);
+  }
 
   // Close the database connection.
   mysql_close($conn);
@@ -496,7 +499,7 @@ function checkFirstUserInteractionDAL ($user_id)
    
 
   // User doesn't exist as an active NoteShareSEP user.  
-  if (mysql_num_rows($result1) <= 0) {
+  if ( mysql_num_rows($result1) <= 0) {
       
     closeDB($result1, $conn1);
       
@@ -566,13 +569,12 @@ function addUserSessionDAL ($user_id, $session_id)
 
     $AddUserSessionResult= $doc->createElement('AddUserSessionResult');
     $doc->appendChild($AddUserSessionResult);
-	
+
     $AddUserSession_Name = $doc->createTextNode($result);
     $AddUserSessionResult->appendChild($AddUserSession_Name);
-    
-      
 
     $out = $doc->saveXML();
+    closeDB( null, $conn);
   }
 
   // The user was already a member of the session.  
@@ -596,7 +598,6 @@ function addUserSessionDAL ($user_id, $session_id)
     $out = $doc->saveXML();
   }
 
-  closeDB( $result, $conn);
   return $out;
 }
 
@@ -860,7 +861,7 @@ function addSessionBBSPostDAL ($user_id, $session_id, $header, $body, $parentID)
                                    "SessionBBS.Post_Date, " .
                                    "SessionBBS.Prev_Post_Ptr " .
                         ") Values ("   . $user_id      . ", " .
-	                                  $session_id   . ", " .
+	                                       $session_id   . ", " .
                                    "'" . $header       . "', " .
                                    "'" . $body         . "', " .
 	                            "'" . date("Y-m-d H:i:s") . "', " .
@@ -868,22 +869,9 @@ function addSessionBBSPostDAL ($user_id, $session_id, $header, $body, $parentID)
 
   $result = mysql_query($query);
 
-  $doc = new DOMDocument('1.0');
+  closeDB( null, $conn );
 
-  $style = $doc->createProcessingInstruction('xml-stylesheet', 'type="text/xsl" href="test.xsl"');
-  $doc->appendChild($style);
-  $EndResult = $doc->createElement('AddSessionBBSPostResult');
-  $doc->appendChild($EndResult);
-
-  $AddSessionBBSPost_Name = $doc->createTextNode($result);
-  $EndResult->appendChild($AddSessionBBSPost_Name);
-
-  $out = $doc->saveXML();
-
-  closeDB( $result, $conn );
-
-  return $out;
-
+  return $result;
 }
 
 
@@ -967,14 +955,14 @@ function getSessionBBSTopicsDAL ($session_id)
  * @param integer $parentId parent thread id number
  * @return XML of thread topic including all children posts
  */
-function getSessionBBSPostsDAL ($parentId)
+function getSessionBBSPostsDAL( $parentId )
 {
   $conn = openDB();
 
   // Query for threads that are either the parent thread or decend from the
   //  parent thread
   $query = "Select * From SessionBBS" .
-           " Where (SessionBBS.Session_Ptr = " . $parentId . ") " .
+           " Where (SessionBBS.Prev_Post_Ptr = " . $parentId . ") " .
            " OR (SessionBBS.ID = " . $parentId . " );";
 
   $result = mysql_query($query);

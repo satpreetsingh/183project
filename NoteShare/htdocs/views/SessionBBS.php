@@ -3,6 +3,9 @@
    * SessionBBS.View.php
    * Displays the session bbs topic and associated posts.
   **/
+	require_once $_SERVER['DOCUMENT_ROOT'] . 'controllers/Session.php';
+	require_once $_SERVER['DOCUMENT_ROOT'] . 'controllers/SessionBBS.php';
+	require_once $_SERVER['DOCUMENT_ROOT'] . 'views/View.php';
 
   //--------------------------View Functions--------------------------------//
 
@@ -17,7 +20,7 @@
   {
     $bbsPosts = getSessionBBSPosts( $parentId );
     echo '<br />';
-    echo XSLTransform( $bbsPosts, 'view/SessionBBS.View.xsl' );
+    echo XSLTransform( $bbsPosts, 'SessionBBS.xsl' );
     echo '<br />';
   }
 
@@ -30,9 +33,8 @@
   **/
   function genSessionBBSPost( $parentId, $sessionId )
   {
-    echo '<form action="http://apps.facebook.com/notesharesep/controllers/' .
-            'SessionBBS.Controller.php" method="GET" target="iframe_canvas">';
-    echo '<input type="hidden" name="noteshare_session" value="' . $sessionId . '">';
+    echo '<form action="/controllers/SessionBBS.php" method="GET" target="iframe_canvas">';
+    echo '<input type="hidden" name="ns_session" value="' . $sessionId . '">';
     echo '<input type="hidden" name="parentId" value="' . $parentId . '">';
     echo '<textarea id="sessionBBSPost" class="fbFont sessionBBS"' .
          'name="sessionBBSPost">Post Reply...</textarea>';
@@ -43,33 +45,20 @@
 
   //----------------------Begin View Code----------------------------------//
 
-	require_once $_SERVER['DOCUMENT_ROOT'] . 'controllers/Session.Controller.php';
-
-	include $_SERVER['DOCUMENT_ROOT'] . 'controllers/SessionBBS.Controller.php';
-	include $_SERVER['DOCUMENT_ROOT'] . 'view/xsltView.php';
-	include $_SERVER['DOCUMENT_ROOT'] . 'view/View.php';
-
   genViewHeader( "SessionBBS View" );
   genPageHeader( array( "Main Page",
                         "Course View",
                         "Course Thread" ),
-                 array( "view/UserHomePage.php", 
-                        "view/CoursePageView.php?noteshare_session=" . $_GET['noteshare_session'],
-                        "view/SessionBBS.View.php?noteshare_session=" . $_GET['noteshare_session'] ));
+                 array( "/views/UserHomePage.php", 
+                        "/views/CoursePage.php?ns_session=" . $_GET['ns_session'],
+                        "/views/SessionBBS.php?ns_session=" . $_GET['ns_session'] ));
 
   //Session BBS Table
   $parentId = $_GET['parentId'];
-  $sessionId = $_GET['noteshare_session'];
+  $sessionId = $_GET['ns_session'];
   genSessionBBSTable( $parentId );
   genSessionBBSPost( $parentId, $sessionId );
+
+  // Close out page
+  genViewFooter();
 ?>
-
-  <script type="text/javascript">
-    FB_RequireFeatures(["XFBML"],
-      function(){ FB.Facebook.init("20f5b69813b87ffd25e42744b326a112",
-        "xd_receiver.htm"); });
-  </script>
-  </body>
-</html>
-
-

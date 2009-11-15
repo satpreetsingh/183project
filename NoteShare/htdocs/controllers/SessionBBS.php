@@ -1,5 +1,5 @@
 <?php
-  require_once $_SERVER['DOCUMENT_ROOT'] . 'controllers/Session.Controller.php';
+  require_once $_SERVER['DOCUMENT_ROOT'] . 'controllers/Session.php';
   include $_SERVER['DOCUMENT_ROOT'] . 'model/NoteshareDatabase.php';
 
   /**
@@ -10,7 +10,7 @@
   **/
   function getSessionBBSPosts( $parentId )
   {
-    return getSessionBBSPostsDAL( 2 );
+    return getSessionBBSPostsDAL( $parentId );
   }
 
   function getThreadWall( $threadID )
@@ -39,11 +39,14 @@
   /** Post reply**/
   if( isset( $_GET['sessionBBSPost'] ))
   {
-    $userId = $_GET['fb_sig_user'];
-    $sessionId = $_GET['noteshare_session'];
+    $sessionId = $_GET['ns_session'];
     $parentId = $_GET['parentId'];
     $body = $_GET['sessionBBSPost'];
-    addSessionBBSPostDAL( $userId, $sessionId, 'null', $body, $parentId );
-    $facebook->redirect( 'http://apps.facebook.com/notesharesep/view/SessionBBS.View.php?noteshare_session=' . $sessionId . '&parentId=' . $parentId );
+    echo "Session: " . $sessionId . "<br>";
+    echo "Parent: " . $parentId . "<br>";
+    echo "User: " . $user_id . "<br>";
+    echo "Body: " . $body . "<br>";
+    addSessionBBSPostDAL( $user_id, $sessionId, 'null', $body, $parentId );
+    $facebook->redirect( 'http://apps.facebook.com/notesharesep/views/SessionBBS.php?noteshare_session=' . $sessionId . '&parentId=' . $parentId );
   }
 ?>

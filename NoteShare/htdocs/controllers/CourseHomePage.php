@@ -57,7 +57,7 @@ function removeSession($sessionID)
 
 function getSessionBBSTopics( $sessionID )
 {
-  return getSessionBBSTopicsDAL( 2 );
+  return getSessionBBSTopicsDAL( $sessionID );
 }
 
 function getSessionWall( $sessionID )

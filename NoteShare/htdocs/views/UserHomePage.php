@@ -42,6 +42,7 @@
 	echo '<br /><br />';
 
   genCourseEnrollment( $user_id );
+
+  // close out page
+  genViewFooter();
 ?>
-	</body>
-</html>

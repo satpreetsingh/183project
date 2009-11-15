@@ -32,8 +32,18 @@
          "    <title>" . $title . "</title>\n" .
          "    <link rel=\"stylesheet\" type=\"text/css\" href=\"/views/noteshare.css\">\n" .
          "  </head>\n" .
-         "  <body>\n" .
-         "    <script src=\"http://static.ak.facebook.com/js/api_lib/v0.4/FeatureLoader.js.php\" type=\"text/javascript\"></script>\n" .
+         "  <body>\n";
+  }
+
+  /**
+   * Prints out a generic view's footer
+   *
+   * @return HTML, view footer
+  **/
+  function genViewFooter()
+  {
+    echo "    <script src=\"http://static.ak.facebook.com/js/api_lib/v0.4/FeatureLoader.js.php\" type=\"text/javascript\"></script>\n" .
+         "    </script>\n" . 
          "    <script type=\"text/javascript\">\n" .
          "      FB_RequireFeatures([\"XFBML\", \"CanvasUtil\"], function()\n" .
          "      {\n" .
@@ -41,8 +51,10 @@
          "        FB.XdComm.Server.init(\"/xd_receiver.htm\");\n" .
          "        FB.CanvasClient.startTimerToSizeToContent();\n" .
          "        FB.CanvasClient.scrollTo( 0, 0 );\n" .
-         "      });\n" .
-         "    </script>\n";
+         "      });\n" . 
+         "    </script>\n" .
+         "  </body>\n" .
+         "</html>\n";
   }
 
   /**
