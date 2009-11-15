@@ -10,6 +10,13 @@
  Notes:         Modified and joined the original index with the UserHomePage.
 -----------------------------------------------------------------------------*/
 
+  function genCourseEnrollment( $userID )
+  {
+	  $coursesXML = getHomePageSessionList( $userID );
+	  genHeadingBar( "Course Enrollment" );
+	  echo XSLTransform($coursesXML,'view/userHomePageView.xsl');
+  }
+
 // All pages require the session controller
  	require_once $_SERVER['DOCUMENT_ROOT'] . 'controllers/Session.Controller.php';
 
@@ -18,43 +25,17 @@
 	require_once $_SERVER['DOCUMENT_ROOT'] . 'view/xsltView.php';
 	require_once $_SERVER['DOCUMENT_ROOT'] . 'view/View.php';
 
-	echo '
-	<xml version="1.0" encoding="UTF-8">
-	<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
-	<html xmlns="http://www.w3.org/1999/xhtml" xmlns:fb="http://www.facebook.com/2008/fbml">
-	<head>
-		<title>NoteShare User Hompage</title>
-    <script src="http://static.ak.connect.facebook.com/js/api_lib/v0.4/FeatureLoader.js.php" type="text/javascript"></script>
-    <link rel="stylesheet" type="text/css" href="/view/noteshare.css" />
-	</head>
-	<body>';
+  genViewHeader( "NoteShare User Homepage" );
+	genPageHeader(	array( "Main Page" ),
+				          array( "view/UserHomePage.php" ));
 
-	genHeader(	array( "Main Page" ),
-				array( "view/UserHomePage.php" ));
-
-/*  $userDetails = $facebook->api_client->users_getInfo( $user_id, 'last_name, first_name');
-  $userDetails = null;
-  if( $userDetails != null )
-  {
-    echo '<p class="fbFont greeting">Hello, '
-         . $userDetails[0]['first_name'] . ' ' 
-         . $userDetails[0]['last_name']
-         . '!</p>';
-  } else {
-  }
-*/
 	echo '<fb:name uid="' . $user_id . '" useyou="false"></fb:name><br>';
 	echo '<fb:profile-pic uid="' . $user_id . '"></fb:profile-pic>';
 	echo '<br /><br />';
-	
-	$coursesXML = getHomePageSessionListDAL( $user_id );
-	
-	genHeadingBar( "Course Enrollment" );
 
-	echo XSLTransform($coursesXML,'view/userHomePageView.xsl');
-
+  genCourseEnrollment( $user_id );
 ?>
-	<a class="fbFont" href="http://apps.facebook.com/notesharesep/view/AddCourse.php" target="_top">Join Another Course</a>
+	<a class="fbFont" href="http://apps.facebook.com/notesharesep/view/AddCourse.php" target="iframe_canvas">Join Another Course</a>
 
 	<script>
 		function postQuery( sessionID ) 

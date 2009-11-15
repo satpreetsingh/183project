@@ -61,7 +61,8 @@
 	$replaces[1] = '-->\\0';
 	$replaces[2] = '\\0<!--';
 	$replaces[3] = '-->\\0';
-	$body = preg_replace($patterns, $replaces, $headerBody[1]);
+//	$body = preg_replace($patterns, $replaces, $headerBody[1]);
+	$body = $headerBody[1];
 	@$document->loadHTML( $body );
 
 	// XPath for searching the DOM
@@ -105,18 +106,6 @@
 					'position:fixed; bottom:0%; right:0%; width:200px; height:62px; z-index:100;'));
 			$div->appendChild($style);
 			
-			// add a p element to the div
-			$p = $document->createElement('p');
-			$id = $document->createAttribute('id');
-			$id->appendChild($document->createTextNode("IPS_p"));
-			$p->appendChild($id);
-			$style = $document->createAttribute('style');
-			$style->appendChild(
-				$document->createTextNode(
-					'position:absolute; right:65px; top: 10%; background-color:white;'));
-			$p->appendChild($style);
-			$div->appendChild($p);
-			
 			// add the div to the body
 			$body->appendChild($div);
 			
@@ -126,7 +115,7 @@
 			$id->appendChild($document->createTextNode("IPS_svg"));
 			$embed->appendChild($id);
 			$src = $document->createAttribute('src');
-			$src->appendChild($document->createTextNode("http://$proxy/infoproxy/Information_icon.svg"));
+			$src->appendChild($document->createTextNode("IPS_SVG_ICON.svg"));
 			$embed->appendChild($src);
 			$type = $document->createAttribute('type');
 			$type->appendChild($document->createTextNode('image/svg+xml'));
@@ -137,6 +126,8 @@
 			$style = $document->createAttribute('style');
 			$style->appendChild($document->createTextNode('position:fixed; bottom:0%; right:0%; z-index:99;'));
 			$embed->appendChild($style);
+			
+			// add the embed to the body
 			$body->appendChild($embed);
 
 						

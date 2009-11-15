@@ -39,20 +39,28 @@ xmlns:fb="http://www.facebook.com/2008/fbml"
 	</div>
 </xsl:template>
 
-<xsl:template match="SessionBBS">
-  <xsl:for-each select="Post">
-    <table class="sessionBBS">
-      <tr>
-        <td class="userImage" rowspan="2">
-          <fb:profile-pic linked="true">
-            <xsl:attribute name="uid">
-              <xsl:value-of select="@User" />
-            </xsl:attribute>
-          </fb:profile-pic>
-        </td>
-      </tr>
-    </table>
-  </xsl:for-each>
+<!--
+  <SessionBBSTopics>
+    <SessionBBSTopic Id="##">Topic Header</SessionBBSTopic>
+  </SessionBBSTopics>
+-->
+<xsl:template match="SessionBBSTopics">
+  <table class="sessionBBS">
+    <xsl:for-each select="SessionBBSTopic">
+    <tr>
+      <td class="sessionBBSTopic fbFont">
+        <a target="iframe_canvas">
+          <xsl:attribute name="href">
+            http://apps.facebook.com/notesharesep/view/SessionBBS.View.php?noteshare_session=<xsl:value-of select="@SessionId" />&amp;parentId=<xsl:value-of select="@Id" />
+          </xsl:attribute>
+          <xsl:value-of select="." />
+        </a>
+        <br />
+        Created on <xsl:value-of select="@PostDate" />
+      </td>
+    </tr>
+    </xsl:for-each>
+  </table>
 </xsl:template>
 
 </xsl:stylesheet>
