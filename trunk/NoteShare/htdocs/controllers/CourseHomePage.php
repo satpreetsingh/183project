@@ -64,23 +64,21 @@ function getSessionWall( $sessionID )
 {
   return '' .
   '<?xml version="1.0" encoding="UTF-8"?>
-   <SessionWall>
-     <Post Header="Example Header"
-           Date="11-09-09 12:00:01"
-           User="14821122">
+   <sessionWallPosts>
+     <post time="1234567890"
+           user="14821122">
 		   Test next week everyone!
-     </Post>
-		 <Comment Header="Example Header"
-			   Date="11-09-09 12:00:02"
-			   User="14821222">
-			   Just 7 days!
-		 </Comment>		
-     <Post Header="Example Header2"
-           Date="11-09-09 12:00:05"
+     </post
+     <post	time="111111111"
+		user="14821222">
+		Just 7 days!
+	 </post>
+     <post time="33333333"
            User="14821122">
 		   Welcome to the new semester!
-     </Post>
-   </SessionWall>';
+     </post>
+   </sessionWallPosts>';
 }
+
 
 ?>
