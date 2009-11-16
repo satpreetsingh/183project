@@ -549,7 +549,7 @@ function addUserSessionDAL ($user_id, $session_id)
     // Add the user from a given course's session.
     $query = "Insert Into SessionEnrollment (SessionEnrollment.User_Ptr, ." . 
                                             "SessionEnrollment.Session_Ptr, " .
- 		                             "SessionEnrollment.Join_Date" .
+ 		                              "SessionEnrollment.Join_Date" .
 			 ") Values ("   . $user_id      . ", " . 
 			                  $session_id   . ", " .
 			            "'" . date("Y-m-d") . "'); ";	
@@ -641,9 +641,7 @@ function removeUserSessionDAL ($user_id, $session_id)
    
 
   $out = $doc->saveXML();
-
-  closeDB( $result, $conn );
-
+ 
   return $out;
 }
 
@@ -668,7 +666,7 @@ function addUserDAL ($user_id)
 }
 	
 /**
- * This function removes a user from the app.
+ * This function removes a user from the application by setting a left date.
  * @author Jon Hall/Joseph Trapani
  * @version 2.0
  * @param integer $user_id userID number
@@ -677,11 +675,10 @@ function removeUserDAL ($user_id)
 {
   $conn = openDB();
  
-  $query = "Delete From User Where (User_ID= " . $user_id . ");";
+  $query = "Update User Set Left_Date = '" . date("Y-m-d") . "' " .
+           "Where (User_ID = " . $user_id . ");";
     	
   mysql_query($query);
-    	
-  closeDB ($result, $conn);
 
   return;
 }
@@ -881,7 +878,7 @@ function addSessionNoteDAL ($user_id, $session_id, $header, $body, $file_path, $
 /**
  * This function returns a note posting with the physical file location.
  * @author Joseph Trapani
- * @version 1.0
+ * @version 2.0
  * @param integer $session_id session ID, integer $id unique ID number of post
  */
 function getSessionNoteDAL ($session_id, $id)
@@ -890,21 +887,15 @@ function getSessionNoteDAL ($session_id, $id)
   
 
   // Allow the function to return a specific post OR a group of posts for a class.
-  $WhereClause = "Where (Session_Ptr = " . $session_id . ")";
+  $WhereClause = "Where (SessionNotes.Removal_Date Is Null) And " .
+			  "(SessionNotes.Session_Ptr = " . $session_id . ")";
 
   if ($id <> 0) { 
     $WhereClause = $WhereClause . " And (ID = " . $id . ");";
   } 
 
-  $query = "Select User_Ptr, " .
-		    "Header, " .
-		    "Body, " . 
-		    "Path, " .	
-  		    "Original_File_Name, " . 
-		    "File_Size " .
-           
+  $query = "Select * " .            
            "From SessionNotes  " .  
-
             $WhereClause;
 
   
@@ -975,6 +966,48 @@ function getSessionNoteDAL ($session_id, $id)
 
 
 /**
+ * This function returns the result after removing a note from public view.
+ * @author Joseph Trapani
+ * @version 1.0
+ * @param integer $id note's database ID number
+ * @return XML removal of note data
+ */   
+function removeSessionNoteDAL ($id)
+{
+    
+  $conn = openDB();
+ 
+  $query = "Update SessionNotes Set " . 
+                  "SessionNotes.Removal_Date = '" . date("Y-m-d") . "' " .
+
+	    "Where (SessionNotes.ID = " . $id . ");";	
+
+  $result = mysql_query($query);
+
+
+
+  $doc = new DOMDocument('1.0');
+
+  $style = $doc->createProcessingInstruction('xml-stylesheet', 'type="text/xsl" href="test.xsl"');
+  $doc->appendChild($style);
+  $EndResult = $doc->createElement('RemoveSessionNoteResult');
+  $doc->appendChild($EndResult);
+
+
+  $RemoveSessionNoteResult= $doc->createElement('RemoveSessionNoteResult');
+  $doc->appendChild($RemoveSessionNoteResult);
+
+  $RemoveSessionNote_Name = $doc->createTextNode($result);
+  $RemoveSessionNoteResult->appendChild($RemoveSessionNote_Name);
+   
+
+  $out = $doc->saveXML();
+
+  return $out;
+}
+
+
+/**
  * This function returns the result of adding a session bulletin board post to a
  * a session's bulletin board.
  * @version 1.0
@@ -1002,7 +1035,7 @@ function addSessionBBSPostDAL ($user_id, $session_id, $header, $body, $parentID)
                                    "SessionBBS.Post_Date, " .
                                    "SessionBBS.Prev_Post_Ptr " .
                         ") Values ("   . $user_id      . ", " .
-	                                       $session_id   . ", " .
+	                                  $session_id   . ", " .
                                    "'" . $header       . "', " .
                                    "'" . $body         . "', " .
 	                            "'" . date("Y-m-d H:i:s") . "', " .
@@ -1010,7 +1043,7 @@ function addSessionBBSPostDAL ($user_id, $session_id, $header, $body, $parentID)
 
   $result = mysql_query($query);
 
-  closeDB( null, $conn );
+  closeDB (null, $conn);
 
   return $result;
 }
@@ -1018,7 +1051,7 @@ function addSessionBBSPostDAL ($user_id, $session_id, $header, $body, $parentID)
 
 /**
  * This function gets all of the BBS thread topics for a given session.
- * @version 1.0
+ * @version 2.0
  * @param integer $session_id session ID number
  * @return XML BBS thread topics of session bulletin board post data
  */
@@ -1034,7 +1067,8 @@ function getSessionBBSTopicsDAL ($session_id)
   // Add the user from a given course's session.
   $query = "Select * " . 
 	    "From SessionBBS " .
-           "Where (SessionBBS.Prev_Post_Ptr Is Null) And " .
+           "Where (SessionBBS.Removal_Date Is Null) And " .
+		   "(SessionBBS.Prev_Post_Ptr Is Null) And " .
                  "(SessionBBS.Session_Ptr = " . $session_id . " );";
 
   $result = mysql_query($query);
@@ -1047,7 +1081,7 @@ function getSessionBBSTopicsDAL ($session_id)
   $EndResult = $doc->createElement("SessionBBSTopics");
   $doc->appendChild($EndResult);
 
-  while($row = mysql_fetch_assoc($result)) {
+  while ($row = mysql_fetch_assoc($result)) {
 
     // create the SessionBBSTopic Tag <SessionBBSTopic>
     $sessionBBSTopic = $doc->createElement('SessionBBSTopic');
@@ -1084,7 +1118,7 @@ function getSessionBBSTopicsDAL ($session_id)
 
   $out = $doc->saveXML();
 
-  closeDB( $result, $conn );
+  closeDB ($result, $conn);
 
   return $out;
 }
@@ -1092,7 +1126,7 @@ function getSessionBBSTopicsDAL ($session_id)
 /**
  * This function returns the thread specified by the parent thread id
  *
- * @version 1.0
+ * @version 2.0
  * @param integer $parentId parent thread id number
  * @return XML of thread topic including all children posts
  */
@@ -1102,9 +1136,11 @@ function getSessionBBSPostsDAL( $parentId )
 
   // Query for threads that are either the parent thread or decend from the
   //  parent thread
-  $query = "Select * From SessionBBS" .
-           " Where (SessionBBS.Prev_Post_Ptr = " . $parentId . ") " .
-           " OR (SessionBBS.ID = " . $parentId . " );";
+  $query = "Select * " . 
+	    "From SessionBBS " .
+           "Where (SessionBBS.Removal_Date Is Null) And " .
+                 "((SessionBBS.Prev_Post_Ptr = " . $parentId . ") Or " .
+                  "(SessionBBS.ID = " . $parentId . " ));";
 
   $result = mysql_query($query);
 
@@ -1115,10 +1151,10 @@ function getSessionBBSPostsDAL( $parentId )
   $sessionBBSThread = $doc->createElement('SessionBBSThread');
   $doc->appendChild($sessionBBSThread);
 
-  while($row = mysql_fetch_assoc($result)) {
+  while ($row = mysql_fetch_assoc($result)) {
 
     // Attach header attribute to SessionBBSThread from the first post.
-    if( !$row['Prev_Post_Ptr'] )
+    if (!$row['Prev_Post_Ptr'])
     {
       $sessionBBSThread_header = $doc->createAttribute('Header');
       $sessionBBSThread->appendChild($sessionBBSThread_header);
@@ -1161,9 +1197,53 @@ function getSessionBBSPostsDAL( $parentId )
 
   $out = $doc->saveXML();
 
-  closeDB( $result, $conn );
+  closeDB ($result, $conn);
 
   return $out;
 
 }
+
+
+/**
+ * This function returns the result after removing a bbs post from public view.
+ * @author Joseph Trapani
+ * @version 1.0
+ * @param integer $id bbs post's database ID number
+ * @return XML removal of bbs data
+ */   
+function removeSessionBBSDAL ($id)
+{
+    
+  $conn = openDB();
+ 
+  $query = "Update SessionBBS Set " . 
+                  "SessionBBS.Removal_Date = '" . date("Y-m-d") . "' " .
+
+	    "Where (SessionBBS.ID = " . $id . ");";	
+
+  $result = mysql_query($query);
+
+
+
+  $doc = new DOMDocument('1.0');
+
+  $style = $doc->createProcessingInstruction('xml-stylesheet', 'type="text/xsl" href="test.xsl"');
+  $doc->appendChild($style);
+  $EndResult = $doc->createElement('RemoveSessionBBSResult');
+  $doc->appendChild($EndResult);
+
+
+  $RemoveSessionBBSResult= $doc->createElement('RemoveSessionBBSResult');
+  $doc->appendChild($RemoveSessionBBSResult);
+
+  $RemoveSessionBBS_Name = $doc->createTextNode($result);
+  $RemoveSessionBBSResult->appendChild($RemoveSessionBBS_Name);
+   
+
+  $out = $doc->saveXML();
+
+  return $out;
+}
+
+
 ?>
