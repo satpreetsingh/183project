@@ -779,7 +779,7 @@ function addSessionWallPostDAL($user_id, $session_id, $body)
 function getSessionWallPostsDAL($session_id)
 {
 	// Get parent
-	$wall_parent = getSessionWallParentDAL($session_id)
+	$wall_parent = getSessionWallParentDAL($session_id);
 	
 	$conn = openDB();
 	
@@ -798,16 +798,16 @@ function getSessionWallPostsDAL($session_id)
 		
 		// Add user attribute
 		$user_id = $doc->createAttribute("user");
-		$user_id->appendChild($doc->createTextNode($row['User_ptr'])));
+		$user_id->appendChild($doc->createTextNode($row['User_ptr']));
 		$post->appendChild($user_id);
 		
 		// Add time attribute
-		$date_Array = strptime(row['POST_DATE'],"Y-m-d H:m:s");
+		$date_Array = strptime($row['POST_DATE'],"Y-m-d H:m:s");
 		$time_Stamp = mktime($date_Array['tm_hour'], $date_Array['tm_min'],
 				$date_Array['tm_sec'], $date_Array['tm_mon'], 
 				$date_Array['tm_mday'], $date_Array['tm_year'] );
 		$time = $doc->createAttribute("time");
-		$time->appendChild($doc->createTextNode($time_Stamp)));
+		$time->appendChild($doc->createTextNode($time_Stamp));
 		$post->appendChild($time);
 		
 		// Add the post body

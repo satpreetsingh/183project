@@ -70,6 +70,11 @@
 		 . "	</button>"
 		 . "</form>";
 	echo "</br></br>";
+	
+	// Session Wall
+	genHeadingBar( "Session Shoutouts" );
+	$wall = getSessionWall($sessionId);
+	echo XSLTransform($wall,'CoursePage.xsl');
 
   // SessionBBS
   genHeadingBar( "Session Bulletin Board" );

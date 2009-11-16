@@ -17,6 +17,22 @@ xmlns:fb="http://www.facebook.com/2008/fbml"
   </table>
 </xsl:template>
 
+<xsl:template match="sessionWallPosts">
+	<fb:serverfbml>
+		<script type="text/fbml">
+			<fb:wall>
+				<xsl:for-each select="post">
+					<fb:wallpost>
+						<xsl:attribute name="uid"><xsl:value-of select="@user" /></xsl:attribute>
+						<xsl:attribute name="t"><xsl:value-of select="@time" /></xsl:attribute>
+						<xsl:value-of select="." />
+					</fb:wallpost>
+				</xsl:for-each>
+			</fb:wall>
+		</script>
+	</fb:serverfbml>
+</xsl:template>
+
 <xsl:template match="memberList">
 	<div>
 		<xsl:for-each select="member">
