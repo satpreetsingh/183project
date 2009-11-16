@@ -58,13 +58,14 @@ function memTest_getUniversityDAL( $bruteTest )
 //addUserSessionDAL(66000948,2);
 //addSessionBBSPostDAL( 66000948, 2, 'testing header', 'testing body', null );
 //echo getSessionBBSTopicsDAL( 2 );
-echo getSessionBBSPostsDAL( 11 );
+//echo getSessionBBSPostsDAL( 11 );
 
 //echo getHomePageSessionListDAL(66000948);
 
 //addSessionNoteDAL(66000948, 1, 'testing header', 'testing body', '/no where', 'testing file.txt', 1.23999);
 //getSessionNoteDAL (1,0);
-
+echo removeSessionNoteDAL(7);
+//echo removeSessionBBSDAL(7);
 
 //addUserDAL(34234);
 //include '/var/www/localhost/htdocs/model/dbcon.php';
