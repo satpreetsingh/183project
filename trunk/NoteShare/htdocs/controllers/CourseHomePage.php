@@ -68,7 +68,7 @@ function getSessionWall( $sessionID )
      <post time="1234567890"
            user="14821122">
 		   Test next week everyone!
-     </post
+     </post>
      <post	time="111111111"
 		user="14821222">
 		Just 7 days!
