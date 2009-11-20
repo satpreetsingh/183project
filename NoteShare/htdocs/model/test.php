@@ -52,6 +52,12 @@ function memTest_getUniversityDAL( $bruteTest )
 
 
 //WORKING CALLS Remember to add in this to output it:  	echo "<textarea cols=\"100\" rows=\"15\">".$out."</textarea>";
+
+//getUniversityDAL();
+//getDepartmentsDAL(1);
+//getCoursesDAL(1);
+//getSessionsDAL(1);
+//getDepartmentsDAL(1);
 //getSessionMetadataDAL(1);
 //getSessionMembersDAL(1);
 //removeUserSessionDAL(2,1);
@@ -63,12 +69,16 @@ function memTest_getUniversityDAL( $bruteTest )
 //echo getHomePageSessionListDAL(66000948);
 
 //addSessionNoteDAL(66000948, 1, 'testing header', 'testing body', '/no where', 'testing file.txt', 1.23999);
-//getSessionNoteDAL (1,0);
-echo removeSessionNoteDAL(7);
+//echo getSessionNoteDAL (1,0);
+//echo removeSessionNoteDAL(7);
 //echo removeSessionBBSDAL(7);
 
+getSessionNoteDAL (2);
+
 //addUserDAL(34234);
+
 //include '/var/www/localhost/htdocs/model/dbcon.php';
-//$dbData = new DBData("localhost","root","b4n4n4s","NoteShareSEP");
+//$dbData = new DBData();
+//$dbData->free(true);
 
 ?>

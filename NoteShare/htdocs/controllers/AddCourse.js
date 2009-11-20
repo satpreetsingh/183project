@@ -50,7 +50,7 @@
           document.getElementById( 'ns_department' ).style.background = "#eceff6";
           document.getElementById( 'ns_course' ).innerHTML = "";
           document.getElementById( 'ns_session' ).innerHTML = "";
-          document.getElementById( 'debug' ).innerHTML = xmlhttp.responseText;
+          document.getElementById( 'debug' ).innerHTML = "Shoot: " + xmlhttp.responseText;
         }
       }
       xmlhttp.open( "GET", AJAX_URL_BASE + "?function_name=getDepartments&ns_universityID="+universityID);

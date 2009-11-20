@@ -1,6 +1,7 @@
 <?php
 
   include $_SERVER['DOCUMENT_ROOT'] . 'model/NoteshareDatabase.php';
+  require_once $_SERVER['DOCUMENT_ROOT'] . 'controllers/Session.php';
 
 function getSessionMetadata( $sessionid )
 {
@@ -57,7 +58,8 @@ function removeSession($sessionID)
 
 function getSessionBBSTopics( $sessionID )
 {
-  return getSessionBBSTopicsDAL( $sessionID );
+  // Request the five most recent BBS postings for this session.
+  return getSessionBBSTopicsDAL( $sessionID, 5 );
 }
 
 function getSessionWall( $sessionID )
@@ -80,5 +82,23 @@ function getSessionWall( $sessionID )
    </sessionWallPosts>';
 }
 
+function getSessionNotes( $sessionID )
+{
+  // Request the five most recent note postings for this session.
+  return getSessionNoteDAL( $sessionID, 0, 5 );
+}
+
+
+/**
+ * Get Response
+**/
+  if( isset( $_GET['parentId'] ))
+  {
+    $sessionId = $_GET['ns_session'];
+    $parentId = $_GET['parentId'];
+    removeSessionBBSDAL( $parentId );
+    
+    $facebook->redirect( "http://apps.facebook.com/notesharesep/views/CoursePage.php?ns_session=" . $sessionId );
+  }
 
 ?>

@@ -134,7 +134,7 @@ function getDepartmentsDAL ($univ_id)
   }
 
   $out = $doc->saveXML();
-
+ 
   closeDB ($result, $conn);
 
   return $out;
@@ -783,8 +783,11 @@ function getSessionWallPostsDAL($session_id)
 	
 	$conn = openDB();
 	
-	$query = "Select * From SessionBBS Where (Session_ptr=$session_id and Prev_Post_ptr=$wall_parent) " .
-			"Order By POST_DATE DESC";
+	$query = "Select * " .
+		  "From SessionBBS " .
+ 		  "Where (Session_Ptr = $session_id) And " .
+                      "(Prev_Post_Ptr = $wall_parent) " .
+	         "Order By Post_Date Desc";
 	
 	$result =  mysql_query($query);
 	
@@ -824,6 +827,7 @@ function getSessionWallPostsDAL($session_id)
 	return $doc->saveXML();
 }
 
+
 /**
  * This function adds a note posting and physical upload location.
  * @author Joseph Trapani
@@ -836,6 +840,7 @@ function addSessionNoteDAL ($user_id, $session_id, $header, $body, $file_path, $
  
   $query = "Insert Into SessionNotes (User_Ptr, " .
 					  "Session_Ptr, " .
+					  "Post_Date, " . 
 					  "Header, " .
 					  "Body, " . 
 					  "Path, " .	
@@ -844,6 +849,7 @@ function addSessionNoteDAL ($user_id, $session_id, $header, $body, $file_path, $
 					 ") Values (" . 
 					  $user_id . ", " . 
 		                       $session_id . ", '" . 
+					  date ("Y-m-d H:i:s") . "', '" . 
 					  $header . "', '" . 
 		                       $body . "', '" . 					  
 					  $file_path . "', '" . 
@@ -869,8 +875,6 @@ function addSessionNoteDAL ($user_id, $session_id, $header, $body, $file_path, $
 
   $out = $doc->saveXML();
 
-  closeDB( $result, $conn );
-
   return $out;
 
 }
@@ -879,9 +883,9 @@ function addSessionNoteDAL ($user_id, $session_id, $header, $body, $file_path, $
  * This function returns a note posting with the physical file location.
  * @author Joseph Trapani
  * @version 2.0
- * @param integer $session_id session ID, integer $id unique ID number of post
+ * @param integer $session_id session ID, integer $id unique ID number of post, integer $return_latest return latest X records 
  */
-function getSessionNoteDAL ($session_id, $id)
+function getSessionNoteDAL ($session_id, $id = 0, $latest_posts = 0)
 {
   $conn = openDB();
   
@@ -894,9 +898,21 @@ function getSessionNoteDAL ($session_id, $id)
     $WhereClause = $WhereClause . " And (ID = " . $id . ");";
   } 
 
-  $query = "Select * " .            
-           "From SessionNotes  " .  
-            $WhereClause;
+  // Only select the latest X posts.
+  if ($latest_posts <> 0) {
+    $query = "Select * " .            
+             "From SessionNotes " .  
+              $WhereClause ." And " .
+             "(SessionNotes.Path Is Not Null) And " .
+             "(SessionNotes.Prev_Post_Ptr Is Null) " .		
+             "Order By ID Desc " .
+ 	      "Limit 0," . $latest_posts . ";";	    
+  }
+  else {
+    $query = "Select * " .            
+             "From SessionNotes " .  
+              $WhereClause;
+  }
 
   
   $result = mysql_query($query);
@@ -905,7 +921,7 @@ function getSessionNoteDAL ($session_id, $id)
 
   $style = $doc->createProcessingInstruction('xml-stylesheet', 'type="text/xsl" href="test.xsl"');
   $doc->appendChild($style);
-  $list = $doc->createElement('getSessionNote');
+  $list = $doc->createElement('getSessionNotes');
   $doc->appendChild($list);
 
 
@@ -915,10 +931,17 @@ function getSessionNoteDAL ($session_id, $id)
     $list->appendChild($getSessionNote);
 
 
+    $id_attr = $doc->createAttribute('Id');
+    $getSessionNote->appendChild($id_attr);
+   
+    $id_text = $doc->createTextNode($row['ID']);
+    $id_attr->appendChild($id_text);
+
+
     $user_attr = $doc->createAttribute('User_ID');
     $getSessionNote->appendChild($user_attr);
    
-    $user_text = $doc->createTextNode($row['User_Ptr']);
+    $user_text = $doc->createTextNode($row['User_ptr']);
     $user_attr->appendChild($user_text);
 
 
@@ -950,15 +973,22 @@ function getSessionNoteDAL ($session_id, $id)
     $filesize_attr->appendChild($filesize_text);
 
 
+    $Server_Path_attr = $doc->createAttribute('Server_Path');
+    $getSessionNote->appendChild($Server_Path_attr);
+   
+    $filesize_text = $doc->createTextNode($row['Path']);
+    $filesize_attr->appendChild($filesize_text);
 
-    $getSessionNote_Name = $doc->createTextNode($row['Path']);
+
+
+    $getSessionNote_Name = $doc->createTextNode("http://noteshare.homelinux.net/" . substr ($row['PATH'], 53));
     $getSessionNote->appendChild($getSessionNote_Name);  
 
   }
 
   $out = $doc->saveXML();
 
-  mysql_close ($result, $conn);
+  closeDB ($result, $conn);
 
   return $out;
 
@@ -1051,11 +1081,11 @@ function addSessionBBSPostDAL ($user_id, $session_id, $header, $body, $parentID)
 
 /**
  * This function gets all of the BBS thread topics for a given session.
- * @version 2.0
+ * @version 3.0
  * @param integer $session_id session ID number
- * @return XML BBS thread topics of session bulletin board post data
+ * @return XML BBS thread topics of session bulletin board post data, integer $return_latest return latest X records 
  */
-function getSessionBBSTopicsDAL ($session_id)
+function getSessionBBSTopicsDAL ($session_id, $latest_posts = 0)
 {
   $conn = openDB();
 
@@ -1064,12 +1094,27 @@ function getSessionBBSTopicsDAL ($session_id)
     return 'null';
   }
 
+  // Only select the latest X posts.
   // Add the user from a given course's session.
-  $query = "Select * " . 
-	    "From SessionBBS " .
-           "Where (SessionBBS.Removal_Date Is Null) And " .
-		   "(SessionBBS.Prev_Post_Ptr Is Null) And " .
-                 "(SessionBBS.Session_Ptr = " . $session_id . " );";
+  if ($latest_posts <> 0) {
+    
+    $query = "Select  * " . 
+	      "From SessionBBS " .
+             "Where (SessionBBS.Removal_Date Is Null) And " .
+		     "(SessionBBS.Prev_Post_Ptr Is Null) And " .
+                   "(SessionBBS.Session_Ptr = " . $session_id . " ) " .
+	      "Order By ID Desc " . 
+             "Limit 0," . $latest_posts . ";";
+  }
+  else {
+   
+    $query = "Select * " . 
+	      "From SessionBBS " .
+             "Where (SessionBBS.Removal_Date Is Null) And " .
+		     "(SessionBBS.Prev_Post_Ptr Is Null) And " .
+                   "(SessionBBS.Session_Ptr = " . $session_id . " );";
+  }
+
 
   $result = mysql_query($query);
 
@@ -1086,7 +1131,7 @@ function getSessionBBSTopicsDAL ($session_id)
     // create the SessionBBSTopic Tag <SessionBBSTopic>
     $sessionBBSTopic = $doc->createElement('SessionBBSTopic');
     $EndResult->appendChild($sessionBBSTopic);
-
+           
     // Add the Id attribute Id=""
     $sessionBBSTopic_id = $doc->createAttribute('Id');
     $sessionBBSTopic->appendChild($sessionBBSTopic_id);
@@ -1123,6 +1168,7 @@ function getSessionBBSTopicsDAL ($session_id)
   return $out;
 }
 
+
 /**
  * This function returns the thread specified by the parent thread id
  *
@@ -1130,7 +1176,7 @@ function getSessionBBSTopicsDAL ($session_id)
  * @param integer $parentId parent thread id number
  * @return XML of thread topic including all children posts
  */
-function getSessionBBSPostsDAL( $parentId )
+function getSessionBBSPostsDAL ($parentId)
 {
   $conn = openDB();
 
