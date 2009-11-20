@@ -17,6 +17,7 @@ xmlns:fb="http://www.facebook.com/2008/fbml"
   </SessionBBSThread>
 -->
 <xsl:template match="SessionBBSThread">
+  <xsl:variable name="viewUserId"><xsl:value-of select="userId" /></xsl:variable>
   <table>
     <tr>
       <td class="fbFont sessionBBSHeadingBar">
@@ -45,13 +46,19 @@ xmlns:fb="http://www.facebook.com/2008/fbml"
       <td class="fbFont sessionBBSHeadingBar right normal">
         on <xsl:value-of select="@PostDate" />
       </td>
+      <td rowspan="2" class="fbFont right" valign="top">
+        <!--
+        <xsl:if test="$viewUserId=@UserId">
+          <xsl:value-of select="$viewUserId" />
+        </xsl:if>
+        -->
+      </td>
     </tr>
     <tr>
       <td class="fbFont sessionBBSPost" colspan="2">
         <xsl:value-of select="." />
       </td>
     </tr>
-    <tr><td><br /></td></tr>
     </xsl:for-each>
   </table>
 </xsl:template>

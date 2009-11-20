@@ -25,7 +25,7 @@
   **/
   function genViewHeader( $title )
   {
-    echo "<xml version=\"1.0\" encoding=\"UTF-8\">\n" .
+    echo "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n" .
          "<!DOCTYPE html PUBLIC \"-//W3C//DTD XHTML 1.0 Strict//EN\" \"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd\">\n" .
          "<html xmlns=\"http://www.w3.org/1999/xhtml\" xmlns:fb=\"http://www.facebook.com/2008/fbml\">\n" .
          "  <head>\n" .
@@ -80,10 +80,10 @@
       $upperBound = sizeof( $titles ) - 1;
       for( $i = 0; $i < $upperBound; $i += 1 )
       {
-	      echo '<a href="' . $links[ $i ] . '" target="iframe_canvas" class="fbFont">' . $titles[ $i ] . '</a>';
+	      echo '<a href="http://apps.facebook.com/notesharesep' . $links[ $i ] . '" target="_top" class="fbFont">' . $titles[ $i ] . '</a>';
         echo ' | ';
       }
-      echo '<a href="' . $links[ $i ] . '" target="iframe_canvas" class="fbFont">' . $titles[ $i ] . '</a>';
+      echo '<a href="http://apps.facebook.com/notesharesep' . $links[ $i ] . '" target="_top" class="fbFont">' . $titles[ $i ] . '</a>';
     }
 
     echo '</td></tr></table>';
@@ -108,7 +108,7 @@
       echo '<table cellspacing="0" cellpadding="0">' .
            '  <tr>' .
            '    <td class="headingBar">' . $title . '</td>' .
-           '    <td class="headingBar right">[ <a href="' . $link_href . '" target="iframe_canvas" class="fbFont">' . $link_text . '</a> ]</td>' .
+           '    <td class="headingBar right">[ <a href="http://apps.facebook.com/notesharesep' . $link_href . '" target="_top" class="fbFont">' . $link_text . '</a> ]</td>' .
            '  </tr>' .
            '</table>';
     }
@@ -143,5 +143,42 @@
 	    $xslt->importStylesheet( $xsl );
   	  return str_replace( "<?xml version=\"1.0\"?>", "", $xslt->transformToXML( $xml ));
     }
+  }
+
+  function formatXmlString($xml) {
+    // add marker linefeeds to aid the pretty-tokeniser (adds a linefeed between all tag-end boundaries)
+    $xml = preg_replace('/(>)(<)(\/*)/', "$1\n$2$3", $xml);   /**/
+
+    // now indent the tags
+    $token      = strtok($xml, "\n");
+    $result     = ''; // holds formatted version as it is built
+    $pad        = 0; // initial indent
+    $matches    = array(); // returns from preg_matches()
+
+    // scan each line and adjust indent based on opening/closing tags
+    while ($token !== false) :
+      // test for the various tag states
+      // 1. open and closing tags on same line - no change
+      if (preg_match('/.+<\/\w[^>]*>$/', $token, $matches)) :
+        $indent=0;
+      // 2. closing tag - outdent now
+      elseif (preg_match('/^<\/\w/', $token, $matches)) :
+        $pad--;
+      // 3. opening tag - don't pad this one, only subsequent tags
+      elseif (preg_match('/^<\w[^>]*[^\/]>.*$/', $token, $matches)) :
+        $indent=1;
+      // 4. no indentation needed
+      else :
+        $indent = 0;
+      endif;
+
+      // pad the line with the required number of leading spaces
+      $line    = str_pad($token, strlen($token)+$pad, ' ', STR_PAD_LEFT);
+      $result .= $line . "\n"; // add to the cumulative result, with linefeed
+      $token   = strtok("\n"); // get the next token
+      $pad    += $indent; // update the pad size for subsequent lines
+    endwhile;
+
+    return $result;
   }
 ?>

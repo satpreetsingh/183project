@@ -33,8 +33,8 @@ if ((!empty ($_FILES["uploaded_file"])) &&
       ($_FILES["uploaded_file"]["size"] < 5242881)) {
 
     // Determine the path to which we want to save this file.
-    $newname = dirname (__FILE__) . '/noteFiles/' . $AdvFileName;
-    
+    $newname = '/home/fate/SEPRepository/183project/NoteShare/htdocs/noteFiles/' . $AdvFileName;
+    //dirname (__FILE__) .
     
     $index = 0;
 
@@ -42,6 +42,7 @@ if ((!empty ($_FILES["uploaded_file"])) &&
     while (file_exists ($newname . $index)) {
       $index++;
     }
+
 
 
     // Attempt to move the uploaded file to it's new location within the noteFiles directory.

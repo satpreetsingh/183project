@@ -29,7 +29,7 @@
   function openEditor( )
   {
     echo '' .
-    '<form action="/controllers/NewThread.php" method="GET" target="iframe_canvas"
+    '<form action="http://apps.facebook.com/notesharesep/controllers/NewThread.php" method="GET" target="_top"
        <table class="formTable">';
   }
 
@@ -73,7 +73,7 @@
              <input class="submit" type="submit" class="add action" value="Post Thread" name="Post Thread"/>
              <span class="cancel_link">
                <span>or</span>
-               <a href="/views/CoursePage.php?ns_session=' . $sessionId . '" target="iframe_canvas">Cancel</a>
+               <a href="http://apps.facebook.com/notesharesep/views/CoursePage.php?ns_session=' . $sessionId . '" target="_top">Cancel</a>
              </span>
            </td>
            <td class="right_padding">

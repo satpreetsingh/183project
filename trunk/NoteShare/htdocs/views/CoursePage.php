@@ -12,6 +12,21 @@
 
 //--------------------------View Functions--------------------------------//
   /**
+   * Inserts the user id of the viewer into the xml response
+  **/
+  function insertUserId( $bbsPosts, $user_id )
+  {
+    $temp = explode( "\n", $bbsPosts );
+    $response = $temp[0] . $temp[1] . $temp[2] . '<userId>' . $user_id . "</userId>\n";
+    for( $i = 3; $i < count( $temp ); $i++ )
+    {
+      $response = $response . $temp[$i];
+    }
+
+    return $response;
+  }
+
+  /**
    * Generates a text area with the specified name and intial value
    *
    * @version 1.0
@@ -33,8 +48,18 @@
   function genNewThreadBBS( $sessionId )
   {
     echo '<div style="text-align: right;">' .
-         '<a href="/views/NewThread.php?ns_session=' . $sessionId . '" target="iframe_canvas" class="fbFont">' .
+         '<a href="http://apps.facebook.com/notesharesep/views/NewThread.php?ns_session=' . $sessionId . '" target="_top" class="fbFont">' .
          'Create New Thread</a></div>';
+  }
+
+  /**
+   * Displays the posting link for the session note system
+   *
+   * @return displays the link for posting
+  **/
+  function genNewThreadNotes( $sessionId )
+  {
+echo "test";
   }
 
   /**
@@ -42,13 +67,32 @@
    *
    * @return displays table of session's BBS topics
   **/
-  function genSessionBBS( $sessionId )
+  function genSessionBBS( $sessionId, $user_id )
   {
     $bbsTopicsXML = getSessionBBSTopics( $sessionId );
+    $bbsTopicsXML = formatXMLString( $bbsTopicsXML );
+    $bbsTopicsXML = insertUserId( $bbsTopicsXML, $user_id );
     echo XSLTransform( $bbsTopicsXML, 'CoursePage.xsl');
     echo '<br />';
     genNewThreadBBS( $sessionId );
   }
+
+  /**
+   * Gathers and displays the contents of this session's notes.
+   *
+   * @return displays table of session's notes
+  **/
+  function genSessionNotes( $user_id, $sessionId )
+  {
+    $notesXML = getSessionNotes( $sessionId );
+    $notesXML = formatXMLString( $notes );
+    $notesXML = insertUserId( $notes, $user_id );
+    echo XSLTransform( $notesXML, 'CoursePage.xsl' );
+    echo '<br />';
+    genNewThreadNotes( $sessionID );
+
+  }
+
 
 //----------------------Begin View Code----------------------------------//
 
@@ -70,15 +114,20 @@
 		 . "	</button>"
 		 . "</form>";
 	echo "</br></br>";
-	
+
 	// Session Wall
 	genHeadingBar( "Session Shoutouts" );
 	$wall = getSessionWall($sessionId);
 	echo XSLTransform($wall,'CoursePage.xsl');
 
+  // Uploaded Notes?
+  genHeadingBar( "Course Notes", "Add New Note Set", "/views/SessionNotes.php?ns_session=" . $sessionId );
+  genSessionNotes( $user_id, $sessionId );
+  echo '<br /><br />';
+
   // SessionBBS
   genHeadingBar( "Session Bulletin Board" );
-  genSessionBBS( $sessionId );
+  genSessionBBS( $sessionId, $user_id );
   echo '<br /><br />';
 
   // Classmates in the course

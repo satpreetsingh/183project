@@ -20,16 +20,12 @@ xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
 	   		<ul>
 		   		<xsl:for-each select="key('session-by-uni', @University_Name)">
 		   			<li>
-			   			<a target="iframe_canvas">
-							<xsl:attribute name="href">
-								/views/CoursePage.php?ns_session=<xsl:value-of select="@Id" />
-							</xsl:attribute>
+		   			<a target="_top">
+							<xsl:attribute name="href">http://apps.facebook.com/notesharesep/views/CoursePage.php?ns_session=<xsl:value-of select="@Id" /></xsl:attribute>
 							<xsl:value-of select="." />
 						</a>
-						[<a target="iframe_canvas" onclick="return confirm('Really? Drop the course?');">
-					    	<xsl:attribute name="href">
-				      			/controllers/DropCourse.php?ns_session=<xsl:value-of select="@Id" />
-				     		</xsl:attribute>
+						[<a target="_top" onclick="return confirm('Really? Drop the course?');">
+					    	<xsl:attribute name="href">http://apps.facebook.com/notesharesep/controllers/DropCourse.php?ns_session=<xsl:value-of select="@Id" /></xsl:attribute>
 							X
 						</a>]
 					</li>

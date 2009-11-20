@@ -61,22 +61,75 @@ xmlns:fb="http://www.facebook.com/2008/fbml"
   </SessionBBSTopics>
 -->
 <xsl:template match="SessionBBSTopics">
+  <xsl:variable name="viewUserId"><xsl:value-of select="userId" /></xsl:variable>
   <table class="sessionBBS">
     <xsl:for-each select="SessionBBSTopic">
     <tr>
       <td class="sessionBBSTopic fbFont">
-        <a target="iframe_canvas">
+        <a target="_top">
           <xsl:attribute name="href">
-            /views/SessionBBS.php?ns_session=<xsl:value-of select="@SessionId" />&amp;parentId=<xsl:value-of select="@Id" />
+            http://apps.facebook.com/notesharesep/views/SessionBBS.php?ns_session=<xsl:value-of select="@SessionId" />&amp;parentId=<xsl:value-of select="@Id" />
           </xsl:attribute>
           <xsl:value-of select="." />
         </a>
         <br />
         Created on <xsl:value-of select="@PostDate" />
       </td>
+      <td class="fbFont">
+        <br />
+        <xsl:if test="$viewUserId=@UserId">
+          [
+          <a target="_top">
+            <xsl:attribute name="href">
+              http://apps.facebook.com/notesharesep/controllers/CourseHomePage.php?ns_session=<xsl:value-of select="@SessionId" />&amp;parentId=<xsl:value-of select="@Id" />
+            </xsl:attribute>
+            X
+          </a>
+          ]
+        </xsl:if>
+      </td>
     </tr>
     </xsl:for-each>
   </table>
 </xsl:template>
 
+<!--
+<getSessionNote>
+  <getSessionNote User_ID="" Header="" Body="" Original_File_Name="" File_Size="1"></getSessionNote>
+-->
+<xsl:template match="getSessionNotes">
+  <xsl:variable name="viewUserId"><xsl:value-of select="userId" /></xsl:variable>
+  <table class="sessionNotes">
+    <xsl:for-each select="getSessionNote">
+    <tr>
+      <td class="sessionNote fbFont">
+        <a target="_top">
+          <xsl:attribute name="href">
+            <xsl:value-of select="." />
+          </xsl:attribute>        
+          <xsl:value-of select="@Header" />
+        </a>
+      </td>
+      <td class="fbFont right">
+        <br />
+        <xsl:if test="$viewUserId=@User_ID">
+          [
+          <a target="_top">
+            <xsl:attribute name="href">
+              http://apps.facebook.com/notesharesep/controllers/CourseHomePage.php?ns_session=<xsl:value-of select="@SessionId" />&amp;parentId=<xsl:value-of select="@Id" />
+            </xsl:attribute>
+            X
+          </a>
+          ]
+        </xsl:if>
+      </td>
+    </tr>
+    <tr>
+      <td class="sessionNote fbFont">
+        <xsl:value-of select="@Body" />
+      </td>
+    </tr>
+    </xsl:for-each>
+  </table>
+</xsl:template>
 </xsl:stylesheet>

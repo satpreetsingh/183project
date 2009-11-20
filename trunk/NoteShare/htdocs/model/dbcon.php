@@ -3,12 +3,12 @@
 	// Author:  Joseph Trapani
 	// Date:	10/27/2009
 	// General concept found on:  http://www.killersites.com/forums/topic/1843/oops-mysql-connecting-and-fetching-data/
-    // Base class which acts as an ancestor class.
+       // Base class which acts as an ancestor class.
 	// Instanciation example:  include '/var/www/localhost/htdocs/model/dbcon.php';
 	//                         $dbData = new DBData("localhost","root","b4n4n4s","NoteShareSEP);
 
 	
-    class  DBConnect{
+    class  DBConnect {
 	
         protected $hostname,$username,$password,$db_name;
         
@@ -59,7 +59,7 @@
        * @param String $hostname,$username,$password,$db_name. 
        * All information we need to provide whenever we connect to a database.
        */
-        public function __construct($hostname,$username,$password,$db_name){
+        public function __construct($hostname = "localhost",$username = "root",$password = "b4n4n4s",$db_name = "NoteShareSEP"){
 		  
 		  
 		  // Call the parent constructor to set up the protected data fields.
@@ -71,7 +71,7 @@
 		  
 		  
 		  // Select the database.
-          $this -> selectDB();
+                $this -> selectDB();
 		  
 
         }        

@@ -32,7 +32,7 @@
   function openEditor( )
   {
     echo '' .
-    '<form action="/controllers/AddCourse.php" method="GET" target="iframe_canvas"
+    '<form action="http://apps.facebook.com/notesharesep/controllers/AddCourse.php" method="GET" target="_top"
        <table class="formTable">';
   }
 
@@ -80,7 +80,7 @@
              <input type="submit" class="add action" value="Add" name="Add"/>   
              <span class="cancel_link">
                <span>or</span>
-               <a href="/views/UserHomePage.php" target="iframe_canvas">Cancel</a>
+               <a href="http://apps.facebook.com/notesharesep/views/UserHomePage.php" target="_top">Cancel</a>
              </span>
            </td>
            <td class="right_padding">
@@ -109,7 +109,7 @@
                  array( "/views/UserHomePage.php",
                         "/views/AddCourse.php" ));
   echo '<br>';
-  echo '<script src="/controllers/AddCourse.js" type="text/javascript"></script>';
+  echo '<script src="http://noteshare.homelinux.net/controllers/AddCourse.js" type="text/javascript"></script>';
 
   // Get the universities and shove the two additional options in there
   $XML = getUniversity( );
@@ -123,6 +123,8 @@
   echo genCmbBox( "Session", ns_session, "", null);
   echo genButtons();
   echo closeEditor();
+
+  echo '<div id="debug" name="debug" style="border: 1px dashed #000000;">debug</div>';
 
   genViewFooter();
 ?>
