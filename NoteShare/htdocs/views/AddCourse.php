@@ -77,7 +77,7 @@
     '  <tr>
          <th></th>
            <td class="editorkit_buttonset">
-             <input type="submit" class="add action" value="Add" name="Add"/>   
+             <input type="submit" class="submit" value="Add" name="Add"/>   
              <span class="cancel_link">
                <span>or</span>
                <a href="http://apps.facebook.com/notesharesep/views/UserHomePage.php" target="_top">Cancel</a>

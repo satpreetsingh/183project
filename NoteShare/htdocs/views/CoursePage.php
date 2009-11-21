@@ -64,7 +64,7 @@ echo "test";
 
   /**
    * Gathers and displays the contents of this session's BBS topics.
-   *
+   *  USE DOM to insert USER_ID
    * @return displays table of session's BBS topics
   **/
   function genSessionBBS( $sessionId, $user_id )
@@ -92,6 +92,19 @@ echo "test";
     genNewThreadNotes( $sessionID );
 
   }
+  
+function genSessionWallArea($user_id, $sessionId )
+{
+	genHeadingBar( "Session Shoutouts" );
+	echo 
+		"<form action=\"/controllers/AddWallPost.php\">" .
+		"	<textarea name=\"post_body\"></textarea>" .
+		"	<button class=\"drop\" name=\"ns_session\" value=\"$sessionId\">Share</button>" .
+		"</form>";
+  	// Session Wall
+	$wall = getSessionWall($sessionId);
+	echo XSLTransform($wall,'CoursePage.xsl');
+}
 
 
 //----------------------Begin View Code----------------------------------//
@@ -101,9 +114,10 @@ echo "test";
                  array( "/views/UserHomePage.php", "/views/CoursePage.php?ns_session=" . $_GET['ns_session'] ));
 
   // Course information
-  genHeadingBar( "Course Info" );
+  //genHeadingBar( "Course Info" );
 	$sessionId = $_GET['ns_session'];
-	$metaXML = getSessionMetadata($sessionId);
+  $metaXML = getSessionMetadata($sessionId);
+  echo $metaXML;
 	echo XSLTransform($metaXML,'CoursePage.xsl');
 	echo '</br></br>';
 
@@ -115,10 +129,7 @@ echo "test";
 		 . "</form>";
 	echo "</br></br>";
 
-	// Session Wall
-	genHeadingBar( "Session Shoutouts" );
-	$wall = getSessionWall($sessionId);
-	echo XSLTransform($wall,'CoursePage.xsl');
+	genSessionWallArea($user_id, $sessionId);
 
   // Uploaded Notes?
   genHeadingBar( "Course Notes", "Add New Note Set", "/views/SessionNotes.php?ns_session=" . $sessionId );
