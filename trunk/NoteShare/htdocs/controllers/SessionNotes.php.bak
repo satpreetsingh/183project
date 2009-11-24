@@ -1,0 +1,69 @@
+<?php
+  require_once $_SERVER['DOCUMENT_ROOT'] . 'controllers/Session.php';
+  include $_SERVER['DOCUMENT_ROOT'] . 'model/NoteshareDatabase.php';
+
+  $AllowedExts     = array ("TXT", "PDF", "DOC", "DOCX", "XLS", "XLSX", "PPT", "PPTX", "JPEG", "JPG", "ZIP", "PS", "PNG", "DVI");
+  $AllowedExtTypes = array ("text/plain", "application/pdf", "application/x-pdf", "application/doc", "application/docx",
+                            "application/xls", "application/xlsx", "application/msexcel", "application/vnd.ms-excel",
+                            "application/excel", "application/vnd.x-msexcel", "application/msword", "application/vnd.msword",
+                            "application/vnd.ms-word", "application/word", "application/x-msword",
+                            "application/mspowerpoint", "application/vnd.ms-powerpoint", "application/powerpoint", "application/vnd.x-mspowerpoint", "application/octet-stream", 
+			                      "image/jpeg", "application/zip", "application/postscript", "image/png", "application/x-dvi");
+  echo var_dump( $_POST );
+  echo var_dump( $_FILES );
+/*
+  //Respond to file post
+  if(( !empty( $_FILES["uploaded_file"] )) && (!empty( $_POST['userId'])) &&
+    ( $_FILES['uploaded_file']['error'] == 0) )
+  {
+    // Get the filename, the extension, and user id
+    $filename    = basename ($_FILES['uploaded_file']['name']);
+    $ext         = strtoupper (substr ($filename, strrpos ($filename, '.') + 1));
+    $sessionId   = $_POST['ns_session'];
+    $userId      = $_POST['userId'];
+    $header      = $_POST['header'];
+    $body        = $_POST['body'];
+
+    // Set an advanced file name for storage on our server.
+    $AdvFileName = $userId . date("YmdHis");
+
+
+    // If the ext, Mime type, and size requirements (< 5MB) are met, then proceed on uploading the file.
+    if ((strlen (array_search ($ext, $AllowedExts)) > 0) &&
+      (strlen (array_search ($_FILES["uploaded_file"]["type"], $AllowedExtTypes)) > 0) && 
+      ($_FILES["uploaded_file"]["size"] < 5242881))
+    {
+
+      // Determine the path to which we want to save this file.
+      $newname = '/home/fate/SEPRepository/183project/NoteShare/htdocs/noteFiles/' . $AdvFileName;
+      //dirname (__FILE__) .
+
+      $index = 0;
+
+      // Find the next unallocated filename for the file. 
+      while (file_exists ($newname . $index)) {
+        $index++;
+      }
+
+      // Attempt to move the uploaded file to it's new location within the noteFiles directory.
+      if ((move_uploaded_file ($_FILES['uploaded_file']['tmp_name'], $newname . $index)))
+      {
+        addSessionNoteDAL( $userId, $sessionId, $header, $body, $newname . $index, $filename, $_FILES['uploaded_file']['size'] );
+        header( "location: http://apps.facebook.com/notesharesep/views/CoursePage.php?ns_session=" . $sessionId );
+      }
+      else
+      {
+        echo "Error: A problem occurred during file upload!";
+      }
+    }
+    else
+    {
+      echo "Error: Either your file format is not supported or your file exceeds 5 MB.";
+    }
+  }
+  else
+  {
+    echo "Error: No file to uploaded!";
+  }
+*/
+?>

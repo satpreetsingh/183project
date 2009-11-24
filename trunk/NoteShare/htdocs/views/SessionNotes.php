@@ -1,132 +1,46 @@
 <?php
   /**
-   * SessionBBS.View.php
-   * Displays the session bbs topic and associated posts.
+   * CoursePageView.php
+   * Provides information and functionality of a course session.
+   * Right now, partisipants.
   **/
-	require_once $_SERVER['DOCUMENT_ROOT'] . 'controllers/Session.php';
-	require_once $_SERVER['DOCUMENT_ROOT'] . 'controllers/NewThread.php';
+
+	require_once $_SERVER['DOCUMENT_ROOT'] . '/controllers/Session.php';
+	require_once $_SERVER['DOCUMENT_ROOT'] . '/controllers/SessionNotes.php';
 	require_once $_SERVER['DOCUMENT_ROOT'] . 'views/View.php';
 
-  //--------------------------View Functions--------------------------------//
 
+//--------------------------View Functions--------------------------------//
   /**
-   * Generates the form for uploading new notes
+   * Gathers and displays the contents of this session's notes.
    *
+   * @return displays table of session's notes
   **/
-  function genNewNotes( $sessionId, $userId )
+  function genSessionNotes( $user_id, $sessionId )
   {
-    openEditor();
-    genTextBox( "Subject:", header );
-    echo '<input type="hidden" name="MAX_FILE_SIZE" value="5242880">';
-    echo '<input type="hidden" name="ns_session" value="' . $sessionId . '">';
-    echo '<input type="hidden" name="userId" value="' . $userId . '">';
-    genTextArea( "Body:", body );
-    genFileUpload();
-    genButtons( $sessionId );
-    closeEditor();
+    $notesXML = getSessionNotes( $sessionId, $user_id );
+    echo XSLTransform( $notesXML, 'SessionNotes.xsl' );
   }
 
-  /**
-   * Prints the initial opening tags for the new thread form.  Function posts
-   * to controller for new thread creation.
-   *
-   * @version 1.0
-   * @return prints open form tags, and starts form table
-  **/
-  function openEditor( )
-  {
+//----------------------Begin View Code----------------------------------//
 
-    echo '' .
-    '<form enctype="multipart/form-data" action="http://noteshare.homelinux.net/controllers/SessionNotes.php" method="post" target="_top">
-       <table class="formTable">';
-  }
-
-  function genTextBox( $label, $name )
-  {
-    echo '' .
-    '  <tr>
-        <th>
-          <label class="fbFont large">' . $label . '</label>
-        </th>
-        <td class=""><input class="text" type="text" id="' . $name . '" name="' . $name . '"/></td>
-          <td class="right_padding"></td>
-        </tr>';
-  }
-
-
-  function genTextArea( $label, $name )
-  {
-    echo '' .
-    '  <tr>
-        <th>
-          <label class="fbFont large">' . $label . '</label>
-        </th>
-        <td class=""><textarea class="fbFont" id="' . $name . '" name="' . $name . '"/></textarea>
-          <td class="right_padding"></td>
-        </tr>';
-  }
-
-  /**
-   * Prints the closing submission button and cancel link.  This in turn
-   * submits to the location specified by openEditor()
-   *
-   * @version 1.0
-   * @return prints the closing submission buttons
-  **/
-  function genButtons( $sessionId )
-  {
-    echo '' .
-    '  <tr>
-         <th></th>
-           <td class="editorkit_buttonset">
-             <input class="submit add action" type="submit" value="Post Notes" name="Post Notes"/>
-             <span class="cancel_link">
-               <span>or</span>
-               <a href="http://apps.facebook.com/notesharesep/views/CoursePage.php?ns_session=' . $sessionId . '" target="_top">Cancel</a>
-             </span>
-           </td>
-           <td class="right_padding">
-           </td>
-       </tr>
-    ';
-  }
-
-  function genFileUpload( )
-  {
-    echo '' .
-    '  <tr>
-        <th>
-          <label class="fbFont large">Upload New Notes:</label>
-        </th>
-        <td class=""><input class="text" type="file" name="uploaded_file" /></td>
-          <td class="right_padding"></td>
-        </tr>';
-  }
-
-  /**
-   * Closes the form table and the form itself.
-   *
-   * @version 1.0
-   * @return prints close form table and close form tag
-  **/
-  function closeEditor()
-  {
-    echo '</table></form>';
-  }
-  //----------------------Begin View Code----------------------------------//
-
-  genViewHeader( "SessionBBS View" );
-  genPageHeader( array( "Main Page",
+  genViewHeader( "Session Notes Page" );
+  genPageHeader( array( "Main Page", 
                         "Course View",
-                        "New Thread" ),
-                 array( "/views/UserHomePage.php", 
+                        "Session Notes" ),
+                 array( "/views/UserHomePage.php",
                         "/views/CoursePage.php?ns_session=" . $_GET['ns_session'],
-                        "/views/NewThread.php?ns_session=" . $_GET['ns_session'] ));
+                        "/views/SessionNotes.php?ns_session=" . $_GET['ns_session'] ));
 
-  //Session BBS Table
   $sessionId = $_GET['ns_session'];
-  genNewNotes( $sessionId, $user_id ); 
+
+  // Uploaded Notes?
+  genHeadingBar( "Course Notes", "Add New Note Set", "/views/NewNote.php?ns_session=" . $sessionId );
+  genSessionNotes( $user_id, $sessionId );
+  echo '<br /><br />';
 
   // Close out page
   genViewFooter();
 ?>
+
+

@@ -12,7 +12,6 @@ xmlns:fb="http://www.facebook.com/2008/fbml"
 <xsl:template match="SessionMetaData">
   <table class="sessionMetaData">
     <tr><td class="fbFont sessionName"><xsl:value-of select='.' /></td></tr>
-<!--    <tr><td class="fbFont sessionTime">Start Date: <xsl:value-of select="@Start_Date"/></td><td class="sessionTime">End Date: <xsl:value-of select="@End_Date" /></td></tr> -->
 	  <tr><td class="fbFont sessionDescr">Description:<p><xsl:value-of select="@Desc"/></p></td></tr>
   </table>
 </xsl:template>
@@ -33,9 +32,9 @@ xmlns:fb="http://www.facebook.com/2008/fbml"
 	</fb:serverfbml>
 </xsl:template>
 
-<xsl:template match="memberList">
+<xsl:template match="SessionUserList">
 	<div>
-		<xsl:for-each select="member">
+		<xsl:for-each select="SessionUserItem">
 			<xsl:sort select="@friend" order="descending" />
 			<div>
 				<xsl:attribute name="class">
@@ -55,13 +54,8 @@ xmlns:fb="http://www.facebook.com/2008/fbml"
 	</div>
 </xsl:template>
 
-<!--
-  <SessionBBSTopics>
-    <SessionBBSTopic Id="##">Topic Header</SessionBBSTopic>
-  </SessionBBSTopics>
--->
 <xsl:template match="SessionBBSTopics">
-  <xsl:variable name="viewUserId"><xsl:value-of select="userId" /></xsl:variable>
+  <xsl:variable name="viewUserId"><xsl:value-of select="UserId" /></xsl:variable>
   <table class="sessionBBS">
     <xsl:for-each select="SessionBBSTopic">
     <tr>
@@ -81,7 +75,7 @@ xmlns:fb="http://www.facebook.com/2008/fbml"
           [
           <a target="_top">
             <xsl:attribute name="href">
-              http://apps.facebook.com/notesharesep/controllers/CourseHomePage.php?ns_session=<xsl:value-of select="@SessionId" />&amp;parentId=<xsl:value-of select="@Id" />
+              http://apps.facebook.com/notesharesep/controllers/CourseHomePage.php?ns_session=<xsl:value-of select="@SessionId" />&amp;parentId=<xsl:value-of select="@Id" />&amp;funct=DELETEBBS
             </xsl:attribute>
             X
           </a>
@@ -98,7 +92,7 @@ xmlns:fb="http://www.facebook.com/2008/fbml"
   <getSessionNote User_ID="" Header="" Body="" Original_File_Name="" File_Size="1"></getSessionNote>
 -->
 <xsl:template match="getSessionNotes">
-  <xsl:variable name="viewUserId"><xsl:value-of select="userId" /></xsl:variable>
+  <xsl:variable name="viewUserId"><xsl:value-of select="UserId" /></xsl:variable>
   <table class="sessionNotes">
     <xsl:for-each select="getSessionNote">
     <tr>
@@ -114,9 +108,9 @@ xmlns:fb="http://www.facebook.com/2008/fbml"
         <br />
         <xsl:if test="$viewUserId=@User_ID">
           [
-          <a target="_top">
+          <a target="_top" onclick="return confirm('Really? Delete these notes?');">
             <xsl:attribute name="href">
-              http://apps.facebook.com/notesharesep/controllers/CourseHomePage.php?ns_session=<xsl:value-of select="@SessionId" />&amp;parentId=<xsl:value-of select="@Id" />
+              http://apps.facebook.com/notesharesep/controllers/CourseHomePage.php?ns_session=<xsl:value-of select="@SessionId" />&amp;noteId=<xsl:value-of select="@Id" />&amp;funct=DELETENOTE
             </xsl:attribute>
             X
           </a>

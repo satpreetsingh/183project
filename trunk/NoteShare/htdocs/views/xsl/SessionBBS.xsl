@@ -17,7 +17,8 @@ xmlns:fb="http://www.facebook.com/2008/fbml"
   </SessionBBSThread>
 -->
 <xsl:template match="SessionBBSThread">
-  <xsl:variable name="viewUserId"><xsl:value-of select="userId" /></xsl:variable>
+  <xsl:variable name="viewUserId"><xsl:value-of select="UserId" /></xsl:variable>
+  <xsl:variable name="parentId"><xsl:value-of select="ParentId" /></xsl:variable>
   <table>
     <tr>
       <td class="fbFont sessionBBSHeadingBar">
@@ -30,7 +31,7 @@ xmlns:fb="http://www.facebook.com/2008/fbml"
     <xsl:for-each select="SessionBBSPost">
     <tr class="sessionBBSHeaderRow">
       <td class="sessionBBSUserPic" rowspan="2">
-        <fb:profile-pic>
+        <fb:profile-pic size="thumb">
           <xsl:attribute name="uid">
             <xsl:value-of select="@UserId" />
           </xsl:attribute>
@@ -46,18 +47,26 @@ xmlns:fb="http://www.facebook.com/2008/fbml"
       <td class="fbFont sessionBBSHeadingBar right normal">
         on <xsl:value-of select="@PostDate" />
       </td>
-      <td rowspan="2" class="fbFont right" valign="top">
-        <!--
+      <td rowspan="2" class="fbFont right" valign="top">       
+        <br />
         <xsl:if test="$viewUserId=@UserId">
-          <xsl:value-of select="$viewUserId" />
+          [
+          <a target="_top" onclick="return confirm('Really delete this post?');">
+            <xsl:attribute name="href">
+              http://apps.facebook.com/notesharesep/controllers/SessionBBS.php?sessionBBSDEL=1&amp;ns_session=<xsl:value-of select="@SessionId" />&amp;post_id=<xsl:value-of select="@Id" />&amp;parentId=<xsl:value-of select="$parentId" />
+            </xsl:attribute>
+            X
+          </a>]
         </xsl:if>
-        -->
       </td>
     </tr>
     <tr>
       <td class="fbFont sessionBBSPost" colspan="2">
         <xsl:value-of select="." />
       </td>
+    </tr>
+    <tr>
+      <td><br /></td>
     </tr>
     </xsl:for-each>
   </table>
