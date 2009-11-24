@@ -32,10 +32,8 @@
   **/
   function genSessionBBSTable( $parentId, $user_id )
   {
-    $bbsPosts = getSessionBBSPosts( $parentId );
-    $bbsPosts = formatXMLString( $bbsPosts );
-    $bbsPosts = insertUserId( $bbsPosts, $user_id );
-//    echo $bbsPosts;
+    $bbsPosts = getSessionBBSPosts( $parentId, $user_id );
+    echo $bbsPosts;
     echo XSLTransform( $bbsPosts, 'SessionBBS.xsl' );
     echo '<br />';
   }
@@ -69,7 +67,7 @@
                         "/views/CoursePage.php?ns_session=" . $_GET['ns_session'],
                         "/views/SessionBBS.php?ns_session=" . $_GET['ns_session'] . "&parentId=" . $_GET['parentId'] ));
 
-  //Session BBS Table
+  // Gen Session BBS Table
   $parentId = $_GET['parentId'];
   $sessionId = $_GET['ns_session'];
   genSessionBBSTable( $parentId, $user_id );

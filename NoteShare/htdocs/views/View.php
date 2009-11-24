@@ -2,11 +2,17 @@
 /**
  * View.php
  *
- * Contains all of the basic view functions.
+ * Contains all of the basic view functions for generating a page header,
+ *  individual section headings, form posts, and the XSL translations.
  *
- * Last Modified: 11/14/09
+ * Last Modified: 11/23/09
+ * Notes:         Moved genForm functions from the add course page into this
+ *                  generic view.
+ *
+ * Modified:      11/14/09
  * Notes:         Expanded genHeadingBar functionality to include options for
  *                  links within the heading bar.
+ *
  * Modified:	    11/09/09
  * Notes:		      Initial Creation
 **/
@@ -21,6 +27,7 @@
    *  --Open the body tag for the page
    *
    * @param string $title Title of the web page
+   * @version 2.0
    * @return the page header
   **/
   function genViewHeader( $title )
@@ -36,14 +43,16 @@
   }
 
   /**
-   * Prints out a generic view's footer
+   * Prints out a generic view's footer which includes the necessary Facebook
+   *  javascript for XFBML.
    *
+   * @version 2.0
    * @return HTML, view footer
   **/
   function genViewFooter()
   {
     echo "    <script src=\"http://static.ak.facebook.com/js/api_lib/v0.4/FeatureLoader.js.php\" type=\"text/javascript\"></script>\n" .
-         "    </script>\n" . 
+         "    </script>\n" .
          "    <script type=\"text/javascript\">\n" .
          "      FB_RequireFeatures([\"XFBML\", \"CanvasUtil\"], function()\n" .
          "      {\n" .
@@ -51,7 +60,7 @@
          "        FB.XdComm.Server.init(\"/xd_receiver.htm\");\n" .
          "        FB.CanvasClient.startTimerToSizeToContent();\n" .
          "        FB.CanvasClient.scrollTo( 0, 0 );\n" .
-         "      });\n" . 
+         "      });\n" .
          "    </script>\n" .
          "  </body>\n" .
          "</html>\n";
@@ -67,6 +76,7 @@
    *                         in order from main page to current page
    * @param string[] $links  web addresses of the nav links
    *                          in order from main page to current page
+   *                          (paths relative from document root)
    *
   **/
   function genPageHeader( $titles, $links )

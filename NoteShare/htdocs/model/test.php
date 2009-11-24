@@ -59,7 +59,7 @@ function memTest_getUniversityDAL( $bruteTest )
 //getSessionsDAL(1);
 //getDepartmentsDAL(1);
 //getSessionMetadataDAL(1);
-//getSessionMembersDAL(1);
+getSessionMembersDAL(8);
 //removeUserSessionDAL(2,1);
 //addUserSessionDAL(66000948,2);
 //addSessionBBSPostDAL( 66000948, 2, 'testing header', 'testing body', null );
@@ -73,12 +73,31 @@ function memTest_getUniversityDAL( $bruteTest )
 //echo removeSessionNoteDAL(7);
 //echo removeSessionBBSDAL(7);
 
-getSessionNoteDAL (2);
+//getSessionNoteDAL (2);
 
 //addUserDAL(34234);
 
 //include '/var/www/localhost/htdocs/model/dbcon.php';
 //$dbData = new DBData();
 //$dbData->free(true);
+
+
+
+// Working deletion function...
+function RemoveNoteFromServer()
+{
+
+  if (unlink('/home/fate/SEPRepository/183project/NoteShare/htdocs/noteFiles/66000948200911181805540')) {  
+    ?>It Works!<?php
+  }
+  
+  else {
+     ?>It doesn't work :( <?php
+  }
+}
+
+
+
+//RemoveNoteFromServer();
 
 ?>

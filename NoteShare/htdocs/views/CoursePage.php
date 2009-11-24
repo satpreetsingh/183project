@@ -12,21 +12,6 @@
 
 //--------------------------View Functions--------------------------------//
   /**
-   * Inserts the user id of the viewer into the xml response
-  **/
-  function insertUserId( $bbsPosts, $user_id )
-  {
-    $temp = explode( "\n", $bbsPosts );
-    $response = $temp[0] . $temp[1] . $temp[2] . '<userId>' . $user_id . "</userId>\n";
-    for( $i = 3; $i < count( $temp ); $i++ )
-    {
-      $response = $response . $temp[$i];
-    }
-
-    return $response;
-  }
-
-  /**
    * Generates a text area with the specified name and intial value
    *
    * @version 1.0
@@ -41,40 +26,15 @@
   }
 
   /**
-   * Displays the posting link for the session bulletin board system
-   *
-   * @return displays the link for posting
-  **/
-  function genNewThreadBBS( $sessionId )
-  {
-    echo '<div style="text-align: right;">' .
-         '<a href="http://apps.facebook.com/notesharesep/views/NewThread.php?ns_session=' . $sessionId . '" target="_top" class="fbFont">' .
-         'Create New Thread</a></div>';
-  }
-
-  /**
-   * Displays the posting link for the session note system
-   *
-   * @return displays the link for posting
-  **/
-  function genNewThreadNotes( $sessionId )
-  {
-echo "test";
-  }
-
-  /**
    * Gathers and displays the contents of this session's BBS topics.
    *  USE DOM to insert USER_ID
    * @return displays table of session's BBS topics
   **/
   function genSessionBBS( $sessionId, $user_id )
   {
-    $bbsTopicsXML = getSessionBBSTopics( $sessionId );
-    $bbsTopicsXML = formatXMLString( $bbsTopicsXML );
-    $bbsTopicsXML = insertUserId( $bbsTopicsXML, $user_id );
+    $bbsTopicsXML = getSessionBBSTopics( $sessionId, $user_id );
     echo XSLTransform( $bbsTopicsXML, 'CoursePage.xsl');
-    echo '<br />';
-    genNewThreadBBS( $sessionId );
+    echo '<a href="http://apps.facebook.com/notesharesep/views/SessionBBSTopics.php?ns_session=' . $sessionId . '" target="_top" class="fbFont left">View all Topics</a>';
   }
 
   /**
@@ -84,19 +44,21 @@ echo "test";
   **/
   function genSessionNotes( $user_id, $sessionId )
   {
-    $notesXML = getSessionNotes( $sessionId );
-    $notesXML = formatXMLString( $notes );
-    $notesXML = insertUserId( $notes, $user_id );
+    $notesXML = getSessionNotes( $sessionId, $user_id );
+    //echo $notesXML;
     echo XSLTransform( $notesXML, 'CoursePage.xsl' );
-    echo '<br />';
-    genNewThreadNotes( $sessionID );
-
+    echo '<a href="http://apps.facebook.com/notesharesep/views/SessionNotes.php?ns_session=' . $sessionId . '" target="_top" class="fbFont left">View all Notes</a>';
   }
   
+   /**
+   * Gathers and displays the contents of the session's wall.
+   *
+   * @return displays the session's wall
+  **/
 function genSessionWallArea($user_id, $sessionId )
 {
 	genHeadingBar( "Session Shoutouts" );
-	echo 
+	echo
 		"<form action=\"/controllers/AddWallPost.php\">" .
 		"	<textarea name=\"post_body\"></textarea>" .
 		"	<button class=\"drop\" name=\"ns_session\" value=\"$sessionId\">Share</button>" .
@@ -117,7 +79,6 @@ function genSessionWallArea($user_id, $sessionId )
   //genHeadingBar( "Course Info" );
 	$sessionId = $_GET['ns_session'];
   $metaXML = getSessionMetadata($sessionId);
-  echo $metaXML;
 	echo XSLTransform($metaXML,'CoursePage.xsl');
 	echo '</br></br>';
 
@@ -132,18 +93,19 @@ function genSessionWallArea($user_id, $sessionId )
 	genSessionWallArea($user_id, $sessionId);
 
   // Uploaded Notes?
-  genHeadingBar( "Course Notes", "Add New Note Set", "/views/SessionNotes.php?ns_session=" . $sessionId );
+  genHeadingBar( "Course Notes", "Add New Note Set", "/views/NewNote.php?ns_session=" . $sessionId );
   genSessionNotes( $user_id, $sessionId );
   echo '<br /><br />';
 
   // SessionBBS
-  genHeadingBar( "Session Bulletin Board" );
+  genHeadingBar( "Session Bulletin Board", "Create New Thread", "/views/NewThread.php?ns_session=" . $sessionId );
   genSessionBBS( $sessionId, $user_id );
   echo '<br /><br />';
 
   // Classmates in the course
 	genHeadingBar( "Classmates" );
 	$membersXML = getSessionMembers($user_id, $sessionId);
+  echo $membersXML;
 	echo XSLTransform($membersXML,'CoursePage.xsl');
 
   // Close out page

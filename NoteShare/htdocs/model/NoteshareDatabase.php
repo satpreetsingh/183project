@@ -386,18 +386,38 @@ function getSessionMetadataDAL ($session_id)
  * @param integer $session_id sessionID number
  * @return XML user's current enrolled session list
  */
-function getSessionMembersDAL ($session_id)
+function getSessionMembersDAL ($session_id, $get_members = 0)
 {
     
   $conn = openDB();
 
-  $query = "Select Session.Id                 As Session_Id,  " .
-                  "SessionEnrollment.User_Ptr As User_Ptr     " .
 
-           "From Session " . 
-	    "Inner Join SessionEnrollment On SessionEnrollment.Id = Session.Course_Ptr " . 
 
-           "Where (Session.Id = " . $session_id . ");";	
+  // Only select the latest X members.
+  if ($get_members <> 0) {
+    
+
+    $query = "Select Session.Id                 As Session_Id,  " .
+                    "SessionEnrollment.User_Ptr As User_Ptr     " .
+
+             "From Session " . 
+	      "Inner Join SessionEnrollment On (SessionEnrollment.Id = Session.Course_Ptr) And " . 
+		  				   "(SessionEnrollment.Left_Date Is Null) " . 
+
+             "Where (Session.Id = " . $session_id . ") " . 
+             "Order By ID Desc " . 
+             "Limit 0," . $latest_posts . ";";	
+  } 
+  else { 
+    $query = "Select Session.Id                 As Session_Id,  " .
+                    "SessionEnrollment.User_Ptr As User_Ptr     " .
+
+             "From Session " . 
+	      "Inner Join SessionEnrollment On (SessionEnrollment.Id = Session.Course_Ptr) And " . 
+	  			  		   "(SessionEnrollment.Left_Date Is Null) " . 
+
+             "Where (Session.Id = " . $session_id . ") "; 
+  }
 
 
   $result = mysql_query($query);
@@ -415,8 +435,8 @@ function getSessionMembersDAL ($session_id)
 
   while($row = mysql_fetch_assoc($result)) {
 
-    $SessionUserItem= $doc->createElement('SessionUserItem');
-    $doc->appendChild($SessionUserItem);
+    $SessionUserItem = $doc->createElement('SessionUserItem');
+    $list->appendChild($SessionUserItem);
 	
     $id_attr = $doc->createAttribute('Id');
     $SessionUserItem->appendChild($id_attr);
@@ -697,7 +717,7 @@ function addSessioBBSPostDAL( $header, $body, $user_id, $session_id, $prev_post)
 	$header = mysql_real_escape_string($header);
 	$body = mysql_real_escape_string($body);
 	
-	$query = "Insert into SessionBBS (Header, Body, Post_Date, User_ptr, Session_ptr, Prev_Post_ptr) " .
+	$query = "Insert Into SessionBBS (Header, Body, Post_Date, User_ptr, Session_ptr, Prev_Post_ptr) " .
 			"Values (\'$header\', \'$body\', ". date("Y-m-d H:m:s") .", $user_id, $session_id, $prev_post)";
 			
 	mysql_query($query);
@@ -719,8 +739,10 @@ function getSessionWallParentDAL($session_id)
 	/****** Get the session wall parent ******/
 	$wall_parent = '0';
 	
-	$query = "Select ID From SessionBBS Where (Session_ptr=$session_id and " .
-			"User_ptr=null and Header=\'#SESSION WALL#\')";
+	$query = "Select ID From SessionBBS " .
+		  "Where ((Session_ptr = $session_id) Aand " .
+			  "(User_ptr = Null) And " .
+			  "(Header = \'#SESSION WALL#\'))";
 			
 	$result = mysql_query($query);
 	
@@ -921,14 +943,14 @@ function getSessionNoteDAL ($session_id, $id = 0, $latest_posts = 0)
 
   $style = $doc->createProcessingInstruction('xml-stylesheet', 'type="text/xsl" href="test.xsl"');
   $doc->appendChild($style);
-  $list = $doc->createElement('getSessionNotes');
-  $doc->appendChild($list);
+  $SessionNote = $doc->createElement('getSessionNotes');
+  $doc->appendChild($SessionNote);
 
 
   while ($row = mysql_fetch_assoc($result)) {
   
     $getSessionNote = $doc->createElement('getSessionNote');
-    $list->appendChild($getSessionNote);
+    $SessionNote->appendChild($getSessionNote);
 
 
     $id_attr = $doc->createAttribute('Id');
@@ -945,24 +967,31 @@ function getSessionNoteDAL ($session_id, $id = 0, $latest_posts = 0)
     $user_attr->appendChild($user_text);
 
 
+    $session_attr = $doc->createAttribute('SessionId');
+    $getSessionNote->appendChild($session_attr);
+   
+    $session_text = $doc->createTextNode($row['Session_ptr']);
+    $session_attr->appendChild($session_text);
+
+
     $header_attr = $doc->createAttribute('Header');
     $getSessionNote->appendChild($header_attr);
    
-    $header_text = $doc->createTextNode($row['Header']);
+    $header_text = $doc->createTextNode($row['HEADER']);
     $header_attr->appendChild($header_text);
 
 
     $body_attr = $doc->createAttribute('Body');
     $getSessionNote->appendChild($body_attr);
    
-    $body_text = $doc->createTextNode($row['Body']);
+    $body_text = $doc->createTextNode($row['BODY']);
     $body_attr->appendChild($body_text);
 
 
     $originalfilename_attr = $doc->createAttribute('Original_File_Name');
     $getSessionNote->appendChild($originalfilename_attr);
    
-    $originalfilename_text = $doc->createTextNode($row['Original_File_Name']);
+    $originalfilename_text = $doc->createTextNode($row['ORIGINAL_FILE_NAME']);
     $originalfilename_attr->appendChild($originalfilename_text);
 
 
@@ -976,7 +1005,7 @@ function getSessionNoteDAL ($session_id, $id = 0, $latest_posts = 0)
     $Server_Path_attr = $doc->createAttribute('Server_Path');
     $getSessionNote->appendChild($Server_Path_attr);
    
-    $filesize_text = $doc->createTextNode($row['Path']);
+    $filesize_text = $doc->createTextNode($row['PATH']);
     $filesize_attr->appendChild($filesize_text);
 
 
@@ -989,14 +1018,14 @@ function getSessionNoteDAL ($session_id, $id = 0, $latest_posts = 0)
   $out = $doc->saveXML();
 
   closeDB ($result, $conn);
-
+ 
   return $out;
 
 }
 
 
 /**
- * This function returns the result after removing a note from public view.
+ * This function returns the result after removing a note from public view, then removes the physical note on the server.
  * @author Joseph Trapani
  * @version 1.0
  * @param integer $id note's database ID number
@@ -1032,6 +1061,28 @@ function removeSessionNoteDAL ($id)
    
 
   $out = $doc->saveXML();
+
+
+  // Remove the note from the server.
+  $query = "Select SessionNotes.PATH " . 
+ 	    "From SessionNotes " . 
+	    "Where (SessionNotes.ID = " . $id . ");";	
+
+  $result = mysql_query($query);
+
+  while($row = mysql_fetch_assoc($result)) {
+   
+    If ($row['PATH'] <> '') {
+    
+      
+        unlink($row['PATH']);
+
+    }
+
+  }
+
+  closeDB ($result, $conn);
+
 
   return $out;
 }
