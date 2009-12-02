@@ -24,6 +24,20 @@
 // START: AJAX CODE RESPONSE
   if( isset( $_GET['Add']))
   {
+ /* 	if( isset( $_GET['ns_university_add']) && $_GET['ns_university_add']!="")
+  	{
+  		createUnversityDAL($_GET['ns_university_add']);
+  	}
+  	if( isset( $_GET['ns_department_add'] ) && $_GET['ns_department_add']!="")
+  	{
+  		
+  	}
+  	if( isset( $_GET['ns_course_add'] ) && $_GET['ns_course_add']!="")
+  	{
+  	}
+  	if( isset( $_GET['ns_session_add'] ) && $_GET['ns_session_add']!="")
+  	{
+  	}*/
     addCourse( $user_id, $_GET['ns_session'] );
   }
   else

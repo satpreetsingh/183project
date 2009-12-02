@@ -55,7 +55,7 @@
           <th class="combo">
             <label class="fbFont large">' . $label . ' : </label>
           </th>
-          <td class="combo" id="'.$name.'Container">
+          <td class="combo" id="'.$name.'_container">
             <select class="combo" id="' . $name . '" name="' . $name . '" onchange="'.$action.'(); return false;" onmouseover="resetBackground(this); return false;">'
             . $optionString .
             '</select>
