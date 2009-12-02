@@ -60,7 +60,7 @@ if (isset ($_POST[UserSelection])) {
 
 
 
-  $message = "<P></P>Display the list of joined sessions/study groups...";
+  $message = "<P />Display the list of joined sessions/study groups...";
 
   $conn = openDB();
 
@@ -95,7 +95,7 @@ if (isset ($_POST[UserSelection])) {
 
 
 
-  $message = $message . "<P></P>Display the lists of session/study group BBS posts...";
+  $message = $message . "<P />Display the lists of session/study group BBS posts...";
 
   $conn = openDB();
 
@@ -113,7 +113,7 @@ if (isset ($_POST[UserSelection])) {
   $result = mysql_query($query);
 
   // Output the header.
-  $message = $message . "<P></P><P></P><Table><TR><TD><B><Font Color = \"#00611C\">Session</Font></B></TD><TD><B><Font Color = \"#00CD00\">Header</Font></B></TD><TD><B><Font Color = \"#00FF66\">Body</Font></B></TD><TD><B><Font Color = \"#2C5D3F\">Post Date</Font></B></TD><TD><B><Font Color = \"#629632\">Removal Date</Font></B></TD></TR>";
+  $message = $message . "<P /><P /><Table><TR><TD><B><Font Color = \"#00611C\">Session</Font></B></TD><TD><B><Font Color = \"#00CD00\">Header</Font></B></TD><TD><B><Font Color = \"#00FF66\">Body</Font></B></TD><TD><B><Font Color = \"#2C5D3F\">Post Date</Font></B></TD><TD><B><Font Color = \"#629632\">Removal Date</Font></B></TD></TR>";
  
   // Output the data.
   while($row = mysql_fetch_assoc($result)) {
@@ -145,7 +145,7 @@ if (isset ($_POST[UserSelection])) {
   $result = mysql_query($query);
 
   // Output the header.
-  $message = $message . "<P></P><P></P><Table><TR><TD><B><Font Color = \"#00611C\">Study Group</Font></B></TD><TD><B><Font Color = \"#00CD00\">Header</Font></B></TD><TD><B><Font Color = \"#00FF66\">Body</Font></B></TD><TD><B><Font Color = \"#2C5D3F\">Post Date</Font></B></TD><TD><B><Font Color = \"#629632\">Removal Date</Font></B></TD></TR>";
+  $message = $message . "<P /><P /><Table><TR><TD><B><Font Color = \"#00611C\">Study Group</Font></B></TD><TD><B><Font Color = \"#00CD00\">Header</Font></B></TD><TD><B><Font Color = \"#00FF66\">Body</Font></B></TD><TD><B><Font Color = \"#2C5D3F\">Post Date</Font></B></TD><TD><B><Font Color = \"#629632\">Removal Date</Font></B></TD></TR>";
  
   // Output the data.
   while($row = mysql_fetch_assoc($result)) {
@@ -159,7 +159,7 @@ if (isset ($_POST[UserSelection])) {
 
 
 
-  $message = $message . "<P></P>Display the lists of session/study group note posts...";
+  $message = $message . "<P />Display the lists of session/study group note posts...";
 
   $conn = openDB();
 
@@ -177,7 +177,7 @@ if (isset ($_POST[UserSelection])) {
   $result = mysql_query($query);
 
   // Output the header.
-  $message = $message . "<P></P><P></P><Table><TR><TD><B><Font Color = \"#00611C\">Session</B></Font></TD><TD><B><Font Color = \"#00CD00\">Header</Font></B></TD><TD><B><Font Color = \"#00FF66\">Body</Font></B></TD><TD><B><Font Color = \"#2C5D3F\">Post Date</Font></B></TD><TD><B><Font Color = \"#629632\">Removal Date</Font></B></TD><TD><B><Font Color = \"#7FFF00\">Original File Name</Font></B></TD><TD><B><Font Color = \"#AADD00\">File Size</Font></B></TD><TD><B><Font Color = \"#8B7500\">Good/Bad Rating</Font></B></TD></TR>";
+  $message = $message . "<P /><P /><Table><TR><TD><B><Font Color = \"#00611C\">Session</B></Font></TD><TD><B><Font Color = \"#00CD00\">Header</Font></B></TD><TD><B><Font Color = \"#00FF66\">Body</Font></B></TD><TD><B><Font Color = \"#2C5D3F\">Post Date</Font></B></TD><TD><B><Font Color = \"#629632\">Removal Date</Font></B></TD><TD><B><Font Color = \"#7FFF00\">Original File Name</Font></B></TD><TD><B><Font Color = \"#AADD00\">File Size</Font></B></TD><TD><B><Font Color = \"#8B7500\">Good/Bad Rating</Font></B></TD></TR>";
  
   // Output the data.
   while($row = mysql_fetch_assoc($result)) {
@@ -209,7 +209,7 @@ if (isset ($_POST[UserSelection])) {
   $result = mysql_query($query);
 
   // Output the header.
-  $message = $message . "<P></P><P></P><Table><TR><TD><B><Font Color = \"#00611C\">Study Group</B></Font></TD><TD><B><Font Color = \"#00CD00\">Header</Font></B></TD><TD><B><Font Color = \"#00FF66\">Body</Font></B></TD><TD><B><Font Color = \"#2C5D3F\">Post Date</Font></B></TD><TD><B><Font Color = \"#629632\">Removal Date</Font></B></TD><TD><B><Font Color = \"#7FFF00\">Original File Name</Font></B></TD><TD><B><Font Color = \"#AADD00\">File Size</Font></B></TD><TD><B><Font Color = \"#8B7500\">Good/Bad Rating</Font></B></TD></TR>";
+  $message = $message . "<P /><P /><Table><TR><TD><B><Font Color = \"#00611C\">Study Group</B></Font></TD><TD><B><Font Color = \"#00CD00\">Header</Font></B></TD><TD><B><Font Color = \"#00FF66\">Body</Font></B></TD><TD><B><Font Color = \"#2C5D3F\">Post Date</Font></B></TD><TD><B><Font Color = \"#629632\">Removal Date</Font></B></TD><TD><B><Font Color = \"#7FFF00\">Original File Name</Font></B></TD><TD><B><Font Color = \"#AADD00\">File Size</Font></B></TD><TD><B><Font Color = \"#8B7500\">Good/Bad Rating</Font></B></TD></TR>";
  
   // Output the data.
   while($row = mysql_fetch_assoc($result)) {
@@ -260,6 +260,9 @@ echo  $row['User_ID'];
 
 echo '</select>';
 
+
+
+// Use a scrollable div tag to ensure all the text can be viewed on the page.  
 echo '<input type="submit" value="Query NoteShare" />';
 echo '</form>';
 
@@ -270,8 +273,14 @@ echo '<P />';
 echo '<P />';
 
 
+
+echo '<div style="overflow:auto; height:600px">';
+
 // Print the message string 
-print $message;
+echo $message;
+
+echo '</div>';
+
 
 
 

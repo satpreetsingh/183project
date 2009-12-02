@@ -4,6 +4,37 @@
   {
     obj.style.background = "#3b5998";
   }
+  
+function textifyComboBox( containerName )
+{
+	var cmbCont = document.getElementById(containerName+ "Container");
+	cmbCont.innerHTML = 
+			'<input type="text" class="addText" name="' + containerName + 'Add" value="" />'
+}
+
+function addDescriptionToTable()
+{
+	var nsTable = document.getElementById("ns_table").children[0];
+	var buttonRow = document.getElementById("ns_button_row");
+	
+	var newRow = document.createElement("tr");
+	newRow.setAttribute("class","combo");
+	
+	var header = document.createElement("th");
+	header.setAttribute("class","combo");
+	header.innerHTML = '<label class="fbFont large">Description : </label>'
+	newRow.appendChild(header);
+	
+	var data = document.createElement("td");
+	data.setAttribute("class","combo");
+	data.setAttribute("id","ns_descContainer");
+	data.innerHTML = '<textarea id="ns_descAdd" name="ns_descAdd" class="addText" rows="3"></textarea>'
+	newRow.appendChild(data);
+ 
+     nsTable.removeChild(buttonRow);
+     nsTable.appendChild(newRow);
+     nsTable.appendChild(buttonRow);
+}
 
   function getDepartments()
   {
@@ -11,6 +42,18 @@
     var selUni = cmbUni.selectedIndex;
     var universityID = cmbUni.options[ selUni ].value;
 
+	// If add uni was selected
+	if( selUni == 1 )
+	{
+		textifyComboBox("ns_university");
+		textifyComboBox("ns_department");
+		textifyComboBox("ns_course");
+		textifyComboBox("ns_session");
+		addDescriptionToTable();
+		
+		return;
+	}
+	
     // user selected blank option
     if( universityID == -1 )
     {
@@ -63,6 +106,17 @@
     var cmbDept = document.getElementById( 'ns_department' );
     var selDept = cmbDept.selectedIndex;
     var deptID = cmbDept.options[ selDept ].value;
+    
+    // If add dept was selected
+	if( selDept == 1 )
+	{
+		textifyComboBox("ns_department");
+		textifyComboBox("ns_course");
+		textifyComboBox("ns_session");
+		addDescriptionToTable();
+		
+		return;
+	}
 
     // user selected blank option
     if( deptID == -1 )
@@ -113,6 +167,16 @@
     var selCourse = cmbCourse.selectedIndex;
     var courseID = cmbCourse.options[ selCourse ].value;
 
+	// If add course was selected
+	if( selCourse == 1 )
+	{
+		textifyComboBox("ns_course");
+		textifyComboBox("ns_session");
+		addDescriptionToTable();
+		
+		return;
+	}
+
     // user selected blank
     if( courseID == -1 )
     {
@@ -151,3 +215,16 @@
       xmlhttp.send( null );
     }
   }
+  
+function changedSession()
+{
+	var cmbCourse = document.getElementById( 'ns_course' );
+    var selSession = cmbCourse.selectedIndex;
+    
+    // If add course was selected
+	if( selSession == 1 )
+	{	
+		textifyComboBox("ns_session");
+		addDescriptionToTable();
+	}
+}
