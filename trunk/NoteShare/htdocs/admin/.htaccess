@@ -1,0 +1,4 @@
+AuthName "Section Name"
+AuthType Basic
+AuthUserFile /home/fate/SEPRepository/183project/NoteShare/htaccess/.htpasswd
+Require valid-user
