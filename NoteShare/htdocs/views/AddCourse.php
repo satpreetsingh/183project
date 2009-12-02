@@ -19,7 +19,6 @@
 **/
 
   require_once $_SERVER['DOCUMENT_ROOT'] . 'views/View.php';
-  require_once $_SERVER['DOCUMENT_ROOT'] . 'controllers/Session.php';
   require_once $_SERVER['DOCUMENT_ROOT'] . 'controllers/AddCourse.php';
 
   /**

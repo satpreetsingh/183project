@@ -16,7 +16,7 @@
                 should serve as an example of how to create screen mockups
                 for our architecture document.
 -----------------------------------------------------------------------------*/
-  require_once $_SERVER['DOCUMENT_ROOT'] . 'controllers/Session.php';
+  require_once $_SERVER['DOCUMENT_ROOT'] . 'controllers/Controller.php';
 
   $facebook->redirect( 'http://apps.facebook.com/notesharesep/views/UserHomePage.php' );
 ?>

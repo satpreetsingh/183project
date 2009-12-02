@@ -5,9 +5,8 @@
    * Right now, partisipants.
   **/
 
-	require_once $_SERVER['DOCUMENT_ROOT'] . '/controllers/Session.php';
-	require_once $_SERVER['DOCUMENT_ROOT'] . '/controllers/SessionBBSTopics.php';
 	require_once $_SERVER['DOCUMENT_ROOT'] . 'views/View.php';
+	require_once $_SERVER['DOCUMENT_ROOT'] . '/controllers/SessionBBSTopics.php';
 
 
 //--------------------------View Functions--------------------------------//

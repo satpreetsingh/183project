@@ -4,10 +4,8 @@
    * Provides information and functionality of a course session.
    * Right now, partisipants.
   **/
-
-	require_once $_SERVER['DOCUMENT_ROOT'] . '/controllers/Session.php';
-	require_once $_SERVER['DOCUMENT_ROOT'] . '/controllers/SessionNotes.php';
 	require_once $_SERVER['DOCUMENT_ROOT'] . 'views/View.php';
+	require_once $_SERVER['DOCUMENT_ROOT'] . '/controllers/SessionNotes.php';
 
 
 //--------------------------View Functions--------------------------------//

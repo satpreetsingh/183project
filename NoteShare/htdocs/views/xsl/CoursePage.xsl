@@ -17,6 +17,75 @@ xmlns:fb="http://www.facebook.com/2008/fbml"
 </xsl:template>
 
 <xsl:template match="sessionWallPosts">
+  <xsl:variable name="viewUserId"><xsl:value-of select="UserId" /></xsl:variable>
+	<table cellpadding="0" cellspacing="0" class="sessionBBSPost">
+    <xsl:for-each select="post">
+    <tr class="sessionBBSHeaderRow">
+      <td class="sessionBBSUserPic" rowspan="2">
+        <a target="_blank">
+          <xsl:attribute name="href">
+            http://www.facebook.com/profile.php?id=<xsl:value-of select="@user" />
+          </xsl:attribute>
+          <img class="profile_pic_linked" height="50" width="50">
+            <xsl:attribute name="src">
+              <xsl:choose>
+                <xsl:when test="@PicURL!=''">
+                  <xsl:value-of select="@PicURL" />
+                </xsl:when>
+                <xsl:otherwise>
+                  http://static.ak.fbcdn.net/pics/q_silhouette.gif
+                </xsl:otherwise>
+              </xsl:choose> 
+            </xsl:attribute>
+            <xsl:attribute name="alt">
+              <xsl:value-of select="@UserName" />
+            </xsl:attribute>
+            <xsl:attribute name="title">
+              <xsl:value-of select="@UserName" />
+            </xsl:attribute>
+          </img>
+        </a>
+      </td>
+      <td class="fbFont sessionBBSHeadingBar">  
+        <a target="_blank" class="fbFont">
+          <xsl:attribute name="href">
+            http://www.facebook.com/profile.php?id=<xsl:value-of select="@user" />
+          </xsl:attribute>
+          <xsl:value-of select="@UserName" />
+        </a>
+      </td>
+      <td class="fbFont sessionBBSHeadingBar right">
+        <xsl:value-of select="@time" />
+      </td>
+<!--
+      <td rowspan="2" class="fbFont right" valign="top">
+        <br />
+        <xsl:if test="$viewUserId=@user">
+          [
+          <a target="_top" onclick="return confirm('Really delete this post?');">
+            <xsl:attribute name="href">
+              http://apps.facebook.com/notesharesep/controllers/SessionBBS.php?sessionBBSDEL=1&amp;ns_session=<xsl:value-of select="@SessionId" />&amp;post_i$
+            </xsl:attribute>
+            X
+          </a>]
+        </xsl:if>
+      </td>
+-->
+    </tr>
+    <tr>
+      <td class="fbFont sessionBBSPost" colspan="2">
+        <xsl:value-of select="." />
+      </td>
+    </tr>
+    <tr>
+      <td><br /></td>
+    </tr>
+  </xsl:for-each>
+  </table>
+</xsl:template>
+
+<!--
+<xsl:template match="sessionWallPosts">
 	<fb:serverfbml>
 		<script type="text/fbml">
 			<fb:wall>
@@ -31,27 +100,66 @@ xmlns:fb="http://www.facebook.com/2008/fbml"
 		</script>
 	</fb:serverfbml>
 </xsl:template>
-
+-->
 <xsl:template match="SessionUserList">
-	<div>
+	<table class="padded">
+    <tr>
+      <td width="96"></td>
+      <td width="96"></td>
+      <td width="96"></td>
+      <td width="96"></td>
+      <td width="96"></td>
+      <td width="96"></td>
+      <td width="96"></td>
+      <td width="96"></td>
+    </tr>
+    <tr>
 		<xsl:for-each select="SessionUserItem">
-			<xsl:sort select="@friend" order="descending" />
-			<div>
+			<xsl:sort select="@isFriend" order="descending" />
+			<td>
 				<xsl:attribute name="class">
 					<xsl:choose>
-						<xsl:when test="@friend='True'">friend</xsl:when>
+						<xsl:when test="@isFriend=1">friend</xsl:when>
 						<xsl:otherwise>notFriend</xsl:otherwise>
 					</xsl:choose>
 				</xsl:attribute>
-				<fb:profile-pic linked="true">
-					<xsl:attribute name="uid"><xsl:value-of select="@id"/></xsl:attribute>
-				</fb:profile-pic>
-				<fb:name>
-					<xsl:attribute name="uid"><xsl:value-of select="@id"/></xsl:attribute>
-				</fb:name>
-				</div>
+        <div align="center">
+				  <a target="_blank">
+          <xsl:attribute name="href">
+            http://www.facebook.com/profile.php?id=<xsl:value-of select="@user" />
+          </xsl:attribute>
+          <img class="profile_pic_linked" height="50" width="50">
+            <xsl:attribute name="src">
+              <xsl:choose>
+                <xsl:when test="@PicURL!=''">
+                  <xsl:value-of select="@PicURL" />
+                </xsl:when>
+                <xsl:otherwise>
+                  http://static.ak.fbcdn.net/pics/q_silhouette.gif
+                </xsl:otherwise>
+              </xsl:choose>
+            </xsl:attribute>
+            <xsl:attribute name="alt">
+              <xsl:value-of select="@UserName" />
+            </xsl:attribute>
+            <xsl:attribute name="title">
+              <xsl:value-of select="@UserName" />
+            </xsl:attribute>
+          </img>
+        </a>
+        </div>
+        <div align="center">
+          <a target="_blank" class="fbFont">
+            <xsl:attribute name="href">
+              http://www.facebook.com/profile.php?id=<xsl:value-of select="@user" />
+            </xsl:attribute>
+            <xsl:value-of select="@UserName" />
+          </a>
+        </div>
+			</td>
 		</xsl:for-each> 
-	</div>
+    </tr>
+	</table>
 </xsl:template>
 
 <xsl:template match="SessionBBSTopics">
@@ -70,7 +178,6 @@ xmlns:fb="http://www.facebook.com/2008/fbml"
         Created on <xsl:value-of select="@PostDate" />
       </td>
       <td class="fbFont">
-        <br />
         <xsl:if test="$viewUserId=@UserId">
           [
           <a target="_top">
@@ -105,7 +212,6 @@ xmlns:fb="http://www.facebook.com/2008/fbml"
         </a>
       </td>
       <td class="fbFont right">
-        <br />
         <xsl:if test="$viewUserId=@User_ID">
           [
           <a target="_top" onclick="return confirm('Really? Delete these notes?');">
@@ -126,4 +232,56 @@ xmlns:fb="http://www.facebook.com/2008/fbml"
     </xsl:for-each>
   </table>
 </xsl:template>
+
+
+<xsl:template match="GroupList">
+  <!-- Establish variable for the viewing user's facebook id -->
+  <xsl:variable name="viewUserID"><xsl:value-of select="userID" /></xsl:variable>
+  <xsl:variable name="viewSessionID"><xsl:value-of select="sessionID" /></xsl:variable>
+ 
+  <table class="sessionStudyGroups">
+    <xsl:for-each select="Group">
+    <tr>
+      <td class="two-thirds fbFont">
+        <a target="_top">
+          <xsl:attribute name="href">
+            http://apps.facebook.com/notesharesep/views/GroupPage.php?ns_session=<xsl:value-of select="$viewSessionID" />&amp;nsStudyGroup=<xsl:value-of select="@Id" />
+          </xsl:attribute>
+          <xsl:value-of select="." />
+        </a>
+        <br />
+        Description: <xsl:value-of select="@description" />
+      </td>
+      <td class="one-third right fbFont">
+    	  <xsl:choose>
+      		<xsl:when test="@member='True'">
+    			[
+    			  <a target="_top">
+    		  		<xsl:attribute name="href">
+    		  		  http://apps.facebook.com/notesharesep/controllers/GroupEnrollment.php?enroll=DROP&amp;ns_session=<xsl:value-of select="$viewSessionID" />&amp;nsStudyGroup=<xsl:value-of select="@Id" />
+    		  		</xsl:attribute>
+    		  		X
+		    	  </a>
+		    	]  
+	    	  </xsl:when>
+		      <xsl:when test="@member='False'">
+		    	[
+			      <a target="_top">
+	      			<xsl:attribute name="href">
+				        http://apps.facebook.com/notesharesep/controllers/GroupEnrollment.php?enroll=ADD&amp;ns_session=<xsl:value-of select="$viewSessionID" />&amp;nsStudyGroup=<xsl:value-of select="@Id" />
+	      			</xsl:attribute>
+			    	Join
+			      </a>
+		    	]  
+      		</xsl:when>
+		      <xsl:otherwise>
+			      [Membership Status Unknown]
+		      </xsl:otherwise>
+	      </xsl:choose>
+      </td>
+    </tr>
+    </xsl:for-each>
+  </table>
+</xsl:template>
+
 </xsl:stylesheet>

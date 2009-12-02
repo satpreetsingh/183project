@@ -3,9 +3,8 @@
    * SessionBBS.View.php
    * Displays the session bbs topic and associated posts.
   **/
-	require_once $_SERVER['DOCUMENT_ROOT'] . 'controllers/Session.php';
-	require_once $_SERVER['DOCUMENT_ROOT'] . 'controllers/NewNote.php';
 	require_once $_SERVER['DOCUMENT_ROOT'] . 'views/View.php';
+	require_once $_SERVER['DOCUMENT_ROOT'] . 'controllers/NewNote.php';
 
   //--------------------------View Functions--------------------------------//
 
@@ -125,7 +124,7 @@
 
   // Upload new Notes
   $sessionId = $_GET['ns_session'];
-  genNewNotes( $sessionId, $user_id ); 
+  genNewNotes( $sessionId, $user_id );
 
   // Close out page
   genViewFooter();

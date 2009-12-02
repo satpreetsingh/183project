@@ -31,29 +31,48 @@ xmlns:fb="http://www.facebook.com/2008/fbml"
     <xsl:for-each select="SessionBBSPost">
     <tr class="sessionBBSHeaderRow">
       <td class="sessionBBSUserPic" rowspan="2">
-        <fb:profile-pic size="thumb">
-          <xsl:attribute name="uid">
-            <xsl:value-of select="@UserId" />
+        <a target="_blank">
+          <xsl:attribute name="href">
+            http://www.facebook.com/profile.php?id=<xsl:value-of select="@UserId" />
           </xsl:attribute>
-        </fb:profile-pic>
+          <img class="profile_pic_linked" height="50" width="50">
+            <xsl:attribute name="src">
+              <xsl:choose>
+                <xsl:when test="@PicURL!=''">
+                  <xsl:value-of select="@PicURL" />
+                </xsl:when>
+                <xsl:otherwise>
+                  http://static.ak.fbcdn.net/pics/q_silhouette.gif
+                </xsl:otherwise>
+              </xsl:choose>
+            </xsl:attribute>
+            <xsl:attribute name="alt">
+              <xsl:value-of select="@UserName" />
+            </xsl:attribute>
+            <xsl:attribute name="title">
+              <xsl:value-of select="@UserName" />
+            </xsl:attribute>
+          </img>
+        </a>
       </td>
       <td class="fbFont sessionBBSHeadingBar">
-        <fb:name linked="true" capitalized="true" useyou="false">
-          <xsl:attribute name="uid">
-            <xsl:value-of select="@UserId" />
-          </xsl:attribute> 
-        </fb:name>
+        <a target="_blank" class="fbFont">
+          <xsl:attribute name="href">
+            http://www.facebook.com/profile.php?id=<xsl:value-of select="@UserId" />
+          </xsl:attribute>
+          <xsl:value-of select="@UserName" />
+        </a>
       </td>
       <td class="fbFont sessionBBSHeadingBar right normal">
         on <xsl:value-of select="@PostDate" />
       </td>
-      <td rowspan="2" class="fbFont right" valign="top">       
+      <td rowspan="2" class="fbFont right" valign="top">
         <br />
         <xsl:if test="$viewUserId=@UserId">
           [
           <a target="_top" onclick="return confirm('Really delete this post?');">
             <xsl:attribute name="href">
-              http://apps.facebook.com/notesharesep/controllers/SessionBBS.php?sessionBBSDEL=1&amp;ns_session=<xsl:value-of select="@SessionId" />&amp;post_id=<xsl:value-of select="@Id" />&amp;parentId=<xsl:value-of select="$parentId" />
+              http://apps.facebook.com/notesharesep/controllers/SessionBBS.php?sessionBBSDEL=1&amp;ns_session=<xsl:value-of select="@SessionId" />&amp;post_i$
             </xsl:attribute>
             X
           </a>]

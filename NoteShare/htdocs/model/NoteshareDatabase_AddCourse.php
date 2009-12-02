@@ -1,4 +1,34 @@
 <?php
+
+
+/**
+ * This function creates a new university.
+ * @author Joseph Trapani
+ * @version 2.0
+ * @param string $name name, string $desc description
+ * @return XML Group data
+ */
+
+function createUnversityDAL($name, $desc)
+{
+  $conn = openDB();
+
+  $query = "Insert Into University (Name, Description) " . 
+		    "Values ('" . $name . "','" . $desc . "')"; 
+
+  $result = mysql_query($query);
+
+  // Check if SQL succeeded
+  if (!$result) {
+    return 0;
+  }
+  else { 
+    return 1;
+  }
+
+}
+
+
 /**
  * This function gets all of the universities within the database and returns them in XML
  * @author Nathan Denklau
@@ -40,6 +70,34 @@ function getUniversityDAL ()
   closeDB ($result, $conn);
 
   return $out;
+}
+
+
+/**
+ * This function creates a new department within a university.
+ * @author Joseph Trapani
+ * @version 2.0
+ * @param integer $university_id university ID, string $name name
+ * @return XML Group data
+ */
+
+function createDepartmentDAL($university_id, $name)
+{
+  $conn = openDB();
+
+  $query = "Insert Into Department (University_Ptr, Name) " . 
+		    "Values (" . $university_id . ", '" . $name . "')"; 
+
+  $result = mysql_query($query);
+
+  // Check if SQL succeeded
+  if (!$result) {
+    return 0;
+  }
+  else { 
+    return 1;
+  }
+
 }
 
 
@@ -88,6 +146,34 @@ function getDepartmentsDAL ($univ_id)
 
 
 /**
+ * This function creates a new couse within a department.
+ * @author Joseph Trapani
+ * @version 2.0
+ * @param integer $department_id department ID, string $name name, string $desc description
+ * @return XML Group data
+ */
+
+function createCourseDAL($department_id, $name, $desc)
+{
+  $conn = openDB();
+
+  $query = "Insert Into Course (Department_Ptr, Name, Description, Active) " . 
+		    "Values (" . $department_id . ", '" . $name . "', '" . $desc . "',1)"; 
+
+  $result = mysql_query($query);
+
+  // Check if SQL succeeded
+  if (!$result) {
+    return 0;
+  }
+  else { 
+    return 1;
+  }
+
+}
+
+
+/**
  * This function gets all the courses in a given department
  * @author Nathan Denklau
  * @version 1.0
@@ -128,6 +214,34 @@ function getCoursesDAL ($dept_id)
   closeDB ($result, $conn);
 
   return $out;
+}
+
+
+/**
+ * This function creates a new session within a course.
+ * @author Joseph Trapani
+ * @version 2.0
+ * @param integer $course_id course ID, string $name name, date $startdate starting date of the session, date $enddate ending date of the session 
+ * @return XML Group data
+ */
+
+function createSessionDAL($course_id, $name, $startdate, $enddate)
+{
+  $conn = openDB();
+
+  $query = "Insert Into Session (Course_Ptr, Name, Start_Date, End_Date) " . 
+		    "Values (" . $course_id . ", '" . $name . "','" . $startdate . "','" . $enddate . "')"; 
+
+  $result = mysql_query($query);
+
+  // Check if SQL succeeded
+  if (!$result) {
+    return 0;
+  }
+  else { 
+    return 1;
+  }
+
 }
 
 
@@ -178,7 +292,7 @@ function getSessionsDAL($course_id)
 /**
  * This function gets all the courses which the given user is currently enrolled in.
  * @author Joseph Trapani
- * @version 1.0
+ * @version 2.0
  * @param integer $user_id user ID number
  * @return XML user's current enrolled session list
  */ 
@@ -187,7 +301,7 @@ function getHomePageSessionListDAL ($user_id)
   
   $conn = openDB();
 
-  $query = "Select Session.Id   		   As Session_Id,             " .
+  $query = "Select Session.Id   		 As Session_Id,             " .
   	           "Session.Name            As Session_Name,           " . 
                   "Course.Name             As Course_Name,            " .  
 		    "University.Name         As University_Name         " .
@@ -201,6 +315,7 @@ function getHomePageSessionListDAL ($user_id)
 	    "Inner Join University On University.ID = Department.University_Ptr " . 
 	    "Where (SessionEnrollment.User_Ptr = " . $user_id . ") And " .
 		   "(SessionEnrollment.Left_Date Is Null) " . 
+           "Group By University.Name, Course.Name, Session.Name, Session.Id "	.
 	    "Order By University.Name, Course.Name, Session.Name";	
 
 
@@ -327,48 +442,37 @@ function getSessionMetadataDAL ($session_id)
 
 /**
  * This function gets all the users from a given course's session.
- * @author Joseph Trapani
+ * @author Joseph Trapani, edited by Satpreet
  * @version 1.0
- * @param integer $session_id sessionID number
+ * @param integer $session_id sessionID number, integer $user_id number, object $facebook, integer $get_members number
  * @return XML user's current enrolled session list
  */
-function getSessionMembersDAL ($session_id, $get_members = 0)
+function getSessionMembersDAL ($session_id, $user_id, $facebook, $get_members = 0)
 {
-    
+
   $conn = openDB();
-
-
 
   // Only select the latest X members.
   if ($get_members <> 0) {
-    
-
-    $query = "Select Session.Id                 As Session_Id,  " .
-                    "SessionEnrollment.User_Ptr As User_Ptr     " .
-
+    $query = "Select Session.Id                 As Session_Id, " .
+                    "SessionEnrollment.User_Ptr As User_Ptr " .
              "From Session " . 
-	      "Inner Join SessionEnrollment On (SessionEnrollment.Id = Session.Course_Ptr) And " . 
-		  				   "(SessionEnrollment.Left_Date Is Null) " . 
-
-             "Where (Session.Id = " . $session_id . ") " . 
-             "Order By ID Desc " . 
-             "Limit 0," . $latest_posts . ";";	
-  } 
-  else { 
-    $query = "Select Session.Id                 As Session_Id,  " .
-                    "SessionEnrollment.User_Ptr As User_Ptr     " .
-
-             "From Session " . 
-	      "Inner Join SessionEnrollment On (SessionEnrollment.Id = Session.Course_Ptr) And " . 
-	  			  		   "(SessionEnrollment.Left_Date Is Null) " . 
-
-             "Where (Session.Id = " . $session_id . ") "; 
+	      "Inner Join SessionEnrollment On (SessionEnrollment.Session_Ptr = Session.ID) And " . 
+		                         	   "(SessionEnrollment.Left_Date Is Null) " . 
+             "Where (Session.Id = " . $session_id . ") " .
+             "Order By SessionEnrollment.ID Desc " .
+             "Limit 0," . $get_members . ";";
+  }
+  else {
+    $query = "Select Session.Id                 As Session_Id, " . 
+                    "SessionEnrollment.User_Ptr As User_Ptr " .
+             "From Session " .
+	      "Inner Join SessionEnrollment On (SessionEnrollment.Session_Ptr = Session.ID) And " .
+	  	                               "(SessionEnrollment.Left_Date Is Null) " .
+             "Where (Session.Id = " . $session_id . ")";
   }
 
-
   $result = mysql_query($query);
-
-
 
   $doc = new DOMDocument('1.0');
 
@@ -377,29 +481,49 @@ function getSessionMembersDAL ($session_id, $get_members = 0)
   $list = $doc->createElement('SessionUserList');
   $doc->appendChild($list);
 
-
-
   while($row = mysql_fetch_assoc($result)) {
 
     $SessionUserItem = $doc->createElement('SessionUserItem');
     $list->appendChild($SessionUserItem);
-	
+
     $id_attr = $doc->createAttribute('Id');
     $SessionUserItem->appendChild($id_attr);
-	
+
     $id_text = $doc->createTextNode($row['Session_Id']);
     $id_attr->appendChild($id_text);
 
-    $SessionUserItem_Name = $doc->createTextNode($row['User_Ptr']);
-    $SessionUserItem->appendChild($SessionUserItem_Name);
+    // Use Facebook API to check if session member is a friend 1(friend)/0(not friend)
+    $check = $facebook->api_client->friends_areFriends($user_id,$row['User_Ptr']);
+
+    // get user facebook information
+    $user_details = $facebook->api_client->users_getInfo($row['User_Ptr'], 'last_name, first_name, pic_square');
+
+    // Add the Facebook User name attribute UserName=""
+    $SessionUserItem_userName = $doc->createAttribute('UserName');
+    $SessionUserItem->appendChild($SessionUserItem_userName);
+    $SessionUserItem_userName_text = $doc->createTextNode( $user_details[0]['first_name'] . ' ' . $user_details[0]['last_name'] );
+    $SessionUserItem_userName->appendChild($SessionUserItem_userName_text );
+
+    // Add the facebook profile pic url
+    $SessionUserItem_pic = $doc->createAttribute('PicURL');
+    $SessionUserItem->appendChild($SessionUserItem_pic);
+    $SessionUserItem_picURL = $doc->createTextNode( $user_details[0]['pic_square'] );
+    $SessionUserItem_pic->appendChild($SessionUserItem_picURL );
+
+    $friend_attr = $doc->createAttribute('isFriend');
+    $SessionUserItem->appendChild($friend_attr);
+
+    $friend_text = $doc->createTextNode($check[0]['are_friends']);
+    $friend_attr->appendChild($friend_text);
+
+    // Return the Facebook User ID to the controller.
+    $SessionUserItem->appendChild($doc->createTextNode($row['User_Ptr']));
   }
-
   $out = $doc->saveXML();
-
-  closeDB($result, $conn);
+ 
+  closeDB ($result, $conn);
 
   return $out;
-
 }
 
 
@@ -465,7 +589,7 @@ function checkFirstUserInteractionDAL ($user_id)
    
 
   // User doesn't exist as an active NoteShareSEP user.  
-  if ( mysql_num_rows($result1) <= 0) {
+  if (mysql_num_rows($result1) <= 0) {
       
     closeDB($result1, $conn1);
       
@@ -480,13 +604,13 @@ function checkFirstUserInteractionDAL ($user_id)
 
     $result = mysql_query($query);
 
-    closeDB($result, $conn );
+    closeDB ($result, $conn);
     return 1;
 
   }
 
   else {
-    closeDB($result1, $conn1); 
+    closeDB ($result1, $conn1); 
     return 1;
   }
 

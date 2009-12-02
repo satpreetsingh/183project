@@ -5,9 +5,8 @@
    * Right now, partisipants.
   **/
 
-	require_once $_SERVER['DOCUMENT_ROOT'] . '/controllers/Session.php';
-	require_once $_SERVER['DOCUMENT_ROOT'] . '/controllers/CourseHomePage.php';
 	require_once $_SERVER['DOCUMENT_ROOT'] . 'views/View.php';
+	require_once $_SERVER['DOCUMENT_ROOT'] . '/controllers/CourseHomePage.php';
 
 
 //--------------------------View Functions--------------------------------//
@@ -33,7 +32,8 @@
   function genSessionBBS( $sessionId, $user_id )
   {
     $bbsTopicsXML = getSessionBBSTopics( $sessionId, $user_id );
-    echo XSLTransform( $bbsTopicsXML, 'CoursePage.xsl');
+    $HTML = XSLTransform( $bbsTopicsXML, 'CoursePage.xsl');
+    echo html_entity_decode( $HTML );
     echo '<a href="http://apps.facebook.com/notesharesep/views/SessionBBSTopics.php?ns_session=' . $sessionId . '" target="_top" class="fbFont left">View all Topics</a>';
   }
 
@@ -45,33 +45,66 @@
   function genSessionNotes( $user_id, $sessionId )
   {
     $notesXML = getSessionNotes( $sessionId, $user_id );
-    //echo $notesXML;
     echo XSLTransform( $notesXML, 'CoursePage.xsl' );
     echo '<a href="http://apps.facebook.com/notesharesep/views/SessionNotes.php?ns_session=' . $sessionId . '" target="_top" class="fbFont left">View all Notes</a>';
   }
-  
+
    /**
    * Gathers and displays the contents of the session's wall.
    *
    * @return displays the session's wall
   **/
-function genSessionWallArea($user_id, $sessionId )
-{
-	genHeadingBar( "Session Shoutouts" );
-	echo
-		"<form action=\"/controllers/AddWallPost.php\">" .
+  function genSessionWallArea($user_id, $sessionId, $facebook )
+  {
+  	echo "\n\n<br />\n";
+  	$parentId = getSessionWallParentDAL($sessionId);
+  	genHeadingBar( "Course Wall", "More", "/views/SessionBBS.php?ns_session=" . $sessionId . 
+			"&parentId=" . $parentId );
+  	echo
+		"<form action=\"/controllers/AddWallPost.php\" method=\"GET\">" .
 		"	<textarea name=\"post_body\"></textarea>" .
 		"	<button class=\"drop\" name=\"ns_session\" value=\"$sessionId\">Share</button>" .
 		"</form>";
+    echo "<br />\n";
+
   	// Session Wall
-	$wall = getSessionWall($sessionId);
-	echo XSLTransform($wall,'CoursePage.xsl');
-}
+  	$wall = getSessionWall($user_id,$sessionId,$facebook);
+	  echo html_entity_decode(XSLTransform($wall,'CoursePage.xsl'));
+  }
 
+  /**
+   * Gathers the XML data for study groups from the model and does the XSL
+   *   transformation.
+   *
+   * @version 4.0
+   * @param string $user_id     Facebook user Id
+   * @param string $sessionId   Noteshare session Id
+   * @return echos HTML to the course page for the study group listings
+  **/
+  function genStudyGroups( $sessionId, $user_id )
+  {
+	  $studyGroupsXML = getSessionStudyGroups( $user_id, $sessionId);
+	  echo XSLTransform($studyGroupsXML,'CoursePage.xsl');
+  }
 
+  /**
+   * Generates the classmates html for the view by retrieving the record via a
+   *   controller call.
+   *
+   * @version 4.0
+   * @param int    $sessionId    Session id number  (noteshare)
+   * @param string $user_id      Facebook id number (facebook)
+   * @return Displays a list of classmates for this course
+  **/
+  function genClassmates( $sessionId, $user_id, $facebook )
+  {
+  	$membersXML = getSessionMembers( $user_id, $sessionId, $facebook );
+	  echo XSLTransform($membersXML,'CoursePage.xsl');
+  }
 //----------------------Begin View Code----------------------------------//
 
   genViewHeader( "Course View Page" );
+
   genPageHeader( array( "Main Page", "Course View" ),
                  array( "/views/UserHomePage.php", "/views/CoursePage.php?ns_session=" . $_GET['ns_session'] ));
 
@@ -81,7 +114,6 @@ function genSessionWallArea($user_id, $sessionId )
   $metaXML = getSessionMetadata($sessionId);
 	echo XSLTransform($metaXML,'CoursePage.xsl');
 	echo '</br></br>';
-
   // Drop course option
 	echo "<form action=\"/controllers/DropCourse.php\" method=\"GET\">"
 	   . "			<button class=\"drop fbFont\" name=\"ns_session\" value=\"$sessionId\" onclick=\"return confirm(\'Really? Drop the course?\');\">"
@@ -90,26 +122,31 @@ function genSessionWallArea($user_id, $sessionId )
 		 . "</form>";
 	echo "</br></br>";
 
-	genSessionWallArea($user_id, $sessionId);
+	// Wall
+	genSessionWallArea($user_id, $sessionId,$facebook);
+	echo '<br /><br />';
 
-  // Uploaded Notes?
+  // Uploaded Notes
   genHeadingBar( "Course Notes", "Add New Note Set", "/views/NewNote.php?ns_session=" . $sessionId );
   genSessionNotes( $user_id, $sessionId );
   echo '<br /><br />';
 
   // SessionBBS
-  genHeadingBar( "Session Bulletin Board", "Create New Thread", "/views/NewThread.php?ns_session=" . $sessionId );
+  genHeadingBar( "Course Bulletin Board", "Create New Thread", "/views/NewThread.php?ns_session=" . $sessionId );
   genSessionBBS( $sessionId, $user_id );
   echo '<br /><br />';
 
   // Classmates in the course
 	genHeadingBar( "Classmates" );
-	$membersXML = getSessionMembers($user_id, $sessionId);
-  echo $membersXML;
-	echo XSLTransform($membersXML,'CoursePage.xsl');
+  genClassmates( $sessionId, $user_id, $facebook );
+	echo '<br /><br />';
+
+  // Study groups associated with this course
+  genHeadingBar( "Course Study-Groups", "Create New Study-Group", "/views/NewGroup.php?ns_session=" . $sessionId );
+  genStudyGroups( $sessionId, $user_id );
 
   // Close out page
-  genViewFooter();
+	genViewFooter();
 ?>
 
 

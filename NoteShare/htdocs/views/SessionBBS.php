@@ -3,26 +3,10 @@
    * SessionBBS.View.php
    * Displays the session bbs topic and associated posts.
   **/
-	require_once $_SERVER['DOCUMENT_ROOT'] . 'controllers/Session.php';
-	require_once $_SERVER['DOCUMENT_ROOT'] . 'controllers/SessionBBS.php';
 	require_once $_SERVER['DOCUMENT_ROOT'] . 'views/View.php';
+	require_once $_SERVER['DOCUMENT_ROOT'] . 'controllers/SessionBBS.php';
 
   //--------------------------View Functions--------------------------------//
-  /**
-   * Inserts the user id of the viewer into the xml response
-  **/
-  function insertUserId( $bbsPosts, $user_id )
-  {
-    $temp = explode( "\n", $bbsPosts );
-    $response = $temp[0] . $temp[1] . $temp[2] . '<userId>' . $user_id . "</userId>\n";
-    for( $i = 3; $i < count( $temp ); $i++ )
-    {
-      $response = $response . $temp[$i];
-    }
-
-    return $response;
-  }
-
   /**
    * Generates the Session BBS table, displaying the parent post and all of the
    *  child posts.
@@ -30,11 +14,11 @@
    * @param integer $sessionId identifier of this session, which bbs to show
    * @return HTML for Session BBS table
   **/
-  function genSessionBBSTable( $parentId, $user_id )
+  function genSessionBBSTable( $parentId, $user_id, $facebook )
   {
-    $bbsPosts = getSessionBBSPosts( $parentId, $user_id );
-    echo $bbsPosts;
-    echo XSLTransform( $bbsPosts, 'SessionBBS.xsl' );
+    $bbsPosts = getSessionBBSPosts( $parentId, $user_id, $facebook );
+    $HTML = XSLTransform( $bbsPosts, 'SessionBBS.xsl' );
+    echo html_entity_decode( $HTML );
     echo '<br />';
   }
 
@@ -70,7 +54,7 @@
   // Gen Session BBS Table
   $parentId = $_GET['parentId'];
   $sessionId = $_GET['ns_session'];
-  genSessionBBSTable( $parentId, $user_id );
+  genSessionBBSTable( $parentId, $user_id, $facebook );
   genSessionBBSPost( $parentId, $sessionId );
 
   // Close out page
