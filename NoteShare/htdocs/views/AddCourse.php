@@ -32,7 +32,7 @@
   {
     echo '' .
     '<form action="http://apps.facebook.com/notesharesep/controllers/AddCourse.php" method="GET" target="_top"
-       <table class="formTable">';
+       <table id="ns_table" class="formTable">';
   }
 
   /**
@@ -55,7 +55,7 @@
           <th class="combo">
             <label class="fbFont large">' . $label . ' : </label>
           </th>
-          <td class="combo">
+          <td class="combo" id="'.$name.'Container">
             <select class="combo" id="' . $name . '" name="' . $name . '" onchange="'.$action.'(); return false;" onmouseover="resetBackground(this); return false;">'
             . $optionString .
             '</select>
@@ -73,7 +73,7 @@
   function genButtons()
   {
     echo '' .
-    '  <tr>
+    '  <tr id="ns_button_row">
          <th></th>
            <td class="editorkit_buttonset">
              <input type="submit" class="submit" value="Add" name="Add"/>   
@@ -119,7 +119,7 @@
   echo genCmbBox( "University", ns_university, getDepartments, $universities );
   echo genCmbBox( "Department", ns_department, getCourses, null);
   echo genCmbBox( "Course", ns_course, getSessions, null);
-  echo genCmbBox( "Session", ns_session, "", null);
+  echo genCmbBox( "Session", ns_session, changedSession, null);
   echo genButtons();
   echo closeEditor();
 
