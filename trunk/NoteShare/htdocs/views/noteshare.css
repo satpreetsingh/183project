@@ -81,6 +81,12 @@ h3.university
   font-size:          16px; 
 }
 
+img.profile_pic_linked
+{
+  border:             1px solid #94A3C4;
+  background:         #3b5998;
+}
+
 input.submit
 {
   padding:            1px 3px 1px 4px;
@@ -116,10 +122,28 @@ table
   padding: 0px;
 }
 
+table.padded
+{
+  cellpadding:        10px 10px 10px 10px;
+  cellspacing:         0px;
+}
+
 table.sessionMetadata
 {
   cellpadding:        0px;
   cellspacing:        0px;
+}
+
+td.friend
+{
+  background-color:   #ECEFF5;
+  cellpadding:        10px;
+}
+
+td.notFriend
+{
+  background-color:   #FFFFFF;
+  cellpadding:        10px;
 }
 
 td.header
@@ -142,7 +166,10 @@ td.headingBar
   margin:             0px;
   font-weight:        bold;
 }
-
+td.one-third
+{
+  width:              33%;
+}
 td.sessionBBSHeadingBar
 {
   background-color:   #ECEFF5;
@@ -178,6 +205,11 @@ td.title
   margin:             0em;
   padding:            0em;
   font-weight:        bold;
+}
+
+td.two-thirds
+{
+  width:              66%;
 }
 
 td.combo

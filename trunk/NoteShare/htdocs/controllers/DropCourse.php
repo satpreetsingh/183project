@@ -1,5 +1,5 @@
 <?php
-	require_once $_SERVER['DOCUMENT_ROOT'] . '/controllers/Session.php';
+	require_once $_SERVER['DOCUMENT_ROOT'] . '/controllers/Controller.php';
   require_once $_SERVER['DOCUMENT_ROOT'] . '/model/NoteshareDatabase.php';
 
 	$session_id = $_GET['ns_session'];

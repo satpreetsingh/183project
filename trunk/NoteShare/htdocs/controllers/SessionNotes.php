@@ -1,7 +1,7 @@
 <?php
 
   include $_SERVER['DOCUMENT_ROOT'] . 'model/NoteshareDatabase.php';
-  require_once $_SERVER['DOCUMENT_ROOT'] . 'controllers/Session.php';
+  require_once $_SERVER['DOCUMENT_ROOT'] . 'controllers/Controller.php';
 
   /*
    * Retrieves the five most recent note postings for the indicated session

@@ -1,6 +1,8 @@
 <?php
 
-include $_SERVER['DOCUMENT_ROOT'] . 'model/NoteshareDatabase.php';
+  include $_SERVER['DOCUMENT_ROOT'] . 'controllers/Controller.php';
+  include $_SERVER['DOCUMENT_ROOT'] . 'model/NoteshareDatabase.php';
+
 
 /**
  * Fetches the course list from the DAL given the specified user id.

@@ -1,11 +1,15 @@
 <?php
+
+
 /**
  * This function is designed to post a message to a session BBS
  * @author Jon Hall
  * @version 1.0
  * @param string $header, string $body, integer $user_id userID number, integer $session_id sessionID number, integer $prev_post id of parent post
  */
-function addSessioBBSPostDAL( $header, $body, $user_id, $session_id, $prev_post)
+ 
+/* 
+function addSessionBBSPostDAL( $header, $body, $user_id, $session_id, $prev_post)
 {
 	$conn = openDB();
 	
@@ -14,12 +18,12 @@ function addSessioBBSPostDAL( $header, $body, $user_id, $session_id, $prev_post)
 	$body = mysql_real_escape_string($body);
 	
 	$query = "Insert Into SessionBBS (Header, Body, Post_Date, User_ptr, Session_ptr, Prev_Post_ptr) " .
-			"Values (\'$header\', \'$body\', ". date("Y-m-d H:m:s") .", $user_id, $session_id, $prev_post)";
-			
+			"Values ('$header', '$body', '". date("Y-m-d H:i:s") ."', ". 
+			$user_id . ", " . $study_group_id . ", " . $prev_post . ")";	
 	mysql_query($query);
-	
 	mysql_close($conn);
 }
+*/
 
 /**
  * This function is designed to get the parent of a session wall
@@ -36,16 +40,16 @@ function getSessionWallParentDAL($session_id)
 	$wall_parent = '0';
 	
 	$query = "Select ID From SessionBBS " .
-		  "Where ((Session_ptr = $session_id) Aand " .
-			  "(User_ptr = Null) And " .
-			  "(Header = \'#SESSION WALL#\'))";
+		  "Where ((Session_ptr = " . $session_id . ") And " .
+			  "(User_ptr is Null) And " .
+			  "(Header = '#SESSION WALL#'))";
 			
 	$result = mysql_query($query);
 	
 	// Check existance
 	if( $row = mysql_fetch_assoc($result) )
 	{
-		$wall_parent = $row(ID);
+		$wall_parent = $row['ID'];
 		mysql_free_result($result);
 	}
 	// No session wall parent
@@ -53,18 +57,18 @@ function getSessionWallParentDAL($session_id)
 	{
 		// Insert one
 		$query = "Insert into SessionBBS (Header, Body, Post_Date, Session_ptr) " .
-				"Values (\'#SESSION WALL#\', \'Here be dragons\', ". date("Y-m-d H:m:s") .",$session_id)";
+				"Values ('#SESSION WALL#', 'Here be dragons', '". date("Y-m-d H:i:s") ."', " .$session_id . ")";
 				
 		mysql_query($query);
 		
 		// Get the Id that was generated
-		$query = "Select ID From SessionBBS Where (Session_ptr=\'$session_id\' and " .
-			"User_ptr=null and Header=\'#SESSION WALL#\')";
+		$query = "Select ID From SessionBBS Where (Session_ptr='" . $session_id ." ' and " .
+			"User_ptr is null and Header='#SESSION WALL#')";
 			
 		$result = mysql_query($query);
 		
 		$row = mysql_fetch_assoc($result);
-		$wall_parent = $row(ID);
+		$wall_parent = $row['ID'];
 		
 		mysql_free_result($result);
 	}
@@ -82,10 +86,19 @@ function getSessionWallParentDAL($session_id)
  */
 function addSessionWallPostDAL($user_id, $session_id, $body)
 {
-	
+  if( $user_id == null || $session_id == null || $body == null )
+  {
+    return -1;
+  }
+
 	$wall_parent = getSessionWallParentDAL($session_id);
-	
-	addSessioBBSPostDAL('', $body, $user_id, $session_id, $wall_parent);
+  if( $wall_parent == null )
+  {
+    return -2;
+  }
+
+	addSessionBBSPostDAL($user_id, $session_id, '', $body, $wall_parent);
+  return 0;
 }
 
 /**
@@ -95,43 +108,57 @@ function addSessionWallPostDAL($user_id, $session_id, $body)
  * @param interger $session_id sessionID number
  * @return string XML WallPosts
  */
-function getSessionWallPostsDAL($session_id)
+function getSessionWallPostsDAL($session_id, $limit = 5, $facebook )
 {
 	// Get parent
 	$wall_parent = getSessionWallParentDAL($session_id);
-	
 	$conn = openDB();
-	
 	$query = "Select * " .
 		  "From SessionBBS " .
  		  "Where (Session_Ptr = $session_id) And " .
-                      "(Prev_Post_Ptr = $wall_parent) " .
-	         "Order By Post_Date Desc";
+            "(Prev_Post_Ptr = $wall_parent) " .
+	    "Order By Post_Date Desc " .
+	    "Limit 0," . $limit;
 	
 	$result =  mysql_query($query);
-	
+	echo mysql_error();
 	$doc = new DOMDocument('1.0');
 	$wall_posts = $doc->createElement("sessionWallPosts");
-	
-	
 	while($row = mysql_fetch_assoc($result))
 	{
 		$post = $doc->createElement("post");
 		
 		// Add user attribute
 		$user_id = $doc->createAttribute("user");
-		$user_id->appendChild($doc->createTextNode($row['User_ptr']));
+		$user_id->appendChild($doc->createTextNode($row['User_Ptr']));
 		$post->appendChild($user_id);
 		
 		// Add time attribute
-		$date_Array = strptime($row['POST_DATE'],"Y-m-d H:m:s");
-		$time_Stamp = mktime($date_Array['tm_hour'], $date_Array['tm_min'],
-				$date_Array['tm_sec'], $date_Array['tm_mon'], 
-				$date_Array['tm_mday'], $date_Array['tm_year'] );
+		//$date_Array = strptime($row['POST_DATE'],"%Y-%m-%d %H:%M:%S");
+
+		//$time_Stamp = mktime($date_Array['tm_hour'], $date_Array['tm_min'],
+		//		$date_Array['tm_sec'], $date_Array['tm_mon']+1, 
+		//		$date_Array['tm_mday'], $date_Array['tm_year']+1900 );
+				
 		$time = $doc->createAttribute("time");
-		$time->appendChild($doc->createTextNode($time_Stamp));
+		$time->appendChild($doc->createTextNode($row['POST_DATE']));
 		$post->appendChild($time);
-		
+
+    // get user facebook information
+    $user_details = $facebook->api_client->users_getInfo($row['User_Ptr'], 'last_name, first_name, pic_square');
+
+    // Add the Facebook User name attribute UserName=""
+    $post_userName = $doc->createAttribute('UserName');
+    $post->appendChild($post_userName);
+    $post_userName_text = $doc->createTextNode( $user_details[0]['first_name'] . ' ' . $user_details[0]['last_name'] );
+    $post_userName->appendChild($post_userName_text );
+
+    // Add the facebook profile pic url
+    $post_pic = $doc->createAttribute('PicURL');
+    $post->appendChild($post_pic);
+    $post_picURL = $doc->createTextNode( $user_details[0]['pic_square'] );
+    $post_pic->appendChild($post_picURL );
+
 		// Add the post body
 		$post->appendChild($doc->createTextNode($row['BODY']));
 		
@@ -141,9 +168,9 @@ function getSessionWallPostsDAL($session_id)
 	
 	$doc->appendChild($wall_posts);
 	
-	$closeDB($result,$conn);
+	closeDB($result,$conn);
 	
-	return $doc->saveXML();
+	return stripslashes($doc->saveXML());
 }
 
 /**
@@ -159,31 +186,40 @@ function getSessionWallPostsDAL($session_id)
  */
 function addSessionBBSPostDAL ($user_id, $session_id, $header, $body, $parentID)
 {
+  // handel bogus values by escaping
+  if( $user_id == NULL || $session_id == NULL || $body == NULL )
+  {
+    return NULL;
+  }
+
   $conn = openDB();
 
-  if($parentID == null)
+  // alter parent id for mysql if necessary
+  if($parentID == NULL )
   {
     $parentID = 'null';
   }
 
+  // alter passed variables for mysql injections
+  $header = mysql_real_escape_string( $header );
+  $body = mysql_real_escape_string( $body );
+
   // Add the user from a given course's session.
   $query = "Insert Into SessionBBS (SessionBBS.User_Ptr, " .
                                    "SessionBBS.Session_Ptr, " .
- 	                            "SessionBBS.Header, " .
-                                   "SessionBBS.Body, " .
-                                   "SessionBBS.Post_Date, " .
+ 	                                 "SessionBBS.HEADER, " .
+                                   "SessionBBS.BODY, " .
+                                   "SessionBBS.POST_DATE, " .
                                    "SessionBBS.Prev_Post_Ptr " .
-                        ") Values ("   . $user_id      . ", " .
-	                                  $session_id   . ", " .
-                                   "'" . $header       . "', " .
-                                   "'" . $body         . "', " .
-	                            "'" . date("Y-m-d H:i:s") . "', " .
-                                         $parentID     . "); ";
+                   ") Values ("   . $user_id      . ", " .
+	                                  $session_id              . ", " .
+                              "'" . $header                  . "', " .
+                              "'" . $body                    . "', " .
+	                            "'" . date("Y-m-d H:i:s")      . "', " .
+                                    $parentID                . "); ";
 
   $result = mysql_query($query);
-
   closeDB (null, $conn);
-
   return $result;
 }
 
@@ -208,10 +244,11 @@ function getSessionBBSTopicsDAL ($session_id, $latest_posts = 0)
   if ($latest_posts <> 0) {
     
     $query = "Select  * " . 
-	      "From SessionBBS " .
+	           "From SessionBBS " .
              "Where (SessionBBS.Removal_Date Is Null) And " .
-		     "(SessionBBS.Prev_Post_Ptr Is Null) And " .
-                   "(SessionBBS.Session_Ptr = " . $session_id . " ) " .
+		               "(SessionBBS.Prev_Post_Ptr Is Null) And " .
+                   "(SessionBBS.Session_Ptr = " . $session_id . " ) And " .
+                   "(SessionBBS.HEADER != \"#SESSION WALL#\" ) " .
 	      "Order By ID Desc " . 
              "Limit 0," . $latest_posts . ";";
   }
@@ -285,7 +322,7 @@ function getSessionBBSTopicsDAL ($session_id, $latest_posts = 0)
  * @param integer $parentId parent thread id number
  * @return XML of thread topic including all children posts
  */
-function getSessionBBSPostsDAL ($parentId)
+function getSessionBBSPostsDAL ($parentId, $facebook)
 {
   $conn = openDB();
 
@@ -338,6 +375,19 @@ function getSessionBBSPostsDAL ($parentId)
     $sessionBBSPost->appendChild($sessionBBSPost_user);
     $sessionBBSPost_user_text = $doc->createTextNode($row['User_Ptr']);
     $sessionBBSPost_user->appendChild($sessionBBSPost_user_text);
+
+    // Add the Facebook User name attribute UserName=""
+    $user_details = $facebook->api_client->users_getInfo($row['User_Ptr'], 'last_name, first_name, pic_square');
+    $sessionBBSPost_userName = $doc->createAttribute('UserName');
+    $sessionBBSPost->appendChild($sessionBBSPost_userName);
+    $sessionBBSPost_userName_text = $doc->createTextNode( $user_details[0]['first_name'] . ' ' . $user_details[0]['last_name'] );
+    $sessionBBSPost_userName->appendChild($sessionBBSPost_userName_text );
+
+    // Add the facebook profile pic url
+    $sessionBBSPost_pic = $doc->createAttribute('PicURL');
+    $sessionBBSPost->appendChild($sessionBBSPost_pic);
+    $sessionBBSPost_picURL = $doc->createTextNode( $user_details[0]['pic_square'] );
+    $sessionBBSPost_pic->appendChild($sessionBBSPost_picURL );
 
     // Add the SessionId attribute SessionId
     $sessionBBSPost_session = $doc->createAttribute('SessionId');

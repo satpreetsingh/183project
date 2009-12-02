@@ -1,5 +1,8 @@
 <?php
+
+require_once $_SERVER['DOCUMENT_ROOT'] . 'controllers/Controller.php';
 include '/var/www/localhost/htdocs/model/NoteshareDatabase.php';
+
 
 function runMemoryTests( $functions )
 {
@@ -59,7 +62,7 @@ function memTest_getUniversityDAL( $bruteTest )
 //getSessionsDAL(1);
 //getDepartmentsDAL(1);
 //getSessionMetadataDAL(1);
-getSessionMembersDAL(8);
+//getSessionMembersDAL(2,66000948,$facebook,5);
 //removeUserSessionDAL(2,1);
 //addUserSessionDAL(66000948,2);
 //addSessionBBSPostDAL( 66000948, 2, 'testing header', 'testing body', null );
@@ -85,19 +88,31 @@ getSessionMembersDAL(8);
 
 // Working deletion function...
 function RemoveNoteFromServer()
-{
-
-  if (unlink('/home/fate/SEPRepository/183project/NoteShare/htdocs/noteFiles/66000948200911181805540')) {  
-    ?>It Works!<?php
-  }
-  
+{ if (unlink('/home/fate/SEPRepository/183project/NoteShare/htdocs/noteFiles/66000948200911181805540')) {
+?>It Works!<?php
+} 
   else {
-     ?>It doesn't work :( <?php
-  }
+?>It doesn't work :( <?php
 }
-
-
-
+}
 //RemoveNoteFromServer();
+
+
+
+
+//addStudyGroupUserGroupDAL(66000948,2,1);
+//removeUserStudyGroupDAL(66000948,1);
+//getStudyGroupMembersDAL (1,2);
+//getStudyGroupMetadataDAL (1);
+//getHomePageStudyGroupListDAL (66000948);
+//getStudyGroupsDAL(4);
+//addStudyGroupUserGroupDAL(66000948,2,2);
+//getStudyGroupsDAL(1,66000948);
+//createUnversityDAL('Clarke College','Liberal Arts Institution located in Dubuque, Iowa');
+//echo createDepartmentDAL(5,'Computer Science');
+//echo createCourseDAL(5, 'Data Structures and Algorithms', 'This course covers the topics of various data structures commonly used in Computer Science');
+//echo createSessionDAL(11, 'Fall 2009', '2009-08-11', '2009-12-11');
+
+
 
 ?>

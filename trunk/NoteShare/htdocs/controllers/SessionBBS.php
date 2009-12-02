@@ -1,5 +1,5 @@
 <?php
-  require_once $_SERVER['DOCUMENT_ROOT'] . 'controllers/Session.php';
+  require_once $_SERVER['DOCUMENT_ROOT'] . 'controllers/Controller.php';
   include $_SERVER['DOCUMENT_ROOT'] . 'model/NoteshareDatabase.php';
 
   /**
@@ -8,50 +8,12 @@
    * @param integer $sessionId identifier for which session's posts to grab
    * @return XML of the posts
   **/
-  function getSessionBBSPosts( $parentId, $userId )
+  function getSessionBBSPosts( $parentId, $userId, $facebook )
   {
-    $bbsPostsXML = getSessionBBSPostsDAL( $parentId );
-    $bbsPostsDOM = new DOMDocument('1.0');
-    $bbsPostsDOM->loadXML( $bbsPostsXML );
-    $bbsPostsList = $bbsPostsDOM->getElementsByTagName( 'SessionBBSThread' );
-    if( $bbsPostsList->length > 0 )
-    {
-      $bbsPosts = $bbsPostsList->item(0);
-      $sessionUserId = $bbsPostsDOM->createElement('UserId');
-      $bbsPosts->insertBefore( $sessionUserId, $bbsPosts->firstChild );
-      $sessionUserId_text = $bbsPostsDOM->createTextNode( $userId );
-      $sessionUserId->appendChild( $sessionUserId_text );
-
-      $sessionParentId = $bbsPostsDOM->createElement('ParentId');
-      $bbsPosts->insertBefore( $sessionParentId, $sessionUserId );
-      $sessionParentId_text = $bbsPostsDOM->createTextNode( $parentId );
-      $sessionParentId->appendChild( $sessionParentId_text );
-
-    }
-    return $bbsPostsDOM->saveXML();
-  }
-
-  function getThreadWall( $threadID )
-  {
-    return '' .
-    '<?xml version="1.0" encoding="UTF-8"?>
-    <ThreadWall Topic="Tests Coming up...">
-     <Post Header="Example Header"
-           Date="11-09-09 12:00:01"
-           User="14821122">
-		   Test next week everyone!
-     </Post>
-		 <Comment Header="Example Header"
-			   Date="11-09-09 12:00:02"
-			   User="14821222">
-			   Just 7 days!
-		 </Comment>		
-     <Post Header="Example Header2"
-           Date="11-09-09 12:00:05"
-           User="14821122">
-		   Welcome to the new semester!
-     </Post>
-   </ThreadWall>';
+    $bbsPostsXML = getSessionBBSPostsDAL( $parentId, $facebook );
+    $tags = array( 'UserId', 'ParentId' );
+    $values = array( $userId, $parentId );
+    return insertXMLTags( $tags, $values, $bbsPostsXML, 'SessionBBSThread' );
   }
 
   /** Post reply**/
@@ -59,7 +21,10 @@
   {
     $sessionId = $_GET['ns_session'];
     $parentId = $_GET['parentId'];
-    $body = $_GET['sessionBBSPost'];
+    $body = urldecode( $_GET['sessionBBSPost'] );
+
+    $body = preg_replace('/\<\s*(?!\/?\s*(i|b|code|del)).*?\/?\s*\>/','',$body);
+
     addSessionBBSPostDAL( $user_id, $sessionId, 'null', $body, $parentId );
     $facebook->redirect( 'http://apps.facebook.com/notesharesep/views/SessionBBS.php?ns_session=' . $sessionId . '&parentId=' . $parentId );
   }
@@ -70,7 +35,7 @@
     $parentId = $_GET['parentId'];
 
     removeSessionBBSDAL( $postId );
-    if( $postId = $parentId )
+    if( $postId == $parentId )
     {
       $facebook->redirect( 'http://apps.facebook.com/notesharesep/views/CoursePage.php?ns_session=' . $sessionId );
     }

@@ -2,9 +2,9 @@
 /*-----------------------------------------------------------------------------
  File:          view/UserHomePage.php
  Description:   Displays all of the basic user homepage information.
- UseCases:      
- Requirements:  
- Components:    
+ UseCases:      <Later?>
+ Requirements:  <Later?>
+ Components:    <Later?>
 -------------------------------------------------------------------------------
  Modified On:   11/03/09
  Notes:         Modified and joined the original index with the UserHomePage.
@@ -12,7 +12,6 @@
 
   // Inludes
 	require_once $_SERVER['DOCUMENT_ROOT'] . 'views/View.php';
- 	require_once $_SERVER['DOCUMENT_ROOT'] . 'controllers/Session.php';
 	require_once $_SERVER['DOCUMENT_ROOT'] . 'controllers/UserHomePage.php';
 
 /****< Local Functions  >******************************************************/
