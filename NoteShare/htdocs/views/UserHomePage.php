@@ -30,6 +30,20 @@
 	  echo XSLTransform($coursesXML,'UserHomePage.xsl');
   }
 
+  /**
+   * Generates a list of the notes that a user has uploaded.
+   *
+   * @param integer $userId Facebook user Id
+   * @version 2.0
+   * @return HTML of the note list
+  **/
+  function genGroupEnrollment( $userId )
+  {
+    genHeadingBar( "Enrolled Study Groups" );
+    echo '<br />';
+    $notesXML = getHomePageStudyGroupList( $userId );
+    echo $notesXML;
+  }
 /****< Page Content >**********************************************************/
 
   // generate view headers
@@ -41,6 +55,8 @@
 	echo '<br /><br />';
 
   genCourseEnrollment( $user_id );
+
+  genGroupEnrollment( $user_id );
 
   // close out page
   genViewFooter();

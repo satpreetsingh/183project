@@ -2,7 +2,7 @@
 <!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
 <svg xmlns="http://www.w3.org/2000/svg"
 	xmlns:xlink="http://www.w3.org/1999/xlink"
-	width="450" height="460"
+	width="200" height="62"
 	version="1.1">
 	<defs>
 		<clipPath id="clip_box">
@@ -42,7 +42,7 @@
 			<stop offset="1.0" stop-color="#C0C0C0" stop-opacity="0.0" />
 		</radialGradient>
 	</defs>
-	<g id="I_box" opacity="0.3">
+	<g id="I_box" opacity="0.3" transform="translate(-250,-398)">
 		<g id="I_area" opacity="0.0">
 			<rect x="2" y="2" width="418" height="428" rx="3" ry="3"
 				fill="rgb(255,255,255)" stroke="rgb(0,0,0)" stroke-width="2"/>

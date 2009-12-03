@@ -24,6 +24,7 @@
 -----------------------------------------------------------------------------*/
 
   require_once $_SERVER['DOCUMENT_ROOT'] . '../php/facebook.php';
+  require_once $_SERVER['DOCUMENT_ROOT'] . 'model/NoteshareDatabase.php';
 
   // API key for our application, needed for facebook session
   $appapikey = '20f5b69813b87ffd25e42744b326a112';
@@ -36,6 +37,30 @@
 
   // Require that the user be logged in to use the page
   $user_id = $facebook->require_login();
+
+  // Make sure the user is enrolled in the session or study group
+  if( isset( $_GET['nsStudyGroup'] ) && !isset( $_GET['enroll'] ))
+  {
+    $confirm = checkUserInStudyGroupDAL( $user_id, $_GET['nsStudyGroup'] );
+    if( !$confirm )
+    {
+      echo '<script type="text/javascript">';
+      echo ' alert( "You must be enrolled in the study group to view this page." );';
+      echo '</script>';
+      $facebook->redirect( "http://apps.facebook.com/notesharesep/views/CoursePage.php?ns_session=" . $_GET['ns_session'] );
+    }
+  }
+  if( isset( $_GET['ns_session'] ))
+  {
+    $confirm = checkUserInSessionDAL( $user_id, $_GET['ns_session'] );
+    if( !$confirm )
+    {
+      echo '<script type="text/javascript">';
+      echo ' alert( "You must be enrolled in the course to view this page." );';
+      echo '</script>';
+      $facebook->redirect( "http://apps.facebook.com/notesharesep/views/UserHomePage.php" );
+    }
+  }
 
   /**
    * Appends tags with specified values to the parent tag of an existing XML

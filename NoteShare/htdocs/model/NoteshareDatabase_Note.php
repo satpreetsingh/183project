@@ -66,7 +66,7 @@ function getSessionNoteDAL ($session_id, $id = 0, $latest_posts = 0)
 			  "(SessionNotes.Session_Ptr = " . $session_id . ")";
 
   if ($id <> 0) { 
-    $WhereClause = $WhereClause . " And (ID = " . $id . ");";
+    $WhereClause = $WhereClause . " And (ID = " . $id . ") ";
   } 
 
   // Only select the latest X posts.

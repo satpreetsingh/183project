@@ -17,7 +17,6 @@
   function genGroupBBS( $sessionId, $groupId, $user_id )
   {
     $bbsTopicsXML = getStudyGroupBBSTopics( $sessionId, $groupId, $user_id );
-    echo $bbsTopicsXML;
     echo XSLTransform( $bbsTopicsXML, 'GroupBBSTopics.xsl');
   }
 

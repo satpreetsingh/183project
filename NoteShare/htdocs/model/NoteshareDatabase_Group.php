@@ -64,33 +64,45 @@ function getStudyGroupsDAL($user_id, $session_id)
   $list->appendChild($sid);
   
   while($row1 = mysql_fetch_assoc($result1)) {
+
     $Group = $doc->createElement('Group');
     $list->appendChild($Group);  
     $id_attr = $doc->createAttribute('Id');
     $Group->appendChild($id_attr);
+  
     $id_text = $doc->createTextNode($row1['ID']);
     $id_attr->appendChild($id_text);
     $desc_attr = $doc->createAttribute('description');
     $Group->appendChild($desc_attr);
+
     $desc_text = $doc->createTextNode($row1['DESCRIPTION']);
     $desc_attr->appendChild($desc_text);
     $member_attr = $doc->createAttribute('member');
     $Group->appendChild($member_attr);
+
     $member_text = $doc->createTextNode("False");
-    mysql_data_seek($result2, 0);
-    while ($row2 = mysql_fetch_assoc($result2)) {
+
+    if( mysql_num_rows( $result2 ))
+    {
+      mysql_data_seek($result2, 0);
+      while ($row2 = mysql_fetch_assoc($result2)) {
         if ($row2['SG_Ptr'] == $row1['ID']) {	
             // If SG_ID is present in $results2, then enrolled
             $member_text = $doc->createTextNode("True");
         }
-    }	    
+      }
+    }
     $member_attr->appendChild($member_text);  
     $Group->appendChild($doc->createTextNode($row1['NAME'])); 
+
   }
 
   $out = $doc->saveXML();
+
   closeDB ($result, $conn);
+
   return $out;
+
 }
 
 //Joe's version
@@ -185,18 +197,23 @@ function getHomePageStudyGroupListDAL ($user_id)
   $doc->appendChild($list);
 
   while($row = mysql_fetch_assoc($result)) {
+
     $Groupuseritem = $doc->createElement('GroupUserItem');
+    
     $list->appendChild($Groupuseritem);
     $id_attr = $doc->createAttribute('Id');
     $Groupuseritem->appendChild($id_attr);
+    
     $id_text = $doc->createTextNode($row['StudyGroup_Id']);
     $id_attr->appendChild($id_text);
     $uni_attr = $doc->createAttribute('University_Name');
     $Groupuseritem->appendChild($uni_attr);
+   
     $uni_text = $doc->createTextNode($row['University_Name']);
     $uni_attr->appendChild($uni_text);
     $GroupItem_Name = $doc->createTextNode($row['Course_Name'] . " - " . $row['Group_Name'] . " - " . $row['StudyGroup_Name']);
     $Groupuseritem->appendChild($GroupItem_Name);
+
   }
 
   $out = $doc->saveXML();
@@ -228,34 +245,45 @@ function getStudyGroupMetadataDAL ($study_group_id)
 			"From StudyGroup " . 
 			"Inner Join Session On (Session.Id = StudyGroup.Session_Ptr) " .
 			"Inner Join Course On  (Course.Id = Session.Course_Ptr) " . 
-			"Where (StudyGroup.Id = " . $study_group_id . ");";	
+			"Where (StudyGroup.Id = " . $study_group_id . ");";
+	
   $result = mysql_query($query);
+
+
   $doc = new DOMDocument('1.0');
   $style = $doc->createProcessingInstruction('xml-stylesheet', 'type="text/xsl" href="test.xsl"');
   $doc->appendChild($style);
   $EndResult = $doc->createElement('StudyGroupMetaDataResult');
   $doc->appendChild($EndResult);
+
   while($row = mysql_fetch_assoc($result)) {    
+
     $StudyGroupmetadata= $doc->createElement('StudyGroupMetaData');
+    
     $EndResult->appendChild($StudyGroupmetadata);
     $id_attr = $doc->createAttribute('Id');
     $StudyGroupmetadata->appendChild($id_attr);
+    
     $id_text = $doc->createTextNode($row['StudyGroup_Id']);
     $id_attr->appendChild($id_text);
     $startdate_attr = $doc->createAttribute('Start_Date');
     $StudyGroupmetadata->appendChild($startdate_attr);
+    
     $startdate_text = $doc->createTextNode($row['Start_Date']);
     $startdate_attr->appendChild($startdate_text);
     $enddate_attr = $doc->createAttribute('End_Date');
     $StudyGroupmetadata->appendChild($enddate_attr);
+    
     $enddate_text = $doc->createTextNode($row['End_Date']);
     $enddate_attr->appendChild($enddate_text);
     $desc_attr = $doc->createAttribute('Desc');
     $StudyGroupmetadata->appendChild($desc_attr);
+    
     $desc_text = $doc->createTextNode($row['Course_Description']);
     $desc_attr->appendChild($desc_text);	
     $SGdesc_attr = $doc->createAttribute('StudyGroup_Description');
     $StudyGroupmetadata->appendChild($SGdesc_attr);
+    
     $SGdesc_text = $doc->createTextNode($row['StudyGroup_Desc']);
     $SGdesc_attr->appendChild($SGdesc_text);	
     $StudyGroupMetaData_Name = $doc->createTextNode($row['Course_Name'] . " - " . $row['Session_Name'] . " - " . $row['StudyGroup_Name']);
@@ -782,8 +810,7 @@ function getStudyGroupBBSTopicsDAL ($study_group_id, $latest_posts = 0)
 	      "From StudyGroupBBS " .
              "Where (StudyGroupBBS.REMOVAL_DATE Is Null) And " .
 		     "(StudyGroupBBS.Prev_Post_Ptr Is Null) And " .
-         "(StudyGroupBBS.User_Ptr IS NOT NULL ) And " .
-                   "(StudyGroupBBS.SG_Ptr = " . $study_group_id . " );";
+         "(StudyGroupBBS.SG_Ptr = " . $study_group_id . " );";
   }
 
 
@@ -879,50 +906,56 @@ function getStudyGroupBBSPostsDAL ($parentId, $facebook)
       $study_groupBBSThread_header->appendChild($study_groupBBSThread_header_text);
     }
 
-    // create the StudyGroupBBSTopic Tag <StudyGroupBBSTopic>
-    $study_groupBBSPost = $doc->createElement('StudyGroupBBSPost');
-    $study_groupBBSThread->appendChild($study_groupBBSPost);
+    if( $row['HEADER'] == '#STUDY GROUP WALL#' )
+    {
+    }
+    else
+    {
+      // create the StudyGroupBBSTopic Tag <StudyGroupBBSTopic>
+      $study_groupBBSPost = $doc->createElement('StudyGroupBBSPost');
+      $study_groupBBSThread->appendChild($study_groupBBSPost);
 
-    // Add the Id attribute Id=""
-    $study_groupBBSPost_id = $doc->createAttribute('Id');
-    $study_groupBBSPost->appendChild($study_groupBBSPost_id);
-    $study_groupBBSPost_id_text = $doc->createTextNode($row['ID']);
-    $study_groupBBSPost_id->appendChild($study_groupBBSPost_id_text);
+      // Add the Id attribute Id=""
+      $study_groupBBSPost_id = $doc->createAttribute('Id');
+      $study_groupBBSPost->appendChild($study_groupBBSPost_id);
+      $study_groupBBSPost_id_text = $doc->createTextNode($row['ID']);
+      $study_groupBBSPost_id->appendChild($study_groupBBSPost_id_text);
 
-    // Add the PostDate attribute PostDate=""
-    $study_groupBBSPost_date = $doc->createAttribute('PostDate');
-    $study_groupBBSPost->appendChild($study_groupBBSPost_date);
-    $study_groupBBSPost_date_text = $doc->createTextNode($row['POST_DATE']);
-    $study_groupBBSPost_date->appendChild($study_groupBBSPost_date_text);
+      // Add the PostDate attribute PostDate=""
+      $study_groupBBSPost_date = $doc->createAttribute('PostDate');
+      $study_groupBBSPost->appendChild($study_groupBBSPost_date);
+      $study_groupBBSPost_date_text = $doc->createTextNode($row['POST_DATE']);
+      $study_groupBBSPost_date->appendChild($study_groupBBSPost_date_text);
 
-    // Add the UserId attribute UserId=""
-    $study_groupBBSPost_user = $doc->createAttribute('UserId');
-    $study_groupBBSPost->appendChild($study_groupBBSPost_user);
-    $study_groupBBSPost_user_text = $doc->createTextNode($row['User_Ptr']);
-    $study_groupBBSPost_user->appendChild($study_groupBBSPost_user_text);
+      // Add the UserId attribute UserId=""
+      $study_groupBBSPost_user = $doc->createAttribute('UserId');
+      $study_groupBBSPost->appendChild($study_groupBBSPost_user);
+      $study_groupBBSPost_user_text = $doc->createTextNode($row['User_Ptr']);
+      $study_groupBBSPost_user->appendChild($study_groupBBSPost_user_text);
 
-    // Add the StudyGroupId attribute StudyGroupId
-    $study_groupBBSPost_study_group = $doc->createAttribute('StudyGroupId');
-    $study_groupBBSPost->appendChild($study_groupBBSPost_study_group);
-    $study_groupBBSPost_study_group_text = $doc->createTextNode($row['SG_Ptr']);
-    $study_groupBBSPost_study_group->appendChild($study_groupBBSPost_study_group_text);
+      // Add the StudyGroupId attribute StudyGroupId
+      $study_groupBBSPost_study_group = $doc->createAttribute('StudyGroupId');
+      $study_groupBBSPost->appendChild($study_groupBBSPost_study_group);
+      $study_groupBBSPost_study_group_text = $doc->createTextNode($row['SG_Ptr']);
+      $study_groupBBSPost_study_group->appendChild($study_groupBBSPost_study_group_text);
 
-    // Add the Facebook User name attribute UserName=""
-    $user_details = $facebook->api_client->users_getInfo($row['User_Ptr'], 'last_name, first_name, pic_square');
-    $study_groupBBSPost_userName = $doc->createAttribute('UserName');
-    $study_groupBBSPost->appendChild($study_groupBBSPost_userName);
-    $study_groupBBSPost_userName_text = $doc->createTextNode( $user_details[0]['first_name'] . ' ' . $user_details[0]['last_name'] );
-    $study_groupBBSPost_userName->appendChild($study_groupBBSPost_userName_text );
+      // Add the Facebook User name attribute UserName=""
+      $user_details = $facebook->api_client->users_getInfo($row['User_Ptr'], 'last_name, first_name, pic_square');
+      $study_groupBBSPost_userName = $doc->createAttribute('UserName');
+      $study_groupBBSPost->appendChild($study_groupBBSPost_userName);
+      $study_groupBBSPost_userName_text = $doc->createTextNode( $user_details[0]['first_name'] . ' ' . $user_details[0]['last_name'] );
+      $study_groupBBSPost_userName->appendChild($study_groupBBSPost_userName_text );
 
-    // Add the facebook profile pic url
-    $study_groupBBSPost_pic = $doc->createAttribute('PicURL');
-    $study_groupBBSPost->appendChild($study_groupBBSPost_pic);
-    $study_groupBBSPost_picURL = $doc->createTextNode( $user_details[0]['pic_square'] );
-    $study_groupBBSPost_pic->appendChild($study_groupBBSPost_picURL );
+      // Add the facebook profile pic url
+      $study_groupBBSPost_pic = $doc->createAttribute('PicURL');
+      $study_groupBBSPost->appendChild($study_groupBBSPost_pic);
+      $study_groupBBSPost_picURL = $doc->createTextNode( $user_details[0]['pic_square'] );
+      $study_groupBBSPost_pic->appendChild($study_groupBBSPost_picURL );
 
-    // Fill in the Post study_groupBBSPost (subject) <>study_groupBBSPost</>
-    $study_groupBBSPost_text = $doc->createTextNode($row['BODY']);
-    $study_groupBBSPost->appendChild($study_groupBBSPost_text);
+      // Fill in the Post study_groupBBSPost (subject) <>study_groupBBSPost</>
+      $study_groupBBSPost_text = $doc->createTextNode($row['BODY']);
+      $study_groupBBSPost->appendChild($study_groupBBSPost_text);
+    }
   }
 
   $out = $doc->saveXML();
@@ -1030,9 +1063,9 @@ function addStudyGroupNoteDAL ($user_id, $study_group_id, $header, $body, $file_
  * This function returns a note posting with the physical file location.
  * @author Joseph Trapani
  * @version 2.0
- * @param integer $study_group_id study group ID, integer $id unique ID number of post, integer $return_latest return latest X records 
+ * @param integer $study_group_id study group ID, integer $noteid unique ID number of posted note, integer $return_latest return latest X records 
  */
-function getStudyGroupNoteDAL ($study_group_id, $id = 0, $latest_posts = 0)
+function getStudyGroupNoteDAL ($study_group_id, $noteid = 0, $latest_posts = 0)
 {
   $conn = openDB();
   
@@ -1041,8 +1074,8 @@ function getStudyGroupNoteDAL ($study_group_id, $id = 0, $latest_posts = 0)
   $WhereClause = "Where (StudyGroupNotes.Removal_Date Is Null) And " .
 			  "(StudyGroupNotes.SG_Ptr = " . $study_group_id . ")";
 
-  if ($id <> 0) { 
-    $WhereClause = $WhereClause . " And (ID = " . $id . ");";
+  if ($noteid <> 0) { 
+    $WhereClause = $WhereClause . " And (ID = " . $noteid . ") ";
   } 
 
   // Only select the latest X posts.

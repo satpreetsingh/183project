@@ -47,9 +47,9 @@
 	**/
 	function genGroupNotes( $sessionId, $groupId, $user_id )
 	{
-  	$notesXML = getGroupNotes( $groupId, $user_id );
+  	  $notesXML = getGroupNotes( $user_id, $groupId );
 	  echo XSLTransform( $notesXML, 'GroupPage.xsl' );
-  	echo '<a href="http://apps.facebook.com/notesharesep/views/GroupNotes.php?nsStudyGroup=' . $groupId . '&ns_session=' . $sessionId . '" target="_top" class="fbFont left">View all Notes</a>';
+  	  echo '<a href="http://apps.facebook.com/notesharesep/views/GroupNotes.php?nsStudyGroup=' . $groupId . '&ns_session=' . $sessionId . '" target="_top" class="fbFont left">View all Notes</a>';
 	}
 
 	/**
@@ -59,6 +59,12 @@
 	**/
 	function genGroupWallArea( $sessionId, $groupId, $user_id, $facebook )
 	{
+    $parentId = getStudyGroupWallParentDAL( $groupId );
+   	genHeadingBar( "Study-Group Wall", "More", 
+      "/views/GroupBBS.php?ns_session=" . $sessionId . 
+        "&nsStudyGroup=" . $groupId .
+        "&parentId=" . $parentId );
+
 	  echo
 		  "<form action=\"/controllers/AddWallPost.php\">" .
       " <input type=\"hidden\" name=\"ns_session\" value=\"" . $sessionId . "\">" .
@@ -92,27 +98,23 @@
 
   // Group metadata
 	$metaXML = getGroupMetadata($groupId);
-	//echo $metaXML;
   echo XSLTransform($metaXML,'GroupPage.xsl');
 	echo '<br /><br />';
 
-	/*
 	// Join/Drop Course
-	echo 'DROP or JOIN';
-		echo "<form action=\"/controllers/DropGroup.php\" method=\"GET\">"
-		   . "			<button class=\"drop fbFont\" name=\"ns_session\" value=\"$sessionId\" onclick=\"return confirm(\'Really? Leave the group?\');\">"
-			 . "			Drop"
-			 . "	</button>"
-			 . "</form>";
-		echo "</br></br>";
-	*/
+	echo "<form action=\"/controllers/DropGroup.php\" method=\"GET\">"
+     . "      <input type=\"hidden\" name=\"ns_session\" value=\"$sessionId\">"
+	   . "			<button class=\"drop fbFont\" name=\"nsStudyGroup\" value=\"$groupId\" onclick=\"return confirm(\'Really? Leave the group?\');\">"
+		 . "			Drop"
+		 . "	</button>"
+		 . "</form>";
+	echo "<br /><br />";
 
 	// Wall Area
-	genHeadingBar( "Study-Group Wall" );
 	genGroupWallArea( $sessionId, $groupId, $user_id, $facebook );
 
 	// Uploaded Notes?
-	genHeadingBar( "Group Notes", "Add New Note Set", "/views/NewNote.php?nsStudyGroup=" . $groupId . "&ns_session=" . $sessionId );
+	genHeadingBar( "Group Notes", "Add New Note Set", "/views/NewNote_Group.php?nsStudyGroup=" . $groupId . "&ns_session=" . $sessionId );
 	genGroupNotes( $sessionId, $groupId, $user_id );
 	echo '<br /><br />';
 

@@ -1,6 +1,6 @@
 <?php
   require_once $_SERVER['DOCUMENT_ROOT'] . 'controllers/Controller.php';
-  include $_SERVER['DOCUMENT_ROOT'] . 'model/NoteshareDatabase.php';
+  include_once $_SERVER['DOCUMENT_ROOT'] . 'model/NoteshareDatabase.php';
 
   /**
    * Retrieves all of the posts for the specified session

@@ -12,8 +12,6 @@
   require_once $_SERVER['DOCUMENT_ROOT'] . '/controllers/Controller.php';
   require_once $_SERVER['DOCUMENT_ROOT'] . '/model/NoteshareDatabase.php';
 
-  echo var_dump( $_GET );
-
   if( isset( $_GET[ 'Post_Thread' ] ))
   {
     // Field Study Group Posts

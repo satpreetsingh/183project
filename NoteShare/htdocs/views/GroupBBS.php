@@ -17,7 +17,6 @@
   function genGroupBBSTable( $sessionId, $parentId, $user_id, $facebook )
   {
     $bbsPosts = getStudyGroupBBSPosts( $sessionId, $parentId, $user_id, $facebook );
-    echo $bbsPosts;
     $HTML = XSLTransform( $bbsPosts, 'GroupBBS.xsl' );
     echo html_entity_decode( $HTML );
     echo '<br />';
