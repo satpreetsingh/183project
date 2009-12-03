@@ -353,51 +353,60 @@ function getSessionBBSPostsDAL ($parentId, $facebook)
       $sessionBBSThread_header_text = $doc->createTextNode($row['HEADER']);
       $sessionBBSThread_header->appendChild($sessionBBSThread_header_text);
     }
+    if( $row['HEADER'] == '#SESSION WALL#' )
+    {
+      // skip displaying this as a post
+    }
+    else
+    {
+      // create the SessionBBSTopic Tag <SessionBBSTopic>
+      $sessionBBSPost = $doc->createElement('SessionBBSPost');
+      $sessionBBSThread->appendChild($sessionBBSPost);
 
-    // create the SessionBBSTopic Tag <SessionBBSTopic>
-    $sessionBBSPost = $doc->createElement('SessionBBSPost');
-    $sessionBBSThread->appendChild($sessionBBSPost);
+      // Add the Id attribute Id=""
+      $sessionBBSPost_id = $doc->createAttribute('Id');
+      $sessionBBSPost->appendChild($sessionBBSPost_id);
+      $sessionBBSPost_id_text = $doc->createTextNode($row['ID']);
+      $sessionBBSPost_id->appendChild($sessionBBSPost_id_text);
 
-    // Add the Id attribute Id=""
-    $sessionBBSPost_id = $doc->createAttribute('Id');
-    $sessionBBSPost->appendChild($sessionBBSPost_id);
-    $sessionBBSPost_id_text = $doc->createTextNode($row['ID']);
-    $sessionBBSPost_id->appendChild($sessionBBSPost_id_text);
+      // Add the PostDate attribute PostDate=""
+      $sessionBBSPost_date = $doc->createAttribute('PostDate');
+      $sessionBBSPost->appendChild($sessionBBSPost_date);
+      $sessionBBSPost_date_text = $doc->createTextNode($row['POST_DATE']);
+      $sessionBBSPost_date->appendChild($sessionBBSPost_date_text);
 
-    // Add the PostDate attribute PostDate=""
-    $sessionBBSPost_date = $doc->createAttribute('PostDate');
-    $sessionBBSPost->appendChild($sessionBBSPost_date);
-    $sessionBBSPost_date_text = $doc->createTextNode($row['POST_DATE']);
-    $sessionBBSPost_date->appendChild($sessionBBSPost_date_text);
+      // Add the UserId attribute UserId=""
+      $sessionBBSPost_user = $doc->createAttribute('UserId');
+      $sessionBBSPost->appendChild($sessionBBSPost_user);
+      $sessionBBSPost_user_text = $doc->createTextNode($row['User_Ptr']);
+      $sessionBBSPost_user->appendChild($sessionBBSPost_user_text);
 
-    // Add the UserId attribute UserId=""
-    $sessionBBSPost_user = $doc->createAttribute('UserId');
-    $sessionBBSPost->appendChild($sessionBBSPost_user);
-    $sessionBBSPost_user_text = $doc->createTextNode($row['User_Ptr']);
-    $sessionBBSPost_user->appendChild($sessionBBSPost_user_text);
+      // Add the Facebook User name attribute UserName=""
+      $user_details = $facebook->api_client->users_getInfo($row['User_Ptr'], 'last_name, first_name, pic_square');
+      if( isset( $user_details[0] ))
+      {
+        $sessionBBSPost_userName = $doc->createAttribute('UserName');
+        $sessionBBSPost->appendChild($sessionBBSPost_userName);
+        $sessionBBSPost_userName_text = $doc->createTextNode( $user_details[0]['first_name'] . ' ' . $user_details[0]['last_name'] );
+        $sessionBBSPost_userName->appendChild($sessionBBSPost_userName_text );
 
-    // Add the Facebook User name attribute UserName=""
-    $user_details = $facebook->api_client->users_getInfo($row['User_Ptr'], 'last_name, first_name, pic_square');
-    $sessionBBSPost_userName = $doc->createAttribute('UserName');
-    $sessionBBSPost->appendChild($sessionBBSPost_userName);
-    $sessionBBSPost_userName_text = $doc->createTextNode( $user_details[0]['first_name'] . ' ' . $user_details[0]['last_name'] );
-    $sessionBBSPost_userName->appendChild($sessionBBSPost_userName_text );
+        // Add the facebook profile pic url
+        $sessionBBSPost_pic = $doc->createAttribute('PicURL');
+        $sessionBBSPost->appendChild($sessionBBSPost_pic);
+        $sessionBBSPost_picURL = $doc->createTextNode( $user_details[0]['pic_square'] );
+        $sessionBBSPost_pic->appendChild($sessionBBSPost_picURL );
+      }
 
-    // Add the facebook profile pic url
-    $sessionBBSPost_pic = $doc->createAttribute('PicURL');
-    $sessionBBSPost->appendChild($sessionBBSPost_pic);
-    $sessionBBSPost_picURL = $doc->createTextNode( $user_details[0]['pic_square'] );
-    $sessionBBSPost_pic->appendChild($sessionBBSPost_picURL );
+      // Add the SessionId attribute SessionId
+      $sessionBBSPost_session = $doc->createAttribute('SessionId');
+      $sessionBBSPost->appendChild($sessionBBSPost_session);
+      $sessionBBSPost_session_text = $doc->createTextNode($row['Session_Ptr']);
+      $sessionBBSPost_session->appendChild($sessionBBSPost_session_text);
 
-    // Add the SessionId attribute SessionId
-    $sessionBBSPost_session = $doc->createAttribute('SessionId');
-    $sessionBBSPost->appendChild($sessionBBSPost_session);
-    $sessionBBSPost_session_text = $doc->createTextNode($row['Session_Ptr']);
-    $sessionBBSPost_session->appendChild($sessionBBSPost_session_text);
-
-    // Fill in the Post sessionBBSPost (subject) <>sessionBBSPost</>
-    $sessionBBSPost_text = $doc->createTextNode($row['BODY']);
-    $sessionBBSPost->appendChild($sessionBBSPost_text);
+      // Fill in the Post sessionBBSPost (subject) <>sessionBBSPost</>
+      $sessionBBSPost_text = $doc->createTextNode($row['BODY']);
+      $sessionBBSPost->appendChild($sessionBBSPost_text);
+    }
   }
 
   $out = $doc->saveXML();

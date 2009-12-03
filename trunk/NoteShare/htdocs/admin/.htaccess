@@ -1,4 +1,5 @@
 AuthType Basic
-AuthName "Password Required"
+AuthName "Restricted Files"
 AuthUserFile /home/fate/SEPRepository/183project/NoteShare/htaccess/.htpasswd
-Require valid-user
+AuthGroupFile /dev/null
+Require user fate

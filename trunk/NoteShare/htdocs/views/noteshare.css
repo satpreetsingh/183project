@@ -81,6 +81,21 @@ h3.university
   font-size:          16px; 
 }
 
+iframe.center
+{
+  
+}
+
+#DISCLAIMER
+{
+  border:             0px;
+  position:           absolute;
+  top:                100;
+  left:               100;
+  width:              760px;
+  height:             400px;
+}
+
 img.profile_pic_linked
 {
   border:             1px solid #94A3C4;
@@ -137,13 +152,14 @@ table.sessionMetadata
 td.friend
 {
   background-color:   #ECEFF5;
-  cellpadding:        10px;
+  padding-top:        5px;
 }
 
 td.notFriend
 {
   background-color:   #FFFFFF;
-  cellpadding:        10px;
+  padding-top:        5px;
+  border:             1px solid #94A3C4;
 }
 
 td.header

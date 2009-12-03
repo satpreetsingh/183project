@@ -1,8 +1,8 @@
 <?php
 
 	// the host where the script lives
-	$proxy = "noteshare.homelinux.net";
-//	$proxy = "localhost";
+//	$proxy = "noteshare.homelinux.net";
+	$proxy = "localhost";
 	
 	// extract oringinal url from get query
 	$url = urldecode($_GET['IPS_Orig_Host']);
@@ -33,21 +33,38 @@
 	
 	// Execute curl
 	$response = curl_exec($cu);
-	curl_close($cu);
+	
 	
 	// Split response to header and body
 	$headerBody = explode("\r\n\r\n",$response,2);
 	$headerLines = explode("\r\n",$headerBody[0]);
 	
-	// Set the cookies to the user
-	foreach( $headerLines as $line )
+	
+	if(curl_getinfo($cu,CURLINFO_HTTP_CODE) == 200)
 	{
-		if(substr($line,0,10)=="Set-Cookie")
+		// Set the cookies to the user
+		foreach( $headerLines as $line )
 		{
-			header($line,false);
-			continue;
+			if(substr($line,0,10)=="Set-Cookie")
+			{
+				header($line,false);
+				continue;
+			}
 		}
 	}
+	else
+	{
+		// Set the cookies to the user
+		foreach( $headerLines as $line )
+		{
+			header($line,false);
+		}
+		
+		echo $headerBody[1];
+		exit();
+	}
+	curl_close($cu);
+	
 	
 //	header('Content-type: application/xhtml+xml');
 
@@ -61,8 +78,7 @@
 	$replaces[1] = '-->\\0';
 	$replaces[2] = '\\0<!--';
 	$replaces[3] = '-->\\0';
-//	$body = preg_replace($patterns, $replaces, $headerBody[1]);
-	$body = $headerBody[1];
+	$body = preg_replace($patterns, $replaces, $headerBody[1]);
 	@$document->loadHTML( $body );
 
 	// XPath for searching the DOM

@@ -5,7 +5,7 @@
    * Right now, partisipants.
   **/
 	require_once $_SERVER['DOCUMENT_ROOT'] . 'views/View.php';
-	require_once $_SERVER['DOCUMENT_ROOT'] . '/controllers/SessionNotes.php';
+	require_once $_SERVER['DOCUMENT_ROOT'] . '/controllers/GroupNotes.php';
 
 
 //--------------------------View Functions--------------------------------//
@@ -14,27 +14,30 @@
    *
    * @return displays table of session's notes
   **/
-  function genSessionNotes( $user_id, $sessionId )
+  function genGroupNotes( $user_id, $groupId )
   {
-    $notesXML = getSessionNotes( $sessionId, $user_id );
-    echo XSLTransform( $notesXML, 'SessionNotes.xsl' );
+    $notesXML = getStudyGroupNotes( $groupId, $user_id );
+    echo XSLTransform( $notesXML, 'GroupNotes.xsl' );
   }
 
 //----------------------Begin View Code----------------------------------//
 
-  genViewHeader( "Session Notes Page" );
+  genViewHeader( "Group Notes Page" );
   genPageHeader( array( "Main Page", 
                         "Course View",
-                        "Session Notes" ),
+                        "Group View",
+                        "Group Notes" ),
                  array( "/views/UserHomePage.php",
                         "/views/CoursePage.php?ns_session=" . $_GET['ns_session'],
-                        "/views/SessionNotes.php?ns_session=" . $_GET['ns_session'] ));
+                        "/views/GroupPage.php?ns_session=" . $_GET['ns_session'] . "&nsStudyGroup=" . $_GET['nsStudyGroup'],
+                        "/views/GroupNotes.php?ns_session=" . $_GET['ns_session'] . "&nsStudyGroup=" . $_GET['nsStudyGroup'] ));
 
   $sessionId = $_GET['ns_session'];
+  $groupId = $_GET['nsStudyGroup'];
 
   // Uploaded Notes?
-  genHeadingBar( "Course Notes", "Add New Note Set", "/views/NewNote.php?ns_session=" . $sessionId );
-  genSessionNotes( $user_id, $sessionId );
+  genHeadingBar( "Group Notes", "Add New Note Set", "/views/NewNote_Group.php?ns_session=" . $sessionId . "&nsStudyGroup=" . $groupId );
+  genGroupNotes( $user_id, $groupId );
   echo '<br /><br />';
 
   // Close out page

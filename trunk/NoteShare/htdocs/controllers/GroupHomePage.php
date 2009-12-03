@@ -1,6 +1,6 @@
 <?php
 
-  include $_SERVER['DOCUMENT_ROOT'] . 'model/NoteshareDatabase.php';
+  include_once $_SERVER['DOCUMENT_ROOT'] . 'model/NoteshareDatabase.php';
   require_once $_SERVER['DOCUMENT_ROOT'] . 'controllers/Controller.php';
 
   /**
@@ -17,25 +17,6 @@
   function getGroupWall( $groupID, $facebook )
   {
 	  return getStudyGroupWallPostsDAL( $groupID, $facebook );
-
-  /*	
-  return '' .
-  '<?xml version="1.0" encoding="UTF-8"?>
-   <groupWallPosts>
-     <post time="1234567890"
-           user="66000948">
-		   This is one cool group!
-     </post>
-     <post time="1234567890"
-		user="66000948">
-		Is anyone here...?
-	 </post>
-     <post time="1234567890"
-           User="66000948">
-		   Hello...
-     </post>
-   </groupWallPosts>';
-  */ 
   }
 
 
@@ -49,11 +30,15 @@
    */
   function getGroupNotes( $userId, $groupId )
   {
+
+
     // Request the five most recent note postings for this session.
     $groupNotesXML = getStudyGroupNoteDAL( $groupId, 0, 5 );
+
     $groupNotesDOM = new DOMDocument('1.0');
     $groupNotesDOM->loadXML( $groupNotesXML );
     $groupNotesList = $groupNotesDOM->getElementsByTagName( 'getGroupNotes' );
+
     if( $groupNotesList->length > 0 )
     {
       $groupNotes = $groupNotesList->item(0);
@@ -97,16 +82,6 @@
   function getGroupMembers( $userid, $groupId, $facebook )
   {
 	  return getStudyGroupMembersDAL( $groupId, $userid, $facebook, 8 );
-  /*
-	  return "<?xml version=\"1.0\"?>
-	    <groupUserList>
-		    <groupUserItem friend=\"False\">66000948</groupUserItem>
-		    <groupUserItem friend=\"True\">14821122</groupUserItem>
-		    <groupUserItem friend=\"True\">100000182749925</groupUserItem>	
-		    <groupUserItem friend=\"True\">14811933</groupUserItem>	
-		    <groupUserItem friend=\"True\">850985471</groupUserItem>	
-	    </groupUserList>";
-  */
   }
 
 
@@ -143,7 +118,7 @@
 	//Is this ok?
     return "
 	<?xml version=\"1.0\"?>	    
-	<response>You have been removed from the course...</response>
+	<response>You have been removed from the group...</response>
 	";
   }
 

@@ -37,7 +37,7 @@
     echo '<textarea id="sessionBBSPost" class="fbFont sessionBBS"' .
          'name="sessionBBSPost">Post Reply...</textarea>';
     echo '<div style="text-align: right;">' .
-         ' <input type="submit" value="Post Reply" class="fbFont">';
+         ' <input type="submit" value="Post Reply" class="fbFont submit">';
     echo '</div></form>';
   }
 

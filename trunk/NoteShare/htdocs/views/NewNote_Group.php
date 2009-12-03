@@ -17,9 +17,12 @@
     openEditor();
     genTextBox( "Subject:", header );
     echo '<input type="hidden" name="MAX_FILE_SIZE" value="5242880">';
-    echo '<input type="hidden" name="nsStudyGroup" value="' . $groupId . '">';
+    echo '<input type="hidden" name="sep_type" value="1">';
     echo '<input type="hidden" name="ns_session" value="' . $sessionId . '">';
+    echo '<input type="hidden" name="ns_study_group" value="' . $groupId . '">';
     echo '<input type="hidden" name="userId" value="' . $userId . '">';
+
+ 
     genTextArea( "Body:", body );
     genFileUpload();
     genButtons( $groupId, $sessionId );
@@ -118,15 +121,46 @@
   genViewHeader( "SessionBBS View" );
   genPageHeader( array( "Main Page",
                         "Course View",
+                        "Group View",
                         "New Thread" ),
                  array( "/views/UserHomePage.php", 
                         "/views/CoursePage.php?ns_session=" . $_GET['ns_session'],
+                        "/views/GroupPage.php?ns_session=" . $_GET['ns_session'] . "&nsStudyGroup=" . $_GET['nsStudyGroup'], 
                         "/views/NewThread.php?ns_session=" . $_GET['ns_session'] ));
 
   // Upload new Notes
   $sessionId = $_GET['ns_session'];
   $groupId = $_GET['nsStudyGroup'];
   genNewNotes( $groupId, $sessionId, $user_id ); 
+  echo "
+    <h1>Disclaimer</h1>
+    <p>Copyright law protects various types of original works of authorship
+    and the reproduction of such works without the consent of the copyright 
+    owner. NoteSharedoes not promote or in any way condone the use of our 
+    application for such purposes.</p>
+
+    <p>The use of this website and for such illegal purposes, including file 
+    sharing of copyrighted material without, amongst other things, all 
+    necessary permissions, is prohibited and is in breach of the Facebook 
+    terms and conditions which you have accepted in using this site. You 
+    should not assume that you have permission to share a file simply because 
+    someone else has made it available online.</p>
+
+    <p>Compliance with all relevant laws is your responsibility! NoteShare 
+    maintains an audit trail, and will comply with local laws in cases where 
+    a breach of copyright law is suspected. Please use this site and any 
+    material on it responsibly.</p>
+
+    <p>Some schools and professors have a policy against students discussing 
+    coursework on online forums outside of the official school forums. Users 
+    should check if there is anything in their school/course policy against 
+    discussing class material or homework, or collaborating. We are not 
+    affiliated with any educational institutions: we are a commercial 
+    3rd-party venture.</p>
+
+    <p>NoteShare reserves the right to delete any objectionable content 
+    without notice.</p>
+  ";
 
   // Close out page
   genViewFooter();

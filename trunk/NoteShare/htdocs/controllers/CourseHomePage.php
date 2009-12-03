@@ -1,6 +1,6 @@
 <?php
 
-  include $_SERVER['DOCUMENT_ROOT'] . 'model/NoteshareDatabase.php';
+  include_once $_SERVER['DOCUMENT_ROOT'] . 'model/NoteshareDatabase.php';
   require_once $_SERVER['DOCUMENT_ROOT'] . 'controllers/Controller.php';
 
   /**

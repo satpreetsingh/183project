@@ -1,7 +1,7 @@
 <?php
 
-  include $_SERVER['DOCUMENT_ROOT'] . 'controllers/Controller.php';
-  include $_SERVER['DOCUMENT_ROOT'] . 'model/NoteshareDatabase.php';
+  require_once $_SERVER['DOCUMENT_ROOT'] . 'controllers/Controller.php';
+  require_once $_SERVER['DOCUMENT_ROOT'] . 'model/NoteshareDatabase.php';
 
 
 /**
@@ -16,5 +16,14 @@ function getHomePageSessionList( $userid )
   $sessionList = getHomePageSessionListDAL( $userid );
 
   return $sessionList;
+}
+
+/**
+ *
+**/
+function getHomePageStudyGroupList( $userid )
+{
+  $groupList = getHomePageStudyGroupListDAL( $userid );
+  return $groupList;
 }
 ?>

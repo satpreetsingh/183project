@@ -13,10 +13,10 @@ xmlns:fb="http://www.facebook.com/2008/fbml"
 <getSessionNote>
   <getSessionNote User_ID="" Header="" Body="" Original_File_Name="" File_Size="1"></getSessionNote>
 -->
-<xsl:template match="getSessionNotes">
+<xsl:template match="getStudyGroupNotes">
   <xsl:variable name="viewUserId"><xsl:value-of select="UserId" /></xsl:variable>
   <table class="sessionNotes">
-    <xsl:for-each select="getSessionNote">
+    <xsl:for-each select="getStudyGroupNote">
     <tr>
       <td class="sessionNote fbFont">
         <a target="_top">
