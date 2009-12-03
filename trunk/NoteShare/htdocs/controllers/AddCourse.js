@@ -7,27 +7,62 @@ var ns_discription = false;
     obj.style.background = "#3b5998";
   }
   
+function showRevert(show)
+{
+	if (show == null)
+		show = true;
+		
+	revertBut = document.getElementById("ns_revert");
+	
+	if( show )
+		revertBut.style.visibility = "visible"
+	else
+		revertBut.style.visibility = "hidden"
+}
 function textifyComboBox( containerName )
 {
 	if(!(containerName in ns_backup) )
 	{
 		var cmbCont = document.getElementById(containerName+ "_container");
-		document.getElementById(containerName).innerHTML = "";
 		ns_backup[containerName] = cmbCont.cloneNode(true);
 		
-		cmbCont.innerHTML = 
-				'<input type="text" class="addText" name="' + containerName + 'Add" value="" />'
+		newElem = document.createElement("input");
+		newElem.setAttribute("type","text");
+		newElem.setAttribute("class","addText");
+		newElem.setAttribute("name",containerName + "_add");
+		newElem.setAttribute("id",containerName + "_add");
+		newElem.setAttribute("value","");
+		
+		cmbCont.replaceChild(newElem,document.getElementById(containerName));
 	}
 }
 
-function restoreComboBox( containerName )
+function restoreComboBox( containerName, clear)
 {
+	if (clear == null) clear = false;
+	
 	if(containerName in ns_backup)
 	{
 		var cmbCont = document.getElementById(containerName+ "_container");
 		cmbCont.parentNode.replaceChild(ns_backup[containerName], cmbCont);
+		if(clear)
+			document.getElementById(containerName).innerHTML = "";
 		delete ns_backup[containerName];
 	}
+}
+
+function restoreAll(clear)
+{
+	if(clear == null) clear = false;
+	
+	restoreComboBox("ns_university", false);
+	restoreComboBox("ns_department", clear);
+	restoreComboBox("ns_course", clear);
+	restoreComboBox("ns_session", clear);
+	removeDescriptionToTable();
+	showRevert(false);
+	
+	return false;
 }
 
 function addDescriptionToTable()
@@ -97,15 +132,14 @@ function removeDescriptionToTable()
 		textifyComboBox("ns_course");
 		textifyComboBox("ns_session");
 		addDescriptionToTable();
+		showRevert();
 		
 		return;
     }
     else
     {
-      	restoreComboBox("ns_department");
-		restoreComboBox("ns_course");
-		restoreComboBox("ns_session");
-		removeDescriptionToTable();
+    	
+      restoreAll()
     
       var xmlhttp;
       if( window.XMLHttpRequest)
@@ -157,15 +191,14 @@ function removeDescriptionToTable()
 		textifyComboBox("ns_course");
 		textifyComboBox("ns_session");
 		addDescriptionToTable();
+		showRevert();
 		
 		return;
     }
     else
     {
     
-		restoreComboBox("ns_course");
-		restoreComboBox("ns_session");
-		removeDescriptionToTable();
+		restoreAll(true)
 		
       var xmlhttp;
       if( window.XMLHttpRequest)
@@ -212,14 +245,14 @@ function removeDescriptionToTable()
       	textifyComboBox("ns_course");
 		textifyComboBox("ns_session");
 		addDescriptionToTable();
+		showRevert();
 		
 		return;
     }
     else
     {
 
-		restoreComboBox("ns_session");
-		removeDescriptionToTable();
+		restoreAll(true)
 		
       var xmlhttp;
       if( window.XMLHttpRequest)
@@ -257,6 +290,28 @@ function changedSession()
 	if( sessionID == 0 )
 	{	
 		textifyComboBox("ns_session");
+		showRevert();
 		//addDescriptionToTable();
 	}
+}
+
+function validate()
+{
+	fields = new Array();
+	fields[0] = document.getElementById("ns_university_add");
+	fields[1] = document.getElementById("ns_department_add");
+	fields[2] = document.getElementById("ns_course_add");
+	fields[3] = document.getElementById("ns_session_add");
+	
+	for(field in fields)
+	{
+		if( fields[field] != null && fields[field].value == "" )
+		{	
+			alert("All fields must be full!");
+			fields[field].focus();
+			return false;
+		}
+	}
+	
+	return true;
 }

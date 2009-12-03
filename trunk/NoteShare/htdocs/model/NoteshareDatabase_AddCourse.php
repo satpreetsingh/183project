@@ -6,11 +6,14 @@
  * @author Joseph Trapani
  * @version 2.0
  * @param string $name name, string $desc description
- * @return XML Group data
+ * @return id on success and -1 on failure
  */
 
-function createUnversityDAL($name, $desc)
+function createUnversityDAL($name, $desc = "")
 {
+	$name = mysql_real_escape_string($name);
+	$desc = mysql_real_escape_string($desc);
+	
   $conn = openDB();
 
   $query = "Insert Into University (Name, Description) " . 
@@ -19,11 +22,11 @@ function createUnversityDAL($name, $desc)
   $result = mysql_query($query);
 
   // Check if SQL succeeded
-  if (!$result) {
-    return 0;
+  if ($result) {
+    return mysql_insert_id();
   }
   else { 
-    return 1;
+    return -1;
   }
 
 }
@@ -78,11 +81,13 @@ function getUniversityDAL ()
  * @author Joseph Trapani
  * @version 2.0
  * @param integer $university_id university ID, string $name name
- * @return XML Group data
+ * @return id of department on success, -1 on failure
  */
 
 function createDepartmentDAL($university_id, $name)
 {
+	$name = mysql_real_escape_string($name);
+	
   $conn = openDB();
 
   $query = "Insert Into Department (University_Ptr, Name) " . 
@@ -91,11 +96,11 @@ function createDepartmentDAL($university_id, $name)
   $result = mysql_query($query);
 
   // Check if SQL succeeded
-  if (!$result) {
-    return 0;
+  if ($result) {
+    return mysql_insert_id();
   }
   else { 
-    return 1;
+    return -1;
   }
 
 }
@@ -150,11 +155,14 @@ function getDepartmentsDAL ($univ_id)
  * @author Joseph Trapani
  * @version 2.0
  * @param integer $department_id department ID, string $name name, string $desc description
- * @return XML Group data
+ * @return id of course on sucess, -1 on failure
  */
 
-function createCourseDAL($department_id, $name, $desc)
+function createCourseDAL($department_id, $name, $desc ="")
 {
+	$name = mysql_real_escape_string($name);
+	$desc = mysql_real_escape_string($desc);
+	
   $conn = openDB();
 
   $query = "Insert Into Course (Department_Ptr, Name, Description, Active) " . 
@@ -163,11 +171,11 @@ function createCourseDAL($department_id, $name, $desc)
   $result = mysql_query($query);
 
   // Check if SQL succeeded
-  if (!$result) {
-    return 0;
+  if ($result) {
+    return mysql_insert_id();
   }
   else { 
-    return 1;
+    return -1;
   }
 
 }
@@ -222,11 +230,13 @@ function getCoursesDAL ($dept_id)
  * @author Joseph Trapani
  * @version 2.0
  * @param integer $course_id course ID, string $name name, date $startdate starting date of the session, date $enddate ending date of the session 
- * @return XML Group data
+ * @return session id on success, -1 on failure
  */
 
-function createSessionDAL($course_id, $name, $startdate, $enddate)
+function createSessionDAL($course_id, $name, $startdate = 'null', $enddate = 'null')
 {
+	$name = mysql_real_escape_string($name);
+	
   $conn = openDB();
 
   $query = "Insert Into Session (Course_Ptr, Name, Start_Date, End_Date) " . 
@@ -235,11 +245,11 @@ function createSessionDAL($course_id, $name, $startdate, $enddate)
   $result = mysql_query($query);
 
   // Check if SQL succeeded
-  if (!$result) {
-    return 0;
+  if ($result) {
+    return mysql_insert_id();
   }
   else { 
-    return 1;
+    return -1;
   }
 
 }
