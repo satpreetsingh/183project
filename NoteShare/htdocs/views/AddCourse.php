@@ -76,13 +76,16 @@
     '  <tr id="ns_button_row">
          <th></th>
            <td class="editorkit_buttonset">
-             <input type="submit" class="submit" value="Add" name="Add"/>   
+             <input type="submit" class="submit" value="Add" name="Add" onclick="return validate();"/>   
              <span class="cancel_link">
                <span>or</span>
                <a href="http://apps.facebook.com/notesharesep/views/UserHomePage.php" target="_top">Cancel</a>
              </span>
            </td>
            <td class="right_padding">
+           	<button id="ns_revert" class="submit" onclick="restoreAll(); return false;" style="visibility:hidden;" >
+           		Revert
+           	</button>
            </td>
        </tr>
     ';
