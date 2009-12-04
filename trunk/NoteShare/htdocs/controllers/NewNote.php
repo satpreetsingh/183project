@@ -16,9 +16,9 @@
    * @param integer $sessionId identifier for which session's posts to grab
    * @return XML of the posts
   **/
-  function getSessionNotePosts( $sessionId )
+  function getSessionNotePosts ($sessionId)
   {
-    return getSessionNoteDAL ( $sessionId );
+    return getSessionNoteDAL ($sessionId);
   }
 
   /** Post reply **/
@@ -81,10 +81,10 @@
 
         // Session notes call the session DAL function.
         if ($study_group_id = 0) { 
-          addSessionNoteDAL ( $user_id, $session_id, $header, $body, $newname . $index, $filename, $_FILES["uploaded_file"]["size"]);
+          addSessionNoteDAL ($user_id, $session_id, $header, $body, $newname . $index, $filename, $_FILES["uploaded_file"]["size"]);
         }
         else {
-          addStudyGroupNoteDAL ( $user_id, $study_group_id, $header, $body, $newname . $index, $filename, $_FILES["uploaded_file"]["size"]);
+          addStudyGroupNoteDAL ($user_id, $study_group_id, $header, $body, $newname . $index, $filename, $_FILES["uploaded_file"]["size"]);
         } 
 
 

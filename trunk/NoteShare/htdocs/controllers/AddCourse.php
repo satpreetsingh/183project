@@ -24,21 +24,47 @@
 // START: AJAX CODE RESPONSE
   if( isset( $_GET['Add']))
   {
- /* 	if( isset( $_GET['ns_university_add']) && $_GET['ns_university_add']!="")
+  	$uniId = -1;
+  	$deptId = -1;
+  	$courseId = -1;
+  	$sessionId = -1;
+  	
+  	// Parse through the possibilities to create
+  	
+  	if( isset( $_GET['ns_university_add']) )
   	{
-  		createUnversityDAL($_GET['ns_university_add']);
+  		$uniId = createUniversityDAL(stripslashes($_GET['ns_university_add']));
+  		if( $uniId == -1 ) { echo "ERROR: Could not create University"; exit();}
   	}
-  	if( isset( $_GET['ns_department_add'] ) && $_GET['ns_department_add']!="")
-  	{
+  	else
+  		$uniId = $_GET['ns_university'];
   		
-  	}
-  	if( isset( $_GET['ns_course_add'] ) && $_GET['ns_course_add']!="")
+  	if( isset( $_GET['ns_department_add']) )
   	{
+  		$deptId = createDepartmentDAL($uniId, stripslashes($_GET['ns_department_add']));
+  		if( $deptId == -1 ) { echo "ERROR: Could not create Department"; exit();}
   	}
-  	if( isset( $_GET['ns_session_add'] ) && $_GET['ns_session_add']!="")
+  	else
+  		$deptId = $_GET['ns_department'];
+  		
+  	if( isset( $_GET['ns_course_add']) )
   	{
-  	}*/
-    addCourse( $user_id, $_GET['ns_session'] );
+  		$courseId = createCourseDAL($deptId, stripslashes($_GET['ns_course_add']),
+  				stripslashes($_GET['ns_desc_add']));
+  		if( $courseId == -1 ) { echo "ERROR: Could not create Course"; exit();}
+  	}
+  	else
+  		$courseId = $_GET['ns_course'];
+  		
+  	if( isset( $_GET['ns_session_add']) )
+  	{
+  		$sessionId = createSessionDAL($courseId,stripslashes($_GET['ns_session_add']));
+  		if( $sessionId == -1 ) { echo "ERROR: Could not create Session"; exit();}
+  	}
+  	else
+  		$sessionId = $_GET['ns_course']; 	
+  	
+    addCourse( $user_id, $sessionId );
   }
   else
   {

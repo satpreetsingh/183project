@@ -84,7 +84,7 @@ function addDescriptionToTable()
 		var data = document.createElement("td");
 		data.setAttribute("class","combo");
 		data.setAttribute("id","ns_desc_container");
-		data.innerHTML = '<textarea id="ns_descAdd" name="ns_desc_add" class="addText" rows="3"></textarea>'
+		data.innerHTML = '<textarea id="ns_desc_add" name="ns_desc_add" class="addText" rows="3"></textarea>'
 		newRow.appendChild(data);
 	 
 		 nsTable.removeChild(buttonRow);

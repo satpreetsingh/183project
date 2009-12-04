@@ -9,12 +9,14 @@
  * @return id on success and -1 on failure
  */
 
-function createUnversityDAL($name, $desc = "")
+function createUniversityDAL($name, $desc = "")
 {
-	$name = mysql_real_escape_string($name);
-	$desc = mysql_real_escape_string($desc);
+	
 	
   $conn = openDB();
+  
+  $name = mysql_real_escape_string($name);
+	$desc = mysql_real_escape_string($desc);
 
   $query = "Insert Into University (Name, Description) " . 
 		    "Values ('" . $name . "','" . $desc . "')"; 
@@ -86,9 +88,10 @@ function getUniversityDAL ()
 
 function createDepartmentDAL($university_id, $name)
 {
-	$name = mysql_real_escape_string($name);
 	
   $conn = openDB();
+  
+$name = mysql_real_escape_string($name);
 
   $query = "Insert Into Department (University_Ptr, Name) " . 
 		    "Values (" . $university_id . ", '" . $name . "')"; 
@@ -159,11 +162,11 @@ function getDepartmentsDAL ($univ_id)
  */
 
 function createCourseDAL($department_id, $name, $desc ="")
-{
-	$name = mysql_real_escape_string($name);
-	$desc = mysql_real_escape_string($desc);
-	
+{	
   $conn = openDB();
+  
+  $name = mysql_real_escape_string($name);
+	$desc = mysql_real_escape_string($desc);
 
   $query = "Insert Into Course (Department_Ptr, Name, Description, Active) " . 
 		    "Values (" . $department_id . ", '" . $name . "', '" . $desc . "',1)"; 
@@ -235,9 +238,11 @@ function getCoursesDAL ($dept_id)
 
 function createSessionDAL($course_id, $name, $startdate = 'null', $enddate = 'null')
 {
-	$name = mysql_real_escape_string($name);
+	
 	
   $conn = openDB();
+  
+  $name = mysql_real_escape_string($name);
 
   $query = "Insert Into Session (Course_Ptr, Name, Start_Date, End_Date) " . 
 		    "Values (" . $course_id . ", '" . $name . "','" . $startdate . "','" . $enddate . "')"; 
