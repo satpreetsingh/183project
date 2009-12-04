@@ -1035,7 +1035,7 @@ function addStudyGroupNoteDAL ($user_id, $study_group_id, $header, $body, $file_
 					     $file_path . "', '" . 
 		                          $original_file_name . "', " . 
 					     $file_size . ");";
-    	
+   	
   $result = mysql_query($query);
    	
   $doc = new DOMDocument('1.0');
