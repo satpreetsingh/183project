@@ -17,5 +17,4 @@ include_once $_SERVER['DOCUMENT_ROOT'] . 'model/NoteshareDatabase.php';
  {
  	removeUserDAL($_POST['fb_sig_user']);
  }
- 
 ?>

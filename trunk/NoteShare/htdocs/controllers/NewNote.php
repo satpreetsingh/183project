@@ -31,7 +31,7 @@
     $session_id = $_POST['ns_session'];
     $study_group_id = 0;
 
-    if ($sep_type = 1) {
+    if ($sep_type == 1) {
       $study_group_id = $_POST['ns_study_group'];
     } 
  
@@ -40,18 +40,10 @@
     $header = $_POST['header'];
     $user_id = $_POST['userId'];
 
-
     // Get the filename, and grab the extension.
     $filename    = basename ($_FILES['uploaded_file']['name']);
     $ext         = strtoupper (substr ($filename, (strrpos ($filename, '.') + 1)) );
-
-    // Set an advanced file name for storage on our server.
-    if ($study_group_id = 0) {
-      $AdvFileName = $user_id . $session_id . date("YmdHis") . $ext;
-    }
-    else {
-      $AdvFileName = $user_id . $study_group_id . date("YmdHis") . $ext;
-    }
+	
 
 
     // If the ext, Mime type, and size requirements (< 5MB) are met, then proceed on uploading the file.
@@ -60,12 +52,14 @@
         ($_FILES["uploaded_file"]["size"] < 5242881)) {
 
       // Determine the path to save this file, the first being for a session.
-      if ($study_group_id = 0) {
-        $newname = '/home/fate/SEPRepository/183project/NoteShare/htdocs/noteFiles/' . $AdvFileName;
+      if ($study_group_id == 0) {
+        $newname = '/home/fate/SEPRepository/183project/NoteShare/htdocs/noteFiles/' . $user_id . $session_id . date("YmdHis");
       }
       else { 
-        $newname = '/home/fate/SEPRepository/183project/NoteShare/htdocs/noteFiles/GroupnoteFiles/' . $AdvFileName;    
+        $newname = '/home/fate/SEPRepository/183project/NoteShare/htdocs/noteFiles/GroupnoteFiles/' . $user_id . $study_group_id . date("YmdHis");;    
       }
+
+
 
 
       $index = 0;
@@ -75,36 +69,38 @@
         $index++;
       }
 
+
+
       // Attempt to move the uploaded file to it's new location within the noteFiles directory.
-      if ((move_uploaded_file ($_FILES['uploaded_file']['tmp_name'], $newname . $index))) {
+      if ((move_uploaded_file ($_FILES['uploaded_file']['tmp_name'], $newname . $index . $ext))) {
         
 
         // Session notes call the session DAL function.
-        if ($study_group_id = 0) { 
-          addSessionNoteDAL ($user_id, $session_id, $header, $body, $newname . $index, $filename, $_FILES["uploaded_file"]["size"]);
+        if ($study_group_id == 0) { 
+          addSessionNoteDAL ($user_id, $session_id, $header, $body, $newname . $index . $ext, $filename, $_FILES["uploaded_file"]["size"]);
         }
         else {
-          addStudyGroupNoteDAL ($user_id, $study_group_id, $header, $body, $newname . $index, $filename, $_FILES["uploaded_file"]["size"]);
+          addStudyGroupNoteDAL ($user_id, $study_group_id, $header, $body, $newname . $index . $ext, $filename, $_FILES["uploaded_file"]["size"]);
         } 
 
 
       }
       else {
-        echo "Error: A problem occurred during file upload!";
+        echo "Error: A problem occurred during file upload!"; exit();
       }
 
     }
     else {
-      echo "Error: Either your file format is not supported or your file exceeds 5 MB.";
+      echo "Error: Either your file format is not supported or your file exceeds 5 MB."; exit();
     }
 
 
     // Redirect the user back to the CoursePage (session) or GroupPage (study_group)
-    if ($study_group_id = 0) { 
-      header( "Location: http://apps.facebook.com/notesharesep/views/CoursePage.php?ns_session=" . $sessionId );
+    if ($study_group_id == 0) { 
+      header( "Location: http://apps.facebook.com/notesharesep/views/CoursePage.php?ns_session=" . $session_id );
     }
     else {
-      header( "Location: http://apps.facebook.com/notesharesep/views/CoursePage.php?ns_session=" . $sessionId . "&nsStudyGroup=" . $study_group_id);
+      header( "Location: http://apps.facebook.com/notesharesep/views/CoursePage.php?ns_session=" . $session_id . "&nsStudyGroup=" . $study_group_id);
     } 
 
 

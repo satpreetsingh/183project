@@ -12,6 +12,10 @@ function createStudyGroupDAL($session_id, $name, $desc)
 {
   $conn = openDB();
 
+  // Alter passed variables for mysql injections
+  $name = mysql_real_escape_string( $name );
+  $desc = mysql_real_escape_string( $desc );
+
   $query = "Insert Into StudyGroup (Name, Sesssion_Ptr, Active, Description) " . 
 		    "Values (" . $name . ", " . $session_id . ",1," . $desc . ")"; 
 
@@ -172,22 +176,22 @@ function getHomePageStudyGroupListDAL ($user_id)
   
   $conn = openDB();
 
-  $query = "Select StudyGroup.Id AS StudyGroup_Id,          " .
-  	        "StudyGroup.Name AS StudyGroup_Name,        " . 
-            "Session.Name AS Session_Name, 		  " . 
-		    "Course.Name As Course_Name,            " .  
-		    "University.Name As University_Name         " .
-			"From StudyGroupEnrollment " . 
-			"Inner Join StudyGroup On (StudyGroup.Id = StudyGroupEnrollment.SG_Ptr) " .	
-			"Inner Join Session On    (Session.Id = StudyGroup.Session_Ptr) " . 
-			"Inner Join Course On     (Course.Id = Session.Course_Ptr) " .
-			"Inner Join Department On (Department.Id = Course.Department_Ptr) " . 
-			"Inner Join University On (University.Id = Department.University_Ptr) " . 
-			"Where (StudyGroupEnrollment.User_Ptr = " . $user_id . ") And " .
-			"(StudyGroupEnrollment.Left_Date Is Null) " .
-			"Group By University.Name, Course.Name, Session.Name, StudyGroup.Name, StudyGroup.Id "	.  
-			"Order By University.Name, Course.Name, Session.Name, StudyGroup.Name";	
-
+  $query = "Select StudyGroup.Id AS StudyGroup_Id, " .
+  	              "StudyGroup.Name AS StudyGroup_Name, " .
+                  "Session.Name AS Session_Name, " .
+		              "Course.Name As Course_Name, " .
+		              "University.Name As University_Name, " .
+                  "StudyGroup.Session_Ptr As Session_Id " .
+			      "From StudyGroupEnrollment " .
+      			"Inner Join StudyGroup On (StudyGroup.Id = StudyGroupEnrollment.SG_Ptr) " .	
+      			"Inner Join Session On    (Session.Id = StudyGroup.Session_Ptr) " . 
+      			"Inner Join Course On     (Course.Id = Session.Course_Ptr) " .
+			      "Inner Join Department On (Department.Id = Course.Department_Ptr) " . 
+      			"Inner Join University On (University.Id = Department.University_Ptr) " . 
+      			"Where (StudyGroupEnrollment.User_Ptr = " . $user_id . ") And " .
+            			"(StudyGroupEnrollment.Left_Date Is Null) " .
+		      	"Group By University.Name, Course.Name, Session.Name, StudyGroup.Name, StudyGroup.Id "	.  
+      			"Order By University.Name, Course.Name, Session.Name, StudyGroup.Name";	
 
   $result = mysql_query($query);
   $doc = new DOMDocument('1.0');
@@ -197,23 +201,36 @@ function getHomePageStudyGroupListDAL ($user_id)
   $doc->appendChild($list);
 
   while($row = mysql_fetch_assoc($result)) {
-
     $Groupuseritem = $doc->createElement('GroupUserItem');
-    
+
     $list->appendChild($Groupuseritem);
     $id_attr = $doc->createAttribute('Id');
     $Groupuseritem->appendChild($id_attr);
-    
     $id_text = $doc->createTextNode($row['StudyGroup_Id']);
     $id_attr->appendChild($id_text);
+
+    $sid_attr = $doc->createAttribute('SessionId');
+    $Groupuseritem->appendChild($sid_attr);
+    $sid_text = $doc->createTextNode($row['Session_Id']);
+    $sid_attr->appendChild($sid_text);
+
     $uni_attr = $doc->createAttribute('University_Name');
     $Groupuseritem->appendChild($uni_attr);
-   
     $uni_text = $doc->createTextNode($row['University_Name']);
     $uni_attr->appendChild($uni_text);
-    $GroupItem_Name = $doc->createTextNode($row['Course_Name'] . " - " . $row['Group_Name'] . " - " . $row['StudyGroup_Name']);
-    $Groupuseritem->appendChild($GroupItem_Name);
 
+    $course_attr = $doc->createAttribute('Course_Name');
+    $Groupuseritem->appendChild($course_attr);
+    $course_text = $doc->createTextNode($row['Course_Name']);
+    $course_attr->appendChild($course_text);
+
+    $session_attr = $doc->createAttribute('Session_Name');
+    $Groupuseritem->appendChild($session_attr);
+    $session_text = $doc->createTextNode($row['Session_Name']);
+    $session_attr->appendChild($session_text);
+
+    $GroupItem_Name = $doc->createTextNode($row['StudyGroup_Name']);
+    $Groupuseritem->appendChild($GroupItem_Name);
   }
 
   $out = $doc->saveXML();
@@ -593,9 +610,11 @@ function removeUserStudyGroupDAL ($user_id, $study_group_id)
 function addStudyGroupBBSPostDAL2( $header, $body, $user_id, $study_group_id, $prev_post)
 {
 	$conn = openDB();	
+
 	// Escape header and body
 	$header = mysql_real_escape_string($header);
 	$body = mysql_real_escape_string($body);
+
 	$query = "Insert Into StudyGroupBBS (Header, Body, Post_Date, User_ptr, SG_Ptr, Prev_Post_ptr) " .
 			"Values ('$header', '$body', '". date("Y-m-d H:i:s") ."', ". 
 			$user_id . ", " . $study_group_id . ", " . $prev_post . ")";		
@@ -753,6 +772,10 @@ function addStudyGroupBBSPostDAL ($user_id, $study_group_id, $header, $body, $pa
   {
     $parentID = 'null';
   }
+
+  // alter passed variables for mysql injections
+  $header = mysql_real_escape_string( $header );
+  $body = mysql_real_escape_string( $body );
 
   // Add the user from a given course's study_group.
   $query = "Insert Into StudyGroupBBS (StudyGroupBBS.User_Ptr, " .
@@ -1018,6 +1041,13 @@ function removeStudyGroupBBSDAL ($id)
 function addStudyGroupNoteDAL ($user_id, $study_group_id, $header, $body, $file_path, $original_file_name, $file_size)
 {
   $conn = openDB();
+
+  // Alter passed variables for mysql injections
+  $header = mysql_real_escape_string( $header );
+  $body = mysql_real_escape_string( $body );
+  $file_path = mysql_real_escape_string( $file_path);
+
+
   $query = "Insert Into StudyGroupNotes (User_Ptr, " .
 					     "SG_Ptr, " .
 					     "Post_Date, " . 
@@ -1121,7 +1151,7 @@ function getStudyGroupNoteDAL ($study_group_id, $noteid = 0, $latest_posts = 0)
     $user_attr = $doc->createAttribute('User_ID');
     $getStudyGroupNote->appendChild($user_attr);
    
-    $user_text = $doc->createTextNode($row['User_ptr']);
+    $user_text = $doc->createTextNode($row['User_Ptr']);
     $user_attr->appendChild($user_text);
 
 

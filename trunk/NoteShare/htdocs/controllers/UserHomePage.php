@@ -13,8 +13,12 @@
 **/
 function getHomePageSessionList( $userid )
 {
-  $sessionList = getHomePageSessionListDAL( $userid );
+  if( $userid == NULL )
+  {
+    return "Err: Bad user id number.\n";
+  }
 
+  $sessionList = getHomePageSessionListDAL( $userid );
   return $sessionList;
 }
 
@@ -23,6 +27,11 @@ function getHomePageSessionList( $userid )
 **/
 function getHomePageStudyGroupList( $userid )
 {
+  if( $userid == NULL )
+  {
+    return "Err: Bad user id number.\n";
+  }
+
   $groupList = getHomePageStudyGroupListDAL( $userid );
   return $groupList;
 }

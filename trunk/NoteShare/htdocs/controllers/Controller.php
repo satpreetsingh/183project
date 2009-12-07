@@ -37,11 +37,17 @@
 
   // Require that the user be logged in to use the page
   $user_id = $facebook->require_login();
+  if( $user_id == NULL )
+  {
+    genErrorMessage( "We're sorry.  An error occured in the background.  Please contact NoteShare via the contact link below and include the error code.  You'll now be redirected to Facebook.", "0000" );
+    $facebook->redirect( "http://www.facebook.com" );
+  }
 
   // Make sure the user is enrolled in the session or study group
   if( isset( $_GET['nsStudyGroup'] ) && !isset( $_GET['enroll'] ))
   {
     $confirm = checkUserInStudyGroupDAL( $user_id, $_GET['nsStudyGroup'] );
+
     if( !$confirm )
     {
       echo '<script type="text/javascript">';
@@ -52,6 +58,10 @@
   }
   if( isset( $_GET['ns_session'] ))
   {
+    if( isInvalidCourse( $_GET['ns_session'] ))
+    {
+      $facebook->redirect( "http://apps.facebook.com/notesharesep/views/UserHomePage.php" );
+    }
     $confirm = checkUserInSessionDAL( $user_id, $_GET['ns_session'] );
     if( !$confirm )
     {
@@ -114,5 +124,30 @@
     }
 
     return $tempDOM->saveXML();
+  }
+
+  /**
+   * Generate a javascript pop-up with an error message in the event
+   * that $_GET or $_POST parameters are not passed or invalid.
+   *
+   * @param string $errorMessage message to display
+   * @return Javascript that displays a pop-up.
+  **/
+  function genErrorMessage( $errorMessage, $errorCode = NULL )
+  {
+    echo '<html>';
+    echo '<head>';
+    echo '<script type="text/javascript">';
+    if( $errorCode != NULL )
+    {
+      echo "  alert( 'ERR $errorCode -- $errorMessage' );";
+    }
+    else
+    {
+      echo "  alert( '$errorMessage' );";
+    }
+    echo '</script>';
+    echo '</head>';
+    echo '</html>';
   }
 ?>

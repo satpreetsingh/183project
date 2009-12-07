@@ -42,7 +42,7 @@
     genHeadingBar( "Enrolled Study Groups" );
     echo '<br />';
     $notesXML = getHomePageStudyGroupList( $userId );
-    echo $notesXML;
+    echo XSLTransform( $notesXML, 'UserHomePage.xsl' );
   }
 /****< Page Content >**********************************************************/
 

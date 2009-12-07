@@ -26,5 +26,6 @@
     	$facebook->redirect( "http://apps.facebook.com/notesharesep/views/CoursePage.php?ns_session=" . $session_id );
     }
 
+    genErrorMessage( "Some values got lost in translation.  Now redirecting to the User Home Page.<BR>If this error persists, please report the error via the contact link at the bottom of the page." );
    	$facebook->redirect( "http://apps.facebook.com/notesharesep/views/UserHomePage.php" );
 ?>
