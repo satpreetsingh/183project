@@ -186,16 +186,12 @@ xmlns:fb="http://www.facebook.com/2008/fbml"
   </table>
 </xsl:template>
 
-<!--
-<getSessionNote>
-  <getSessionNote User_ID="" Header="" Body="" Original_File_Name="" File_Size="1"></getSessionNote>
--->
-<xsl:template match="getGroupNotes">
+<xsl:template match="getStudyGroupNotes">
   <xsl:variable name="viewUserId"><xsl:value-of select="UserId" /></xsl:variable>
-  <table class="groupNotes">
-    <xsl:for-each select="getGroupNote">
+  <table class="sessionNotes">
+    <xsl:for-each select="getStudyGroupNote">
     <tr>
-      <td class="fbFont">
+      <td class="sessionNote fbFont">
         <a target="_top">
           <xsl:attribute name="href">
             <xsl:value-of select="." />
@@ -209,7 +205,7 @@ xmlns:fb="http://www.facebook.com/2008/fbml"
           [
           <a target="_top" onclick="return confirm('Really? Delete these notes?');">
             <xsl:attribute name="href">
-              http://apps.facebook.com/notesharesep/controllers/GroupHomePage.php?ns_session=<xsl:value-of select="@SessionId" />&amp;nsStudyGroup=<xsl:value-of select="SG_ptr" />&amp;noteId=<xsl:value-of select="@Id" />&amp;funct=DELETENOTE
+              http://apps.facebook.com/notesharesep/controllers/SessionNotes.php?ns_session=<xsl:value-of select="@SessionId" />&amp;noteId=<xsl:value-of select="@Id" />&amp;funct=DELETENOTE
             </xsl:attribute>
             X
           </a>
@@ -218,12 +214,12 @@ xmlns:fb="http://www.facebook.com/2008/fbml"
       </td>
     </tr>
     <tr>
-      <td class="fbFont">
+      <td class="sessionNote fbFont">
         <xsl:value-of select="@Body" />
       </td>
     </tr>
     </xsl:for-each>
   </table>
 </xsl:template>
-
 </xsl:stylesheet>
+

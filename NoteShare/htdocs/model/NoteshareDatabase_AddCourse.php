@@ -16,7 +16,7 @@ function createUniversityDAL($name, $desc = "")
   $conn = openDB();
   
   $name = mysql_real_escape_string($name);
-	$desc = mysql_real_escape_string($desc);
+  $desc = mysql_real_escape_string($desc);
 
   $query = "Insert Into University (Name, Description) " . 
 		    "Values ('" . $name . "','" . $desc . "')"; 
@@ -91,7 +91,7 @@ function createDepartmentDAL($university_id, $name)
 	
   $conn = openDB();
   
-$name = mysql_real_escape_string($name);
+  $name = mysql_real_escape_string($name);
 
   $query = "Insert Into Department (University_Ptr, Name) " . 
 		    "Values (" . $university_id . ", '" . $name . "')"; 
@@ -166,7 +166,7 @@ function createCourseDAL($department_id, $name, $desc ="")
   $conn = openDB();
   
   $name = mysql_real_escape_string($name);
-	$desc = mysql_real_escape_string($desc);
+  $desc = mysql_real_escape_string($desc);
 
   $query = "Insert Into Course (Department_Ptr, Name, Description, Active) " . 
 		    "Values (" . $department_id . ", '" . $name . "', '" . $desc . "',1)"; 
@@ -564,7 +564,7 @@ function checkUserInSessionDAL ($user_id, $session_id)
 
 
   $result1 = mysql_query($query1);
-	
+
   // User is actively enrolled in the session, return 1.
   if (mysql_num_rows($result1) > 0) {
     closeDB($result1, $conn1);
@@ -786,6 +786,26 @@ function removeUserDAL ($user_id)
   mysql_query($query);
 
   return;
+}
+
+/*
+ * Makes sure that the view's current session value is a valid course.
+ *
+ * @param string $sessionId view's current session value
+ * @return 1 invalid course
+ *         0 valid course
+ */
+function isInvalidCourse( $sessionId)
+{
+  $conn = openDB();
+
+  $query = "SELECT ID FROM Session WHERE ID=" . $sessionId . ";";
+
+  $result = mysql_query($query);
+
+  $row = mysql_fetch_assoc( $result );
+
+  return !$row;
 }
 
 ?>

@@ -1,6 +1,6 @@
 <?php
 
-require_once $_SERVER['DOCUMENT_ROOT'] . 'controllers/Controller.php';
+//require_once $_SERVER['DOCUMENT_ROOT'] . 'controllers/Controller.php';
 include '/var/www/localhost/htdocs/model/NoteshareDatabase.php';
 
 
@@ -72,7 +72,7 @@ function memTest_getUniversityDAL( $bruteTest )
 //echo getHomePageSessionListDAL(66000948);
 
 //addSessionNoteDAL(66000948, 1, 'testing header', 'testing body', '/no where', 'testing file.txt', 1.23999);
-//echo getSessionNoteDAL (1,0);
+//echo getSessionNoteDAL (1,0,1);
 //echo removeSessionNoteDAL(7);
 //echo removeSessionBBSDAL(7);
 

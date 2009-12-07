@@ -3,6 +3,12 @@
   include_once $_SERVER['DOCUMENT_ROOT'] . 'model/NoteshareDatabase.php';
   require_once $_SERVER['DOCUMENT_ROOT'] . 'controllers/Controller.php';
 
+  if( !isset( $_GET['nsStudyGroup'] ) && isset( $_GET['ns_session'] ))
+  {
+    genErrorMessage( "Some values got lost in translation.  Now redirecting to the Course Home Page. If this error persists, please report the error via the contact link at the bottom of the page." );
+    $facebook->redirect( "http://apps.facebook.com/notesharesep/views/CoursePage.php?ns_session=" . $_GET['ns_session'] );
+  }
+
   /**
    * Returns the group's descriptive data from the DAL in XML format
    *
@@ -30,26 +36,11 @@
    */
   function getGroupNotes( $userId, $groupId )
   {
-
-
     // Request the five most recent note postings for this session.
     $groupNotesXML = getStudyGroupNoteDAL( $groupId, 0, 5 );
-
-    $groupNotesDOM = new DOMDocument('1.0');
-    $groupNotesDOM->loadXML( $groupNotesXML );
-    $groupNotesList = $groupNotesDOM->getElementsByTagName( 'getGroupNotes' );
-
-    if( $groupNotesList->length > 0 )
-    {
-      $groupNotes = $groupNotesList->item(0);
-      $groupUserId = $groupNotesDOM->createElement('UserId');
-      $groupNotes->insertBefore( $groupUserId,
-      $groupNotes->firstChild );
-      $groupUserId_text = $groupNotesDOM->createTextNode( $userId );
-      $groupUserId->appendChild( $groupUserId_text );
-    }
-
-    return $groupNotesDOM->saveXML();
+    $tags = array( 'UserId' );
+    $values = array( $userId );
+    return insertXMLTags( $tags, $values, $groupNotesXML, 'getStudyGroupNotes' );
   }
 
 
@@ -121,5 +112,4 @@
 	<response>You have been removed from the group...</response>
 	";
   }
-
 ?>

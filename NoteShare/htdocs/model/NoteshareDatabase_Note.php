@@ -9,6 +9,12 @@ function addSessionNoteDAL ($user_id, $session_id, $header, $body, $file_path, $
 {
   $conn = openDB();
  
+  // Alter passed variables for mysql injections
+  $header = mysql_real_escape_string( $header );
+  $body = mysql_real_escape_string( $body );
+  $file_path = mysql_real_escape_string( $file_path);
+
+
   $query = "Insert Into SessionNotes (User_Ptr, " .
 					  "Session_Ptr, " .
 					  "Post_Date, " . 
@@ -151,11 +157,12 @@ function getSessionNoteDAL ($session_id, $id = 0, $latest_posts = 0)
     $filesize_attr->appendChild($filesize_text);
 
 
+
     $Server_Path_attr = $doc->createAttribute('Server_Path');
     $getSessionNote->appendChild($Server_Path_attr);
    
-    $filesize_text = $doc->createTextNode($row['PATH']);
-    $filesize_attr->appendChild($filesize_text);
+    $Server_Path_text = $doc->createTextNode($row['PATH']);
+    $Server_Path_attr->appendChild($Server_Path_text);
 
 
 

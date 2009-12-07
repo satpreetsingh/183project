@@ -4,6 +4,15 @@
   require_once $_SERVER['DOCUMENT_ROOT'] . 'controllers/Controller.php';
 
   /**
+   * Error check for unsent $_GET parameters
+  **/
+  if( !isset( $_GET['ns_session'] ))
+  {
+    genErrorMessage( "We're sorry.  Some parameters were lost in translation.  Please notify NoteShare via the contact link at the bottom of the page.  You're now being redirected to your user home page.", "0100" );
+    $facebook->redirect( "http://apps.facebook.com/notesharesep/view/UserHomePage.php" );
+  }
+
+  /**
    * Get Response -- Handles get requests made from the Course Home Page.
    *
    * Expected responses:
@@ -26,6 +35,10 @@
       removeSessionNoteDAL( $noteId );
 
       $facebook->redirect( "http://apps.facebook.com/notesharesep/views/CoursePage.php?ns_session=" . $sessionId );
+    }
+    else
+    {
+      genErrorMessage( "We're sorry, and error occured in the background.  Please notify NoteShare via the contact link at the bottom of the page.", "0100" );
     }
   }
 

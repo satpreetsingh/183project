@@ -81,7 +81,7 @@
     '  <tr>
          <th></th>
            <td class="editorkit_buttonset">
-             <input class="submit add action" type="submit" onclick="return confirm( \'Pants\' );" value="Post Notes" name="Post Notes"/>
+             <input class="submit add action" type="submit" onclick="return confirm( \'Do you agree to the terms of the disclaimer?\' );" value="Post Notes" name="Post Notes"/>
              <span class="cancel_link">
                <span>or</span>
                <a href="http://apps.facebook.com/notesharesep/views/CoursePage.php?ns_session=' . $sessionId . '" target="_top">Cancel</a>
@@ -100,7 +100,7 @@
         <th>
           <label class="fbFont large">Upload New Notes:</label>
         </th>
-        <td class=""><input class="text" type="file" name="uploaded_file" /></td>
+        <td ><input class="text" type="file" name="uploaded_file" /></td>
           <td class="right_padding"></td>
         </tr>';
   }

@@ -48,7 +48,7 @@
 	function genGroupNotes( $sessionId, $groupId, $user_id )
 	{
   	  $notesXML = getGroupNotes( $user_id, $groupId );
-	  echo XSLTransform( $notesXML, 'GroupPage.xsl' );
+  	  echo XSLTransform( $notesXML, 'GroupPage.xsl' );
   	  echo '<a href="http://apps.facebook.com/notesharesep/views/GroupNotes.php?nsStudyGroup=' . $groupId . '&ns_session=' . $sessionId . '" target="_top" class="fbFont left">View all Notes</a>';
 	}
 
