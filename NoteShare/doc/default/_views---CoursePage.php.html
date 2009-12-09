@@ -1,0 +1,294 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+  <html xmlns="http://www.w3.org/1999/xhtml">
+		<head>
+			<!-- template designed by Marco Von Ballmoos -->
+			<title>Docs for page CoursePage.php</title>
+			<link rel="stylesheet" href="../media/stylesheet.css" />
+			<meta http-equiv='Content-Type' content='text/html; charset=iso-8859-1'/>
+		</head>
+		<body>
+			<div class="page-body">			
+<h2 class="file-name">/views/CoursePage.php</h2>
+
+<a name="sec-description"></a>
+<div class="info-box">
+	<div class="info-box-title">Description</div>
+	<div class="nav-bar">
+					<span class="disabled">Description</span> |
+									<a href="#sec-includes">Includes</a>
+			|											<a href="#sec-functions">Functions</a>
+			</div>
+	<div class="info-box-body">	
+		<!-- ========== Info from phpDoc block ========= -->
+		
+			</div>
+</div>
+		
+
+	<a name="sec-includes"></a>	
+	<div class="info-box">
+		<div class="info-box-title">Includes</div>
+		<div class="nav-bar">
+			<a href="#sec-description">Description</a> |
+						<span class="disabled">Includes</span>
+			|													<a href="#sec-functions">Functions</a>
+					</div>
+		<div class="info-box-body">	
+			<a name="_$_SERVER[DOCUMENT_ROOT]_views/View_php"><!-- --></a>
+<div class="evenrow">
+	
+	<div>
+		<span class="include-title">
+			<span class="include-type">require_once</span>
+			(<span class="include-name">$_SERVER['DOCUMENT_ROOT'].'views/View.php'</span>)
+			(line <span class="line-number">8</span>)
+		</span>
+	</div>
+
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">CoursePageView.php  Provides information and functionality of a course session.</p>
+<p class="description"><p>Right now, partisipants.</p></p>
+	
+</div>
+<a name="_$_SERVER[DOCUMENT_ROOT]_/controllers/CourseHomePage_php"><!-- --></a>
+<div class="oddrow">
+	
+	<div>
+		<span class="include-title">
+			<span class="include-type">require_once</span>
+			(<span class="include-name">$_SERVER['DOCUMENT_ROOT'].'/controllers/CourseHomePage.php'</span>)
+			(line <span class="line-number">9</span>)
+		</span>
+	</div>
+
+	<!-- ========== Info from phpDoc block ========= -->
+	
+</div>
+		</div>
+	</div>
+	
+	
+	
+	<a name="sec-functions"></a>	
+	<div class="info-box">
+		<div class="info-box-title">Functions</div>
+		<div class="nav-bar">
+			<a href="#sec-description">Description</a> |
+										<a href="#sec-includes">Includes</a>
+				|												<span class="disabled">Functions</span>
+		</div>
+		<div class="info-box-body">	
+			<a name="functiongenClassmates" id="functiongenClassmates"><!-- --></a>
+<div class="evenrow">
+	
+	<div>
+		<span class="method-title">genClassmates</span> (line <span class="line-number">99</span>)
+	</div> 
+
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">Generates the classmates html for the view by retrieving the record via a    controller call.</p>
+	<ul class="tags">
+				<li><span class="field">return:</span> a list of classmates for this course</li>
+				<li><span class="field">version:</span> 4.0</li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result">Displays</span>
+		<span class="method-name">
+			genClassmates
+		</span>
+					(<span class="var-type">int</span>&nbsp;<span class="var-name">$sessionId</span>, <span class="var-type">string</span>&nbsp;<span class="var-name">$user_id</span>, <span class="var-type"></span>&nbsp;<span class="var-name">$facebook</span>)
+			</div>
+
+			<ul class="parameters">
+					<li>
+				<span class="var-type">int</span>
+				<span class="var-name">$sessionId</span><span class="var-description">: Session id number  (noteshare)</span>			</li>
+					<li>
+				<span class="var-type">string</span>
+				<span class="var-name">$user_id</span><span class="var-description">: Facebook id number (facebook)</span>			</li>
+					<li>
+				<span class="var-type"></span>
+				<span class="var-name">$facebook</span>			</li>
+				</ul>
+		
+	
+</div>
+<a name="functiongenSessionBBS" id="functiongenSessionBBS"><!-- --></a>
+<div class="oddrow">
+	
+	<div>
+		<span class="method-title">genSessionBBS</span> (line <span class="line-number">32</span>)
+	</div> 
+
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">Gathers and displays the contents of this session's BBS topics.</p>
+<p class="description"><p>USE DOM to insert USER_ID</p></p>
+	<ul class="tags">
+				<li><span class="field">return:</span> table of session's BBS topics</li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result">displays</span>
+		<span class="method-name">
+			genSessionBBS
+		</span>
+					(<span class="var-type"></span>&nbsp;<span class="var-name">$sessionId</span>, <span class="var-type"></span>&nbsp;<span class="var-name">$user_id</span>)
+			</div>
+
+			<ul class="parameters">
+					<li>
+				<span class="var-type"></span>
+				<span class="var-name">$sessionId</span>			</li>
+					<li>
+				<span class="var-type"></span>
+				<span class="var-name">$user_id</span>			</li>
+				</ul>
+		
+	
+</div>
+<a name="functiongenSessionNotes" id="functiongenSessionNotes"><!-- --></a>
+<div class="evenrow">
+	
+	<div>
+		<span class="method-title">genSessionNotes</span> (line <span class="line-number">45</span>)
+	</div> 
+
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">Gathers and displays the contents of this session's notes.</p>
+	<ul class="tags">
+				<li><span class="field">return:</span> table of session's notes</li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result">displays</span>
+		<span class="method-name">
+			genSessionNotes
+		</span>
+					(<span class="var-type"></span>&nbsp;<span class="var-name">$user_id</span>, <span class="var-type"></span>&nbsp;<span class="var-name">$sessionId</span>)
+			</div>
+
+			<ul class="parameters">
+					<li>
+				<span class="var-type"></span>
+				<span class="var-name">$user_id</span>			</li>
+					<li>
+				<span class="var-type"></span>
+				<span class="var-name">$sessionId</span>			</li>
+				</ul>
+		
+	
+</div>
+<a name="functiongenSessionWallArea" id="functiongenSessionWallArea"><!-- --></a>
+<div class="oddrow">
+	
+	<div>
+		<span class="method-title">genSessionWallArea</span> (line <span class="line-number">57</span>)
+	</div> 
+
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">Gathers and displays the contents of the session's wall.</p>
+	<ul class="tags">
+				<li><span class="field">return:</span> the session's wall</li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result">displays</span>
+		<span class="method-name">
+			genSessionWallArea
+		</span>
+					(<span class="var-type"></span>&nbsp;<span class="var-name">$user_id</span>, <span class="var-type"></span>&nbsp;<span class="var-name">$sessionId</span>, <span class="var-type"></span>&nbsp;<span class="var-name">$facebook</span>)
+			</div>
+
+			<ul class="parameters">
+					<li>
+				<span class="var-type"></span>
+				<span class="var-name">$user_id</span>			</li>
+					<li>
+				<span class="var-type"></span>
+				<span class="var-name">$sessionId</span>			</li>
+					<li>
+				<span class="var-type"></span>
+				<span class="var-name">$facebook</span>			</li>
+				</ul>
+		
+	
+</div>
+<a name="functiongenStudyGroups" id="functiongenStudyGroups"><!-- --></a>
+<div class="evenrow">
+	
+	<div>
+		<span class="method-title">genStudyGroups</span> (line <span class="line-number">84</span>)
+	</div> 
+
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">Gathers the XML data for study groups from the model and does the XSL    transformation.</p>
+	<ul class="tags">
+				<li><span class="field">return:</span> HTML to the course page for the study group listings</li>
+				<li><span class="field">version:</span> 4.0</li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result">echos</span>
+		<span class="method-name">
+			genStudyGroups
+		</span>
+					(<span class="var-type">string</span>&nbsp;<span class="var-name">$sessionId</span>, <span class="var-type">string</span>&nbsp;<span class="var-name">$user_id</span>)
+			</div>
+
+			<ul class="parameters">
+					<li>
+				<span class="var-type">string</span>
+				<span class="var-name">$user_id</span><span class="var-description">: Facebook user Id</span>			</li>
+					<li>
+				<span class="var-type">string</span>
+				<span class="var-name">$sessionId</span><span class="var-description">: Noteshare session Id</span>			</li>
+				</ul>
+		
+	
+</div>
+<a name="functiongenTextBox" id="functiongenTextBox"><!-- --></a>
+<div class="oddrow">
+	
+	<div>
+		<span class="method-title">genTextBox</span> (line <span class="line-number">21</span>)
+	</div> 
+
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">Generates a text area with the specified name and intial value</p>
+	<ul class="tags">
+				<li><span class="field">return:</span> a text area on the view</li>
+				<li><span class="field">version:</span> 1.0</li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result">prints</span>
+		<span class="method-name">
+			genTextBox
+		</span>
+					(<span class="var-type">string</span>&nbsp;<span class="var-name">$name</span>, <span class="var-type"></span>&nbsp;<span class="var-name">$initialValue</span>, <span class="var-type">string</span>&nbsp;<span class="var-name">$initalValue</span>)
+			</div>
+
+			<ul class="parameters">
+					<li>
+				<span class="var-type">string</span>
+				<span class="var-name">$name</span><span class="var-description">: the name of the text area</span>			</li>
+					<li>
+				<span class="var-type">string</span>
+				<span class="var-name">$initalValue</span><span class="var-description">: the initial value of the text area</span>			</li>
+					<li>
+				<span class="var-type"></span>
+				<span class="var-name">$initialValue</span>			</li>
+				</ul>
+		
+	
+</div>
+		</div>
+	</div>
+	
+	<p class="notes" id="credit">
+		Documentation generated on Mon, 07 Dec 2009 08:10:22 -0600 by <a href="http://www.phpdoc.org" target="_blank">phpDocumentor 1.4.1</a>
+	</p>
+	</div></body>
+</html>
