@@ -13,20 +13,23 @@
   require_once( $_SERVER['DOCUMENT_ROOT'] . 'model/NoteshareDatabase.php' );
 
   // Testing Variables
-  $_TESTVARS = array( "userId" => 14821122, "sessionId" => 1, "groupId" => 3 );
+  $_TESTVARS = array( "userId" => 14821122,
+                      "sessionId" => 1,
+                      "groupId" => 3,
+                      "heading" => "Test Heading",
+                      "body" => "Test Body");
 
   //test_iteration2( $_TESTVARS );
-  //test_getStudyGroupsDAL( $_TESTVARS );
-  test_getStudyGroupWallParentDAL( $_TESTVARS );
+  test_iteration4( $_TESTVARS );
 
 //----< Iteration 1 Tests >---------------------------------------------------//
 
 //----< Iteration 2 Tests >---------------------------------------------------//
   function test_iteration2( $_TESTVARS )
   {
-    //test_getSessionWallParent( $_TESTVARS );
-    //test_addSessionWallPostDAL( $_TESTVARS );
-    //test_addSessionBBSPostDAL();
+    test_getSessionWallParent( $_TESTVARS );
+    test_addSessionWallPostDAL( $_TESTVARS );
+    test_addSessionBBSPostDAL();
   }
 
   function test_getSessionWallParent( $_TESTVARS )
@@ -55,6 +58,11 @@
 //----< Iteration 3 Tests >---------------------------------------------------//
 
 //----< Iteration 4 Tests >---------------------------------------------------//
+  function test_iteration4( $_TESTVARS )
+  {
+    test_createStudyGroupDAL( $_TESTVARS );
+  }
+
   function test_getStudyGroupsDAL( $_TESTVARS )
   {
     $response = getStudyGroupsDAL( $_TESTVARS['userId'], $_TESTVARS['sessionId'] );
@@ -64,6 +72,13 @@
   function test_getStudyGroupWallParentDAL( $_TESTVARS )
   {
     $response = getStudyGroupWallParentDAL( $_TESTVARS['groupId'] );
+    echo "Response: " . $response . "\n";
+  }
+
+  function test_createStudyGroupDAL( $_TESTVARS )
+  {
+    $response = createStudyGroupDAL( $_TESTVARS['sessionId'], $_TESTVARS['heading'],
+                                      $_TESTVARS['body'] );
     echo "Response: " . $response . "\n";
   }
 //----< Iteration 5 Tests >---------------------------------------------------//

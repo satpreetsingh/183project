@@ -4,11 +4,15 @@
 
   if( isset( $_GET[ 'Create_Group' ] ))
   {
-    $header = mysql_real_escape_string( $_GET[ 'header' ] );
+    $header = $_GET[ 'header' ];
     $sessionId = $_GET[ 'ns_session' ];
-    $post = mysql_real_escape_string( $_GET[ 'post' ] );
-    //addStudyGroupDAL( $user_id, $sessionId, $header, $post, null );
+    $post = $_GET[ 'post' ];
+    if( !createStudyGroupDAL( $sessionId, $header, $post ))
+    {
+      echo '<script type="text/javascript">';
+      echo ' alert( "Group creation failed." );';
+      echo '</script>';
+    }
     $facebook->redirect( 'http://apps.facebook.com/notesharesep/views/CoursePage.php?ns_session=' . $sessionId );
   }
-
 ?>

@@ -147,17 +147,20 @@ function getSessionWallPostsDAL($session_id, $limit = 5, $facebook )
     // get user facebook information
     $user_details = $facebook->api_client->users_getInfo($row['User_Ptr'], 'last_name, first_name, pic_square');
 
-    // Add the Facebook User name attribute UserName=""
-    $post_userName = $doc->createAttribute('UserName');
+    // Add attributes for the facebook information
+    $post_userName = $doc->createAttribute('UserName'); //UserName
     $post->appendChild($post_userName);
-    $post_userName_text = $doc->createTextNode( $user_details[0]['first_name'] . ' ' . $user_details[0]['last_name'] );
-    $post_userName->appendChild($post_userName_text );
-
-    // Add the facebook profile pic url
-    $post_pic = $doc->createAttribute('PicURL');
+    $post_pic = $doc->createAttribute('PicURL');        //PicURL
     $post->appendChild($post_pic);
-    $post_picURL = $doc->createTextNode( $user_details[0]['pic_square'] );
-    $post_pic->appendChild($post_picURL );
+
+    // Append attribute values if possible
+    if( isset( $user_details ) && isset( $user_details[0] ))
+    {
+      $post_userName_text = $doc->createTextNode( $user_details[0]['first_name'] . ' ' . $user_details[0]['last_name'] );
+      $post_userName->appendChild($post_userName_text );
+      $post_picURL = $doc->createTextNode( $user_details[0]['pic_square'] );
+      $post_pic->appendChild($post_picURL );
+    }
 
 		// Add the post body
 		$post->appendChild($doc->createTextNode($row['BODY']));

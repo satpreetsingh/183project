@@ -86,26 +86,26 @@
 
       }
       else {
-        echo "Error: A problem occurred during file upload!"; exit();
+        echo '<script type="text/javascript">';
+        echo ' alert( "Error: A problem occurred during file upload!" );';
+        echo '</script>';
       }
 
     }
     else {
-      echo "Error: Either your file format is not supported or your file exceeds 5 MB."; exit();
+        echo '<script type="text/javascript">';
+        echo ' alert( "Error: Either your file format is not supported or your file exceeds 5 MB." );';
+        echo '</script>';
     }
 
 
     // Redirect the user back to the CoursePage (session) or GroupPage (study_group)
     if ($study_group_id == 0) { 
-      header( "Location: http://apps.facebook.com/notesharesep/views/CoursePage.php?ns_session=" . $session_id );
+      $facebook->redirect( "http://apps.facebook.com/notesharesep/views/CoursePage.php?ns_session=" . $session_id );
     }
     else {
-      header( "Location: http://apps.facebook.com/notesharesep/views/CoursePage.php?ns_session=" . $session_id . "&nsStudyGroup=" . $study_group_id);
-    } 
-
-
+      $facebook->redirect( "http://apps.facebook.com/notesharesep/views/GroupPage.php?ns_session=" . $session_id . "&nsStudyGroup=" . $study_group_id);
+    }
   }
-  
-
 ?>
 

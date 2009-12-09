@@ -56,7 +56,7 @@
       $facebook->redirect( "http://apps.facebook.com/notesharesep/views/CoursePage.php?ns_session=" . $_GET['ns_session'] );
     }
   }
-  if( isset( $_GET['ns_session'] ))
+  if( isset( $_GET['ns_session'] ) && !isset( $_GET['ns_university'] ))
   {
     if( isInvalidCourse( $_GET['ns_session'] ))
     {

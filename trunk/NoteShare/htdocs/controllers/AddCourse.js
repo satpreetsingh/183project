@@ -1,4 +1,4 @@
-  var AJAX_URL_BASE = '/controllers/AddCourse.php';
+var AJAX_URL_BASE = '/controllers/AddCourse.php';
 var ns_backup = new Object();
 var ns_discription = false;
 
