@@ -16,7 +16,7 @@
   {
     openEditor();
     genTextBox( "Subject:", header );
-    echo '<input type="hidden" name="MAX_FILE_SIZE" value="5242880">';    
+    echo '<input type="hidden" name="MAX_FILE_SIZE" value="26214400">';     
     echo '<input type="hidden" name="sep_type" value="0">';
     echo '<input type="hidden" name="ns_session" value="' . $sessionId . '">';
     echo '<input type="hidden" name="userId" value="' . $userId . '">';

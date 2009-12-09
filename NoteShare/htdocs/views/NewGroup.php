@@ -96,7 +96,7 @@
   genViewHeader( "Study Group View" );
   genPageHeader( array( "Main Page",
                         "Course View",
-                        "New Thread" ),
+                        "New Group" ),
                  array( "/views/UserHomePage.php", 
                         "/views/CoursePage.php?ns_session=" . $_GET['ns_session'],
                         "/views/NewGroup.php?ns_session=" . $_GET['ns_session'] ));

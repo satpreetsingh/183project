@@ -112,7 +112,7 @@ function RemoveNoteFromServer()
 //echo createDepartmentDAL(5,'Computer Science');
 //echo createCourseDAL(5, 'Data Structures and Algorithms', 'This course covers the topics of various data structures commonly used in Computer Science');
 //echo createSessionDAL(11, 'Fall 2009', '2009-08-11', '2009-12-11');
-
-
+//echo createStudyGroupDAL( 1, "Test Header", "Description" );
+phpinfo();
 
 ?>

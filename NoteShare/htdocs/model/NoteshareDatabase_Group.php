@@ -8,24 +8,22 @@
  * @return XML Group data
  */
 
-function createStudyGroupDAL($session_id, $name, $desc)
+function createStudyGroupDAL($user_id, $session_id, $name, $desc)
 {
   $conn = openDB();
 
   // Alter passed variables for mysql injections
   $name = mysql_real_escape_string( $name );
   $desc = mysql_real_escape_string( $desc );
-
-  $query = "Insert Into StudyGroup (Name, Sesssion_Ptr, Active, Description) " . 
-		    "Values (" . $name . ", " . $session_id . ",1," . $desc . ")"; 
-
+  $query = "Insert Into StudyGroup (NAME, Session_Ptr, ACTIVE, DESCRIPTION) " . 
+		    "Values ('" . $name . "'," . $session_id . ",1,'" . $desc . "');"; 
   $result = mysql_query($query);
 
   // Check if SQL succeeded
   if (!$result) {
     return 0;
   }
-  else { 
+  else {
     return 1;
   }
 
@@ -716,14 +714,14 @@ function getStudyGroupWallPostsDAL($study_group_id, $facebook)
 		$post->appendChild($user_id);
 		
 		// Add time attribute
-		$date_Array = strptime($row['POST_DATE'],"%Y-%m-%d %H:%M:%S");
+		/*$date_Array = strptime($row['POST_DATE'],"%Y-%m-%d %H:%M:%S");
 
 		$time_Stamp = mktime($date_Array['tm_hour'], $date_Array['tm_min'],
 				$date_Array['tm_sec'], $date_Array['tm_mon']+1, 
 				$date_Array['tm_mday'], $date_Array['tm_year']+1900 );
-
+    */
 		$time = $doc->createAttribute("time");
-		$time->appendChild($doc->createTextNode($time_Stamp));
+		$time->appendChild($doc->createTextNode($row['POST_DATE']));
 		$post->appendChild($time);
 
     // Add the Facebook User name attribute UserName=""

@@ -3,6 +3,8 @@
 // Require generic view 
 require_once $_SERVER['DOCUMENT_ROOT'] . 'views/View.php';
 
+genViewHeader( null );
+genPageHeader( null, null );
 ?>
 
 <HTML>

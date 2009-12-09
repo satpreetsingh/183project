@@ -5,7 +5,10 @@
  * Contains all of the basic view functions for generating a page header,
  *  individual section headings, form posts, and the XSL translations.
  *
- * Last Modified: 11/23/09
+ * Last Modified: 12/07/09
+ * Notes:         Updated genPageHeader to include a help link
+ *
+ * Modified:      11/23/09
  * Notes:         Moved genForm functions from the add course page into this
  *                  generic view.
  *
@@ -81,7 +84,7 @@
   **/
   function genPageHeader( $titles, $links )
   {
-    echo '<table>' .
+    echo '<table cellspacing="0" cellpadding="0">' .
          '  <tr><td class="title fbFont">NoteShare (Beta)</td></tr>' .
          '  <tr><td class="headingBar fbFont">';
 
@@ -96,7 +99,7 @@
       echo '<a href="http://apps.facebook.com/notesharesep' . $links[ $i ] . '" target="_top" class="fbFont">' . $titles[ $i ] . '</a>';
     }
 
-    echo '</td></tr></table>';
+    echo '</td><td class="headingBar right fbFont"><a href="http://apps.facebook.com/notesharesep/views/UserManual.php">Help</a></td></tr></table>';
     echo '<br><br>';
   }
 
