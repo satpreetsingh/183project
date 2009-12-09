@@ -1,0 +1,630 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+  <html xmlns="http://www.w3.org/1999/xhtml">
+		<head>
+			<!-- template designed by Marco Von Ballmoos -->
+			<title>Docs for page NoteshareDatabase_AddCourse.php</title>
+			<link rel="stylesheet" href="../media/stylesheet.css" />
+			<meta http-equiv='Content-Type' content='text/html; charset=iso-8859-1'/>
+		</head>
+		<body>
+			<div class="page-body">			
+<h2 class="file-name">/model/NoteshareDatabase_AddCourse.php</h2>
+
+<a name="sec-description"></a>
+<div class="info-box">
+	<div class="info-box-title">Description</div>
+	<div class="nav-bar">
+					<span class="disabled">Description</span> |
+															<a href="#sec-functions">Functions</a>
+			</div>
+	<div class="info-box-body">	
+		<!-- ========== Info from phpDoc block ========= -->
+		
+			</div>
+</div>
+		
+
+	
+	
+	
+	<a name="sec-functions"></a>	
+	<div class="info-box">
+		<div class="info-box-title">Functions</div>
+		<div class="nav-bar">
+			<a href="#sec-description">Description</a> |
+															<span class="disabled">Functions</span>
+		</div>
+		<div class="info-box-body">	
+			<a name="functionaddUserDAL" id="functionaddUserDAL"><!-- --></a>
+<div class="oddrow">
+	
+	<div>
+		<span class="method-title">addUserDAL</span> (line <span class="line-number">760</span>)
+	</div> 
+
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">This function adds a user to the application.</p>
+	<ul class="tags">
+				<li><span class="field">author:</span> Jon Hall/Joseph Trapani</li>
+				<li><span class="field">version:</span> 1.0</li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result">void</span>
+		<span class="method-name">
+			addUserDAL
+		</span>
+					(<span class="var-type">integer</span>&nbsp;<span class="var-name">$user_id</span>)
+			</div>
+
+			<ul class="parameters">
+					<li>
+				<span class="var-type">integer</span>
+				<span class="var-name">$user_id</span><span class="var-description">: userID number</span>			</li>
+				</ul>
+		
+	
+</div>
+<a name="functionaddUserSessionDAL" id="functionaddUserSessionDAL"><!-- --></a>
+<div class="evenrow">
+	
+	<div>
+		<span class="method-title">addUserSessionDAL</span> (line <span class="line-number">642</span>)
+	</div> 
+
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">This function returns the result of adding a user to a session's enrollment.</p>
+	<ul class="tags">
+				<li><span class="field">return:</span> adding of user sessionenrollment data</li>
+				<li><span class="field">author:</span> Joseph Trapani</li>
+				<li><span class="field">version:</span> 1.0</li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result">XML</span>
+		<span class="method-name">
+			addUserSessionDAL
+		</span>
+					(<span class="var-type">integer</span>&nbsp;<span class="var-name">$user_id</span>, <span class="var-type"></span>&nbsp;<span class="var-name">$session_id</span>)
+			</div>
+
+			<ul class="parameters">
+					<li>
+				<span class="var-type">integer</span>
+				<span class="var-name">$user_id</span><span class="var-description">: user ID number, integer $session_id session ID number</span>			</li>
+					<li>
+				<span class="var-type"></span>
+				<span class="var-name">$session_id</span>			</li>
+				</ul>
+		
+	
+</div>
+<a name="functioncheckFirstUserInteractionDAL" id="functioncheckFirstUserInteractionDAL"><!-- --></a>
+<div class="oddrow">
+	
+	<div>
+		<span class="method-title">checkFirstUserInteractionDAL</span> (line <span class="line-number">590</span>)
+	</div> 
+
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">This function returns the result of adding a user to a user table.</p>
+	<ul class="tags">
+				<li><span class="field">return:</span> result if user exists or has been added.</li>
+				<li><span class="field">author:</span> Joseph Trapani</li>
+				<li><span class="field">version:</span> 1.0</li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result">boolean</span>
+		<span class="method-name">
+			checkFirstUserInteractionDAL
+		</span>
+					(<span class="var-type">integer</span>&nbsp;<span class="var-name">$user_id</span>)
+			</div>
+
+			<ul class="parameters">
+					<li>
+				<span class="var-type">integer</span>
+				<span class="var-name">$user_id</span><span class="var-description">: user ID number</span>			</li>
+				</ul>
+		
+	
+</div>
+<a name="functioncheckUserInSessionDAL" id="functioncheckUserInSessionDAL"><!-- --></a>
+<div class="evenrow">
+	
+	<div>
+		<span class="method-title">checkUserInSessionDAL</span> (line <span class="line-number">552</span>)
+	</div> 
+
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">This function returns the result of adding a user to a session's enrollment.</p>
+	<ul class="tags">
+				<li><span class="field">return:</span> result</li>
+				<li><span class="field">author:</span> Joseph Trapani</li>
+				<li><span class="field">version:</span> 1.0</li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result">boolean</span>
+		<span class="method-name">
+			checkUserInSessionDAL
+		</span>
+					(<span class="var-type">integer</span>&nbsp;<span class="var-name">$user_id</span>, <span class="var-type"></span>&nbsp;<span class="var-name">$session_id</span>)
+			</div>
+
+			<ul class="parameters">
+					<li>
+				<span class="var-type">integer</span>
+				<span class="var-name">$user_id</span><span class="var-description">: user ID number, integer $session_id session ID number</span>			</li>
+					<li>
+				<span class="var-type"></span>
+				<span class="var-name">$session_id</span>			</li>
+				</ul>
+		
+	
+</div>
+<a name="functioncreateCourseDAL" id="functioncreateCourseDAL"><!-- --></a>
+<div class="oddrow">
+	
+	<div>
+		<span class="method-title">createCourseDAL</span> (line <span class="line-number">164</span>)
+	</div> 
+
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">This function creates a new couse within a department.</p>
+	<ul class="tags">
+				<li><span class="field">return:</span> of course on sucess, -1 on failure</li>
+				<li><span class="field">author:</span> Joseph Trapani</li>
+				<li><span class="field">version:</span> 2.0</li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result">id</span>
+		<span class="method-name">
+			createCourseDAL
+		</span>
+					(<span class="var-type">integer</span>&nbsp;<span class="var-name">$department_id</span>, <span class="var-type"></span>&nbsp;<span class="var-name">$name</span>, [<span class="var-type"></span>&nbsp;<span class="var-name">$desc</span> = <span class="var-default">&amp;quot;&amp;quot;</span>])
+			</div>
+
+			<ul class="parameters">
+					<li>
+				<span class="var-type">integer</span>
+				<span class="var-name">$department_id</span><span class="var-description">: department ID, string $name name, string $desc description</span>			</li>
+					<li>
+				<span class="var-type"></span>
+				<span class="var-name">$name</span>			</li>
+					<li>
+				<span class="var-type"></span>
+				<span class="var-name">$desc</span>			</li>
+				</ul>
+		
+	
+</div>
+<a name="functioncreateDepartmentDAL" id="functioncreateDepartmentDAL"><!-- --></a>
+<div class="evenrow">
+	
+	<div>
+		<span class="method-title">createDepartmentDAL</span> (line <span class="line-number">89</span>)
+	</div> 
+
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">This function creates a new department within a university.</p>
+	<ul class="tags">
+				<li><span class="field">return:</span> of department on success, -1 on failure</li>
+				<li><span class="field">author:</span> Joseph Trapani</li>
+				<li><span class="field">version:</span> 2.0</li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result">id</span>
+		<span class="method-name">
+			createDepartmentDAL
+		</span>
+					(<span class="var-type">integer</span>&nbsp;<span class="var-name">$university_id</span>, <span class="var-type"></span>&nbsp;<span class="var-name">$name</span>)
+			</div>
+
+			<ul class="parameters">
+					<li>
+				<span class="var-type">integer</span>
+				<span class="var-name">$university_id</span><span class="var-description">: university ID, string $name name</span>			</li>
+					<li>
+				<span class="var-type"></span>
+				<span class="var-name">$name</span>			</li>
+				</ul>
+		
+	
+</div>
+<a name="functioncreateSessionDAL" id="functioncreateSessionDAL"><!-- --></a>
+<div class="oddrow">
+	
+	<div>
+		<span class="method-title">createSessionDAL</span> (line <span class="line-number">239</span>)
+	</div> 
+
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">This function creates a new session within a course.</p>
+	<ul class="tags">
+				<li><span class="field">return:</span> id on success, -1 on failure</li>
+				<li><span class="field">author:</span> Joseph Trapani</li>
+				<li><span class="field">version:</span> 2.0</li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result">session</span>
+		<span class="method-name">
+			createSessionDAL
+		</span>
+					(<span class="var-type">integer</span>&nbsp;<span class="var-name">$course_id</span>, <span class="var-type"></span>&nbsp;<span class="var-name">$name</span>, [<span class="var-type"></span>&nbsp;<span class="var-name">$startdate</span> = <span class="var-default">&#039;null&#039;</span>], [<span class="var-type"></span>&nbsp;<span class="var-name">$enddate</span> = <span class="var-default">&#039;null&#039;</span>])
+			</div>
+
+			<ul class="parameters">
+					<li>
+				<span class="var-type">integer</span>
+				<span class="var-name">$course_id</span><span class="var-description">: course ID, string $name name, date $startdate starting date of the session, date $enddate ending date of the session</span>			</li>
+					<li>
+				<span class="var-type"></span>
+				<span class="var-name">$name</span>			</li>
+					<li>
+				<span class="var-type"></span>
+				<span class="var-name">$startdate</span>			</li>
+					<li>
+				<span class="var-type"></span>
+				<span class="var-name">$enddate</span>			</li>
+				</ul>
+		
+	
+</div>
+<a name="functioncreateUniversityDAL" id="functioncreateUniversityDAL"><!-- --></a>
+<div class="evenrow">
+	
+	<div>
+		<span class="method-title">createUniversityDAL</span> (line <span class="line-number">12</span>)
+	</div> 
+
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">This function creates a new university.</p>
+	<ul class="tags">
+				<li><span class="field">return:</span> on success and -1 on failure</li>
+				<li><span class="field">author:</span> Joseph Trapani</li>
+				<li><span class="field">version:</span> 2.0</li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result">id</span>
+		<span class="method-name">
+			createUniversityDAL
+		</span>
+					(<span class="var-type">string</span>&nbsp;<span class="var-name">$name</span>, [<span class="var-type"></span>&nbsp;<span class="var-name">$desc</span> = <span class="var-default">&amp;quot;&amp;quot;</span>])
+			</div>
+
+			<ul class="parameters">
+					<li>
+				<span class="var-type">string</span>
+				<span class="var-name">$name</span><span class="var-description">: name, string $desc description</span>			</li>
+					<li>
+				<span class="var-type"></span>
+				<span class="var-name">$desc</span>			</li>
+				</ul>
+		
+	
+</div>
+<a name="functiongetCoursesDAL" id="functiongetCoursesDAL"><!-- --></a>
+<div class="oddrow">
+	
+	<div>
+		<span class="method-title">getCoursesDAL</span> (line <span class="line-number">194</span>)
+	</div> 
+
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">This function gets all the courses in a given department</p>
+	<ul class="tags">
+				<li><span class="field">return:</span> course data</li>
+				<li><span class="field">author:</span> Nathan Denklau</li>
+				<li><span class="field">version:</span> 1.0</li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result">XML</span>
+		<span class="method-name">
+			getCoursesDAL
+		</span>
+					(<span class="var-type">integer</span>&nbsp;<span class="var-name">$dept_id</span>)
+			</div>
+
+			<ul class="parameters">
+					<li>
+				<span class="var-type">integer</span>
+				<span class="var-name">$dept_id</span><span class="var-description">: department ID number</span>			</li>
+				</ul>
+		
+	
+</div>
+<a name="functiongetDepartmentsDAL" id="functiongetDepartmentsDAL"><!-- --></a>
+<div class="evenrow">
+	
+	<div>
+		<span class="method-title">getDepartmentsDAL</span> (line <span class="line-number">119</span>)
+	</div> 
+
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">This function gets all the departments at a given university</p>
+	<ul class="tags">
+				<li><span class="field">return:</span> department data</li>
+				<li><span class="field">author:</span> Nathan Denklau</li>
+				<li><span class="field">version:</span> 1.0</li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result">XML</span>
+		<span class="method-name">
+			getDepartmentsDAL
+		</span>
+					(<span class="var-type">integer</span>&nbsp;<span class="var-name">$univ_id</span>)
+			</div>
+
+			<ul class="parameters">
+					<li>
+				<span class="var-type">integer</span>
+				<span class="var-name">$univ_id</span><span class="var-description">: university ID number</span>			</li>
+				</ul>
+		
+	
+</div>
+<a name="functiongetHomePageSessionListDAL" id="functiongetHomePageSessionListDAL"><!-- --></a>
+<div class="oddrow">
+	
+	<div>
+		<span class="method-title">getHomePageSessionListDAL</span> (line <span class="line-number">314</span>)
+	</div> 
+
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">This function gets all the courses which the given user is currently enrolled in.</p>
+	<ul class="tags">
+				<li><span class="field">return:</span> user's current enrolled session list</li>
+				<li><span class="field">author:</span> Joseph Trapani</li>
+				<li><span class="field">version:</span> 2.0</li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result">XML</span>
+		<span class="method-name">
+			getHomePageSessionListDAL
+		</span>
+					(<span class="var-type">integer</span>&nbsp;<span class="var-name">$user_id</span>)
+			</div>
+
+			<ul class="parameters">
+					<li>
+				<span class="var-type">integer</span>
+				<span class="var-name">$user_id</span><span class="var-description">: user ID number</span>			</li>
+				</ul>
+		
+	
+</div>
+<a name="functiongetSessionMembersDAL" id="functiongetSessionMembersDAL"><!-- --></a>
+<div class="evenrow">
+	
+	<div>
+		<span class="method-title">getSessionMembersDAL</span> (line <span class="line-number">465</span>)
+	</div> 
+
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">This function gets all the users from a given course's session.</p>
+	<ul class="tags">
+				<li><span class="field">return:</span> user's current enrolled session list</li>
+				<li><span class="field">author:</span> Joseph Trapani, edited by Satpreet</li>
+				<li><span class="field">version:</span> 1.0</li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result">XML</span>
+		<span class="method-name">
+			getSessionMembersDAL
+		</span>
+					(<span class="var-type">integer</span>&nbsp;<span class="var-name">$session_id</span>, <span class="var-type"></span>&nbsp;<span class="var-name">$user_id</span>, <span class="var-type"></span>&nbsp;<span class="var-name">$facebook</span>, [<span class="var-type"></span>&nbsp;<span class="var-name">$get_members</span> = <span class="var-default">0</span>])
+			</div>
+
+			<ul class="parameters">
+					<li>
+				<span class="var-type">integer</span>
+				<span class="var-name">$session_id</span><span class="var-description">: sessionID number, integer $user_id number, object $facebook, integer $get_members number</span>			</li>
+					<li>
+				<span class="var-type"></span>
+				<span class="var-name">$user_id</span>			</li>
+					<li>
+				<span class="var-type"></span>
+				<span class="var-name">$facebook</span>			</li>
+					<li>
+				<span class="var-type"></span>
+				<span class="var-name">$get_members</span>			</li>
+				</ul>
+		
+	
+</div>
+<a name="functiongetSessionMetadataDAL" id="functiongetSessionMetadataDAL"><!-- --></a>
+<div class="oddrow">
+	
+	<div>
+		<span class="method-title">getSessionMetadataDAL</span> (line <span class="line-number">384</span>)
+	</div> 
+
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">This function returns all the details of the session (specific term/semester course information)  and course (general course information).</p>
+	<ul class="tags">
+				<li><span class="field">return:</span> session meta data</li>
+				<li><span class="field">author:</span> Joseph Trapani</li>
+				<li><span class="field">version:</span> 1.0</li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result">XML</span>
+		<span class="method-name">
+			getSessionMetadataDAL
+		</span>
+					(<span class="var-type">integer</span>&nbsp;<span class="var-name">$session_id</span>)
+			</div>
+
+			<ul class="parameters">
+					<li>
+				<span class="var-type">integer</span>
+				<span class="var-name">$session_id</span><span class="var-description">: session ID number</span>			</li>
+				</ul>
+		
+	
+</div>
+<a name="functiongetSessionsDAL" id="functiongetSessionsDAL"><!-- --></a>
+<div class="evenrow">
+	
+	<div>
+		<span class="method-title">getSessionsDAL</span> (line <span class="line-number">270</span>)
+	</div> 
+
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">This function gets all the sessions for a given course</p>
+	<ul class="tags">
+				<li><span class="field">return:</span> session data</li>
+				<li><span class="field">author:</span> Nathan Denklau</li>
+				<li><span class="field">version:</span> 1.0</li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result">XML</span>
+		<span class="method-name">
+			getSessionsDAL
+		</span>
+					(<span class="var-type">integer</span>&nbsp;<span class="var-name">$course_id</span>)
+			</div>
+
+			<ul class="parameters">
+					<li>
+				<span class="var-type">integer</span>
+				<span class="var-name">$course_id</span><span class="var-description">: course ID number</span>			</li>
+				</ul>
+		
+	
+</div>
+<a name="functiongetUniversityDAL" id="functiongetUniversityDAL"><!-- --></a>
+<div class="oddrow">
+	
+	<div>
+		<span class="method-title">getUniversityDAL</span> (line <span class="line-number">43</span>)
+	</div> 
+
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">This function gets all of the universities within the database and returns them in XML</p>
+	<ul class="tags">
+				<li><span class="field">return:</span> university data</li>
+				<li><span class="field">author:</span> Nathan Denklau</li>
+				<li><span class="field">version:</span> 1.0</li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result">XML</span>
+		<span class="method-name">
+			getUniversityDAL
+		</span>
+				()
+			</div>
+
+		
+	
+</div>
+<a name="functionisInvalidCourse" id="functionisInvalidCourse"><!-- --></a>
+<div class="evenrow">
+	
+	<div>
+		<span class="method-title">isInvalidCourse</span> (line <span class="line-number">798</span>)
+	</div> 
+
+	<!-- ========== Info from phpDoc block ========= -->
+	
+	<div class="method-signature">
+		<span class="method-result">void</span>
+		<span class="method-name">
+			isInvalidCourse
+		</span>
+					(<span class="var-type"></span>&nbsp;<span class="var-name">$sessionId</span>)
+			</div>
+
+			<ul class="parameters">
+					<li>
+				<span class="var-type"></span>
+				<span class="var-name">$sessionId</span>			</li>
+				</ul>
+		
+	
+</div>
+<a name="functionremoveUserDAL" id="functionremoveUserDAL"><!-- --></a>
+<div class="oddrow">
+	
+	<div>
+		<span class="method-title">removeUserDAL</span> (line <span class="line-number">779</span>)
+	</div> 
+
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">This function removes a user from the application by setting a left date.</p>
+	<ul class="tags">
+				<li><span class="field">author:</span> Jon Hall/Joseph Trapani</li>
+				<li><span class="field">version:</span> 1.0</li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result">void</span>
+		<span class="method-name">
+			removeUserDAL
+		</span>
+					(<span class="var-type">integer</span>&nbsp;<span class="var-name">$user_id</span>)
+			</div>
+
+			<ul class="parameters">
+					<li>
+				<span class="var-type">integer</span>
+				<span class="var-name">$user_id</span><span class="var-description">: userID number</span>			</li>
+				</ul>
+		
+	
+</div>
+<a name="functionremoveUserSessionDAL" id="functionremoveUserSessionDAL"><!-- --></a>
+<div class="evenrow">
+	
+	<div>
+		<span class="method-title">removeUserSessionDAL</span> (line <span class="line-number">717</span>)
+	</div> 
+
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">This function returns the result after removing a user from a given course's session.</p>
+	<ul class="tags">
+				<li><span class="field">return:</span> removal of user sessionenrollment data</li>
+				<li><span class="field">author:</span> Joseph Trapani</li>
+				<li><span class="field">version:</span> 1.0</li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result">XML</span>
+		<span class="method-name">
+			removeUserSessionDAL
+		</span>
+					(<span class="var-type">integer</span>&nbsp;<span class="var-name">$user_id</span>, <span class="var-type"></span>&nbsp;<span class="var-name">$session_id</span>)
+			</div>
+
+			<ul class="parameters">
+					<li>
+				<span class="var-type">integer</span>
+				<span class="var-name">$user_id</span><span class="var-description">: user ID number, integer $session_id session ID number</span>			</li>
+					<li>
+				<span class="var-type"></span>
+				<span class="var-name">$session_id</span>			</li>
+				</ul>
+		
+	
+</div>
+		</div>
+	</div>
+	
+	<p class="notes" id="credit">
+		Documentation generated on Mon, 07 Dec 2009 08:10:25 -0600 by <a href="http://www.phpdoc.org" target="_blank">phpDocumentor 1.4.1</a>
+	</p>
+	</div></body>
+</html>
