@@ -1,0 +1,759 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+  <html xmlns="http://www.w3.org/1999/xhtml">
+		<head>
+			<!-- template designed by Marco Von Ballmoos -->
+			<title>Docs for page NoteshareDatabase_Group.php</title>
+			<link rel="stylesheet" href="../media/stylesheet.css" />
+			<meta http-equiv='Content-Type' content='text/html; charset=iso-8859-1'/>
+		</head>
+		<body>
+			<div class="page-body">			
+<h2 class="file-name">/model/NoteshareDatabase_Group.php</h2>
+
+<a name="sec-description"></a>
+<div class="info-box">
+	<div class="info-box-title">Description</div>
+	<div class="nav-bar">
+					<span class="disabled">Description</span> |
+															<a href="#sec-functions">Functions</a>
+			</div>
+	<div class="info-box-body">	
+		<!-- ========== Info from phpDoc block ========= -->
+		
+			</div>
+</div>
+		
+
+	
+	
+	
+	<a name="sec-functions"></a>	
+	<div class="info-box">
+		<div class="info-box-title">Functions</div>
+		<div class="nav-bar">
+			<a href="#sec-description">Description</a> |
+															<span class="disabled">Functions</span>
+		</div>
+		<div class="info-box-body">	
+			<a name="functionaddStudyGroupBBSPostDAL" id="functionaddStudyGroupBBSPostDAL"><!-- --></a>
+<div class="evenrow">
+	
+	<div>
+		<span class="method-title">addStudyGroupBBSPostDAL</span> (line <span class="line-number">767</span>)
+	</div> 
+
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">This function returns the result of adding a study_group bulletin board post to a  a study_group's bulletin board.</p>
+	<ul class="tags">
+				<li><span class="field">return:</span> adding of study_group bulletin board post data</li>
+				<li><span class="field">version:</span> 1.0</li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result">XML</span>
+		<span class="method-name">
+			addStudyGroupBBSPostDAL
+		</span>
+					(<span class="var-type">integer</span>&nbsp;<span class="var-name">$user_id</span>, <span class="var-type">integer</span>&nbsp;<span class="var-name">$study_group_id</span>, <span class="var-type">string</span>&nbsp;<span class="var-name">$header</span>, <span class="var-type">string</span>&nbsp;<span class="var-name">$body</span>, <span class="var-type">integer</span>&nbsp;<span class="var-name">$parentID</span>)
+			</div>
+
+			<ul class="parameters">
+					<li>
+				<span class="var-type">integer</span>
+				<span class="var-name">$user_id</span><span class="var-description">: user ID number</span>			</li>
+					<li>
+				<span class="var-type">integer</span>
+				<span class="var-name">$study_group_id</span><span class="var-description">: study_group ID number</span>			</li>
+					<li>
+				<span class="var-type">string</span>
+				<span class="var-name">$header</span><span class="var-description">: title of the post</span>			</li>
+					<li>
+				<span class="var-type">string</span>
+				<span class="var-name">$body</span><span class="var-description">: content of the post</span>			</li>
+					<li>
+				<span class="var-type">integer</span>
+				<span class="var-name">$parentID</span><span class="var-description">: parent post of the thread (could be null)</span>			</li>
+				</ul>
+		
+	
+</div>
+<a name="functionaddStudyGroupBBSPostDAL2" id="functionaddStudyGroupBBSPostDAL2"><!-- --></a>
+<div class="oddrow">
+	
+	<div>
+		<span class="method-title">addStudyGroupBBSPostDAL2</span> (line <span class="line-number">610</span>)
+	</div> 
+
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">This function is designed to post a message to a study_group BBS</p>
+	<ul class="tags">
+				<li><span class="field">author:</span> Jon Hall</li>
+				<li><span class="field">version:</span> 1.0</li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result">void</span>
+		<span class="method-name">
+			addStudyGroupBBSPostDAL2
+		</span>
+					(<span class="var-type"></span>&nbsp;<span class="var-name">$header</span>, <span class="var-type"></span>&nbsp;<span class="var-name">$body</span>, <span class="var-type"></span>&nbsp;<span class="var-name">$user_id</span>, <span class="var-type"></span>&nbsp;<span class="var-name">$study_group_id</span>, <span class="var-type"></span>&nbsp;<span class="var-name">$prev_post</span>, <span class="var-type">string</span>&nbsp;<span class="var-name">$header,</span>)
+			</div>
+
+			<ul class="parameters">
+					<li>
+				<span class="var-type">string</span>
+				<span class="var-name">$header,</span><span class="var-description">: string $body, integer $user_id userID number, integer $study_group_id study_groupID number, integer $prev_post id of parent post</span>			</li>
+					<li>
+				<span class="var-type"></span>
+				<span class="var-name">$header</span>			</li>
+					<li>
+				<span class="var-type"></span>
+				<span class="var-name">$body</span>			</li>
+					<li>
+				<span class="var-type"></span>
+				<span class="var-name">$user_id</span>			</li>
+					<li>
+				<span class="var-type"></span>
+				<span class="var-name">$study_group_id</span>			</li>
+					<li>
+				<span class="var-type"></span>
+				<span class="var-name">$prev_post</span>			</li>
+				</ul>
+		
+	
+</div>
+<a name="functionaddStudyGroupNoteDAL" id="functionaddStudyGroupNoteDAL"><!-- --></a>
+<div class="evenrow">
+	
+	<div>
+		<span class="method-title">addStudyGroupNoteDAL</span> (line <span class="line-number">1041</span>)
+	</div> 
+
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">This function adds a note posting and physical upload location.</p>
+	<ul class="tags">
+				<li><span class="field">author:</span> Joseph Trapani</li>
+				<li><span class="field">version:</span> 1.0</li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result">void</span>
+		<span class="method-name">
+			addStudyGroupNoteDAL
+		</span>
+					(<span class="var-type">integer</span>&nbsp;<span class="var-name">$user_id</span>, <span class="var-type"></span>&nbsp;<span class="var-name">$study_group_id</span>, <span class="var-type"></span>&nbsp;<span class="var-name">$header</span>, <span class="var-type"></span>&nbsp;<span class="var-name">$body</span>, <span class="var-type"></span>&nbsp;<span class="var-name">$file_path</span>, <span class="var-type"></span>&nbsp;<span class="var-name">$original_file_name</span>, <span class="var-type"></span>&nbsp;<span class="var-name">$file_size</span>)
+			</div>
+
+			<ul class="parameters">
+					<li>
+				<span class="var-type">integer</span>
+				<span class="var-name">$user_id</span><span class="var-description">: userID number, integer $study_group_id study group ID, varchar $header header post title, varchar $body message body, varchar $file_path path to uploaded file,  varchar $original_file_name original file name, float $file_size size of file (in MB)</span>			</li>
+					<li>
+				<span class="var-type"></span>
+				<span class="var-name">$study_group_id</span>			</li>
+					<li>
+				<span class="var-type"></span>
+				<span class="var-name">$header</span>			</li>
+					<li>
+				<span class="var-type"></span>
+				<span class="var-name">$body</span>			</li>
+					<li>
+				<span class="var-type"></span>
+				<span class="var-name">$file_path</span>			</li>
+					<li>
+				<span class="var-type"></span>
+				<span class="var-name">$original_file_name</span>			</li>
+					<li>
+				<span class="var-type"></span>
+				<span class="var-name">$file_size</span>			</li>
+				</ul>
+		
+	
+</div>
+<a name="functionaddStudyGroupUserGroupDAL" id="functionaddStudyGroupUserGroupDAL"><!-- --></a>
+<div class="oddrow">
+	
+	<div>
+		<span class="method-title">addStudyGroupUserGroupDAL</span> (line <span class="line-number">464</span>)
+	</div> 
+
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">This function adds a user to a study group.</p>
+	<ul class="tags">
+				<li><span class="field">author:</span> Joseph Trapani</li>
+				<li><span class="field">version:</span> 1.0</li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result">void</span>
+		<span class="method-name">
+			addStudyGroupUserGroupDAL
+		</span>
+					(<span class="var-type"></span>&nbsp;<span class="var-name">$user_id</span>, <span class="var-type"></span>&nbsp;<span class="var-name">$session_id</span>, <span class="var-type"></span>&nbsp;<span class="var-name">$study_group_id</span>, <span class="var-type">integer</span>&nbsp;<span class="var-name">$user_id,</span>)
+			</div>
+
+			<ul class="parameters">
+					<li>
+				<span class="var-type">integer</span>
+				<span class="var-name">$user_id,</span><span class="var-description">: integer $session_id, integer $study_group_id</span>			</li>
+					<li>
+				<span class="var-type"></span>
+				<span class="var-name">$user_id</span>			</li>
+					<li>
+				<span class="var-type"></span>
+				<span class="var-name">$session_id</span>			</li>
+					<li>
+				<span class="var-type"></span>
+				<span class="var-name">$study_group_id</span>			</li>
+				</ul>
+		
+	
+</div>
+<a name="functionaddStudyGroupWallPostDAL" id="functionaddStudyGroupWallPostDAL"><!-- --></a>
+<div class="evenrow">
+	
+	<div>
+		<span class="method-title">addStudyGroupWallPostDAL</span> (line <span class="line-number">676</span>)
+	</div> 
+
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">This function is designed to post a message to a wall</p>
+	<ul class="tags">
+				<li><span class="field">author:</span> Jon Hall</li>
+				<li><span class="field">version:</span> 1.0</li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result">void</span>
+		<span class="method-name">
+			addStudyGroupWallPostDAL
+		</span>
+					(<span class="var-type">integer</span>&nbsp;<span class="var-name">$user_id</span>, <span class="var-type"></span>&nbsp;<span class="var-name">$study_group_id</span>, <span class="var-type"></span>&nbsp;<span class="var-name">$body</span>)
+			</div>
+
+			<ul class="parameters">
+					<li>
+				<span class="var-type">integer</span>
+				<span class="var-name">$user_id</span><span class="var-description">: userID number, integer $study_group_id study_groupID number, string $body post contents</span>			</li>
+					<li>
+				<span class="var-type"></span>
+				<span class="var-name">$study_group_id</span>			</li>
+					<li>
+				<span class="var-type"></span>
+				<span class="var-name">$body</span>			</li>
+				</ul>
+		
+	
+</div>
+<a name="functioncheckUserInStudyGroupDAL" id="functioncheckUserInStudyGroupDAL"><!-- --></a>
+<div class="oddrow">
+	
+	<div>
+		<span class="method-title">checkUserInStudyGroupDAL</span> (line <span class="line-number">427</span>)
+	</div> 
+
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">This function returns the result of adding a user to a study group's enrollment.</p>
+	<ul class="tags">
+				<li><span class="field">return:</span> result</li>
+				<li><span class="field">author:</span> Joseph Trapani</li>
+				<li><span class="field">version:</span> 1.0</li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result">boolean</span>
+		<span class="method-name">
+			checkUserInStudyGroupDAL
+		</span>
+					(<span class="var-type">integer</span>&nbsp;<span class="var-name">$user_id</span>, <span class="var-type"></span>&nbsp;<span class="var-name">$study_group_id</span>)
+			</div>
+
+			<ul class="parameters">
+					<li>
+				<span class="var-type">integer</span>
+				<span class="var-name">$user_id</span><span class="var-description">: user ID number, integer $study_group_id study group ID number</span>			</li>
+					<li>
+				<span class="var-type"></span>
+				<span class="var-name">$study_group_id</span>			</li>
+				</ul>
+		
+	
+</div>
+<a name="functioncreateStudyGroupDAL" id="functioncreateStudyGroupDAL"><!-- --></a>
+<div class="evenrow">
+	
+	<div>
+		<span class="method-title">createStudyGroupDAL</span> (line <span class="line-number">11</span>)
+	</div> 
+
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">This function creates a new study group associated to a session.</p>
+	<ul class="tags">
+				<li><span class="field">return:</span> Group data</li>
+				<li><span class="field">author:</span> Joseph Trapani</li>
+				<li><span class="field">version:</span> 2.0</li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result">XML</span>
+		<span class="method-name">
+			createStudyGroupDAL
+		</span>
+					(<span class="var-type"></span>&nbsp;<span class="var-name">$session_id</span>, <span class="var-type"></span>&nbsp;<span class="var-name">$name</span>, <span class="var-type"></span>&nbsp;<span class="var-name">$desc</span>, <span class="var-type">integer</span>&nbsp;<span class="var-name">$study_group_id</span>)
+			</div>
+
+			<ul class="parameters">
+					<li>
+				<span class="var-type">integer</span>
+				<span class="var-name">$study_group_id</span><span class="var-description">: study group ID number, string $name name string, string $desc desc string</span>			</li>
+					<li>
+				<span class="var-type"></span>
+				<span class="var-name">$session_id</span>			</li>
+					<li>
+				<span class="var-type"></span>
+				<span class="var-name">$name</span>			</li>
+					<li>
+				<span class="var-type"></span>
+				<span class="var-name">$desc</span>			</li>
+				</ul>
+		
+	
+</div>
+<a name="functiongetHomePageStudyGroupListDAL" id="functiongetHomePageStudyGroupListDAL"><!-- --></a>
+<div class="oddrow">
+	
+	<div>
+		<span class="method-title">getHomePageStudyGroupListDAL</span> (line <span class="line-number">174</span>)
+	</div> 
+
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">This function gets all the study groups which the given user is currently enrolled in.</p>
+	<ul class="tags">
+				<li><span class="field">return:</span> user's current enrolled study group list</li>
+				<li><span class="field">author:</span> Joseph Trapani</li>
+				<li><span class="field">version:</span> 1.0</li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result">XML</span>
+		<span class="method-name">
+			getHomePageStudyGroupListDAL
+		</span>
+					(<span class="var-type">integer</span>&nbsp;<span class="var-name">$user_id</span>)
+			</div>
+
+			<ul class="parameters">
+					<li>
+				<span class="var-type">integer</span>
+				<span class="var-name">$user_id</span><span class="var-description">: user ID number</span>			</li>
+				</ul>
+		
+	
+</div>
+<a name="functiongetStudyGroupBBSPostsDAL" id="functiongetStudyGroupBBSPostsDAL"><!-- --></a>
+<div class="evenrow">
+	
+	<div>
+		<span class="method-title">getStudyGroupBBSPostsDAL</span> (line <span class="line-number">900</span>)
+	</div> 
+
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">This function returns the thread specified by the parent thread id</p>
+	<ul class="tags">
+				<li><span class="field">return:</span> of thread topic including all children posts</li>
+				<li><span class="field">version:</span> 2.0</li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result">XML</span>
+		<span class="method-name">
+			getStudyGroupBBSPostsDAL
+		</span>
+					(<span class="var-type">integer</span>&nbsp;<span class="var-name">$parentId</span>, <span class="var-type"></span>&nbsp;<span class="var-name">$facebook</span>)
+			</div>
+
+			<ul class="parameters">
+					<li>
+				<span class="var-type">integer</span>
+				<span class="var-name">$parentId</span><span class="var-description">: parent thread id number</span>			</li>
+					<li>
+				<span class="var-type"></span>
+				<span class="var-name">$facebook</span>			</li>
+				</ul>
+		
+	
+</div>
+<a name="functiongetStudyGroupBBSTopicsDAL" id="functiongetStudyGroupBBSTopicsDAL"><!-- --></a>
+<div class="oddrow">
+	
+	<div>
+		<span class="method-title">getStudyGroupBBSTopicsDAL</span> (line <span class="line-number">808</span>)
+	</div> 
+
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">This function gets all of the BBS thread topics for a given study_group.</p>
+	<ul class="tags">
+				<li><span class="field">return:</span> BBS thread topics of study_group bulletin board post data, integer $return_latest return latest X records</li>
+				<li><span class="field">version:</span> 3.0</li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result">XML</span>
+		<span class="method-name">
+			getStudyGroupBBSTopicsDAL
+		</span>
+					(<span class="var-type">integer</span>&nbsp;<span class="var-name">$study_group_id</span>, [<span class="var-type"></span>&nbsp;<span class="var-name">$latest_posts</span> = <span class="var-default">0</span>])
+			</div>
+
+			<ul class="parameters">
+					<li>
+				<span class="var-type">integer</span>
+				<span class="var-name">$study_group_id</span><span class="var-description">: study_group ID number</span>			</li>
+					<li>
+				<span class="var-type"></span>
+				<span class="var-name">$latest_posts</span>			</li>
+				</ul>
+		
+	
+</div>
+<a name="functiongetStudyGroupMembersDAL" id="functiongetStudyGroupMembersDAL"><!-- --></a>
+<div class="evenrow">
+	
+	<div>
+		<span class="method-title">getStudyGroupMembersDAL</span> (line <span class="line-number">324</span>)
+	</div> 
+
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">This function gets all the users from a given session's study group.</p>
+	<ul class="tags">
+				<li><span class="field">return:</span> user's current enrolled study group list</li>
+				<li><span class="field">author:</span> Joseph Trapani</li>
+				<li><span class="field">version:</span> 1.0</li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result">XML</span>
+		<span class="method-name">
+			getStudyGroupMembersDAL
+		</span>
+					(<span class="var-type">integer</span>&nbsp;<span class="var-name">$study_group_id</span>, <span class="var-type"></span>&nbsp;<span class="var-name">$user_id</span>, <span class="var-type"></span>&nbsp;<span class="var-name">$facebook</span>, [<span class="var-type"></span>&nbsp;<span class="var-name">$get_members</span> = <span class="var-default">0</span>])
+			</div>
+
+			<ul class="parameters">
+					<li>
+				<span class="var-type">integer</span>
+				<span class="var-name">$study_group_id</span><span class="var-description">: study group ID number, integer $user_id number, object $facebook, integer $get_members number</span>			</li>
+					<li>
+				<span class="var-type"></span>
+				<span class="var-name">$user_id</span>			</li>
+					<li>
+				<span class="var-type"></span>
+				<span class="var-name">$facebook</span>			</li>
+					<li>
+				<span class="var-type"></span>
+				<span class="var-name">$get_members</span>			</li>
+				</ul>
+		
+	
+</div>
+<a name="functiongetStudyGroupMetadataDAL" id="functiongetStudyGroupMetadataDAL"><!-- --></a>
+<div class="oddrow">
+	
+	<div>
+		<span class="method-title">getStudyGroupMetadataDAL</span> (line <span class="line-number">251</span>)
+	</div> 
+
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">This function returns all the details of the Study Group (specific term/semester course information)  and course (general course information).</p>
+	<ul class="tags">
+				<li><span class="field">return:</span> Group meta data</li>
+				<li><span class="field">author:</span> Joseph Trapani</li>
+				<li><span class="field">version:</span> 1.0</li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result">XML</span>
+		<span class="method-name">
+			getStudyGroupMetadataDAL
+		</span>
+					(<span class="var-type">integer</span>&nbsp;<span class="var-name">$study_group_id</span>)
+			</div>
+
+			<ul class="parameters">
+					<li>
+				<span class="var-type">integer</span>
+				<span class="var-name">$study_group_id</span><span class="var-description">: Study Group ID number</span>			</li>
+				</ul>
+		
+	
+</div>
+<a name="functiongetStudyGroupNoteDAL" id="functiongetStudyGroupNoteDAL"><!-- --></a>
+<div class="evenrow">
+	
+	<div>
+		<span class="method-title">getStudyGroupNoteDAL</span> (line <span class="line-number">1098</span>)
+	</div> 
+
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">This function returns a note posting with the physical file location.</p>
+	<ul class="tags">
+				<li><span class="field">author:</span> Joseph Trapani</li>
+				<li><span class="field">version:</span> 2.0</li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result">void</span>
+		<span class="method-name">
+			getStudyGroupNoteDAL
+		</span>
+					(<span class="var-type">integer</span>&nbsp;<span class="var-name">$study_group_id</span>, [<span class="var-type"></span>&nbsp;<span class="var-name">$noteid</span> = <span class="var-default">0</span>], [<span class="var-type"></span>&nbsp;<span class="var-name">$latest_posts</span> = <span class="var-default">0</span>])
+			</div>
+
+			<ul class="parameters">
+					<li>
+				<span class="var-type">integer</span>
+				<span class="var-name">$study_group_id</span><span class="var-description">: study group ID, integer $noteid unique ID number of posted note, integer $return_latest return latest X records</span>			</li>
+					<li>
+				<span class="var-type"></span>
+				<span class="var-name">$noteid</span>			</li>
+					<li>
+				<span class="var-type"></span>
+				<span class="var-name">$latest_posts</span>			</li>
+				</ul>
+		
+	
+</div>
+<a name="functiongetStudyGroupsDAL" id="functiongetStudyGroupsDAL"><!-- --></a>
+<div class="oddrow">
+	
+	<div>
+		<span class="method-title">getStudyGroupsDAL</span> (line <span class="line-number">45</span>)
+	</div> 
+
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">This function gets all the Study Groups for a given session</p>
+	<ul class="tags">
+				<li><span class="field">return:</span> Group data</li>
+				<li><span class="field">author:</span> Joseph Trapani</li>
+				<li><span class="field">version:</span> 2.0</li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result">XML</span>
+		<span class="method-name">
+			getStudyGroupsDAL
+		</span>
+					(<span class="var-type"></span>&nbsp;<span class="var-name">$user_id</span>, <span class="var-type">integer</span>&nbsp;<span class="var-name">$session_id</span>)
+			</div>
+
+			<ul class="parameters">
+					<li>
+				<span class="var-type">integer</span>
+				<span class="var-name">$session_id</span><span class="var-description">: session ID number, integer $user_id user id number, bit $basic basic bit</span>			</li>
+					<li>
+				<span class="var-type"></span>
+				<span class="var-name">$user_id</span>			</li>
+				</ul>
+		
+	
+</div>
+<a name="functiongetStudyGroupsDAL2" id="functiongetStudyGroupsDAL2"><!-- --></a>
+<div class="evenrow">
+	
+	<div>
+		<span class="method-title">getStudyGroupsDAL2</span> (line <span class="line-number">113</span>)
+	</div> 
+
+	<!-- ========== Info from phpDoc block ========= -->
+	
+	<div class="method-signature">
+		<span class="method-result">void</span>
+		<span class="method-name">
+			getStudyGroupsDAL2
+		</span>
+					(<span class="var-type"></span>&nbsp;<span class="var-name">$session_id</span>, <span class="var-type"></span>&nbsp;<span class="var-name">$user_id</span>, [<span class="var-type"></span>&nbsp;<span class="var-name">$basic</span> = <span class="var-default">0</span>])
+			</div>
+
+			<ul class="parameters">
+					<li>
+				<span class="var-type"></span>
+				<span class="var-name">$session_id</span>			</li>
+					<li>
+				<span class="var-type"></span>
+				<span class="var-name">$user_id</span>			</li>
+					<li>
+				<span class="var-type"></span>
+				<span class="var-name">$basic</span>			</li>
+				</ul>
+		
+	
+</div>
+<a name="functiongetStudyGroupWallParentDAL" id="functiongetStudyGroupWallParentDAL"><!-- --></a>
+<div class="oddrow">
+	
+	<div>
+		<span class="method-title">getStudyGroupWallParentDAL</span> (line <span class="line-number">632</span>)
+	</div> 
+
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">This function is designed to get the parent of a study_group wall</p>
+	<ul class="tags">
+				<li><span class="field">author:</span> Jon Hall</li>
+				<li><span class="field">version:</span> 1.0</li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result">integer</span>
+		<span class="method-name">
+			getStudyGroupWallParentDAL
+		</span>
+					(<span class="var-type">integer</span>&nbsp;<span class="var-name">$study_group_id</span>)
+			</div>
+
+			<ul class="parameters">
+					<li>
+				<span class="var-type">integer</span>
+				<span class="var-name">$study_group_id</span><span class="var-description">: study_groupID number</span>			</li>
+				</ul>
+		
+	
+</div>
+<a name="functiongetStudyGroupWallPostsDAL" id="functiongetStudyGroupWallPostsDAL"><!-- --></a>
+<div class="evenrow">
+	
+	<div>
+		<span class="method-title">getStudyGroupWallPostsDAL</span> (line <span class="line-number">691</span>)
+	</div> 
+
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">This function is designed to get posts that are on a study_group wall</p>
+	<ul class="tags">
+				<li><span class="field">return:</span> XML WallPosts</li>
+				<li><span class="field">author:</span> Jon Hall</li>
+				<li><span class="field">version:</span> 1.0</li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result">string</span>
+		<span class="method-name">
+			getStudyGroupWallPostsDAL
+		</span>
+					(<span class="var-type">interger</span>&nbsp;<span class="var-name">$study_group_id</span>, <span class="var-type"></span>&nbsp;<span class="var-name">$facebook</span>)
+			</div>
+
+			<ul class="parameters">
+					<li>
+				<span class="var-type">interger</span>
+				<span class="var-name">$study_group_id</span><span class="var-description">: study_groupID number</span>			</li>
+					<li>
+				<span class="var-type"></span>
+				<span class="var-name">$facebook</span>			</li>
+				</ul>
+		
+	
+</div>
+<a name="functionremoveStudyGroupBBSDAL" id="functionremoveStudyGroupBBSDAL"><!-- --></a>
+<div class="oddrow">
+	
+	<div>
+		<span class="method-title">removeStudyGroupBBSDAL</span> (line <span class="line-number">1000</span>)
+	</div> 
+
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">This function returns the result after removing a bbs post from public view.</p>
+	<ul class="tags">
+				<li><span class="field">return:</span> removal of bbs data</li>
+				<li><span class="field">author:</span> Joseph Trapani</li>
+				<li><span class="field">version:</span> 1.0</li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result">XML</span>
+		<span class="method-name">
+			removeStudyGroupBBSDAL
+		</span>
+					(<span class="var-type">integer</span>&nbsp;<span class="var-name">$id</span>)
+			</div>
+
+			<ul class="parameters">
+					<li>
+				<span class="var-type">integer</span>
+				<span class="var-name">$id</span><span class="var-description">: bbs post's database ID number</span>			</li>
+				</ul>
+		
+	
+</div>
+<a name="functionremoveStudyGroupNoteDAL" id="functionremoveStudyGroupNoteDAL"><!-- --></a>
+<div class="evenrow">
+	
+	<div>
+		<span class="method-title">removeStudyGroupNoteDAL</span> (line <span class="line-number">1222</span>)
+	</div> 
+
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">This function returns the result after removing a note from public view, then removes the physical note on the server.</p>
+	<ul class="tags">
+				<li><span class="field">return:</span> removal of note data</li>
+				<li><span class="field">author:</span> Joseph Trapani</li>
+				<li><span class="field">version:</span> 1.0</li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result">XML</span>
+		<span class="method-name">
+			removeStudyGroupNoteDAL
+		</span>
+					(<span class="var-type">integer</span>&nbsp;<span class="var-name">$id</span>)
+			</div>
+
+			<ul class="parameters">
+					<li>
+				<span class="var-type">integer</span>
+				<span class="var-name">$id</span><span class="var-description">: note's database ID number</span>			</li>
+				</ul>
+		
+	
+</div>
+<a name="functionremoveUserStudyGroupDAL" id="functionremoveUserStudyGroupDAL"><!-- --></a>
+<div class="oddrow">
+	
+	<div>
+		<span class="method-title">removeUserStudyGroupDAL</span> (line <span class="line-number">566</span>)
+	</div> 
+
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">This function returns the result after removing a user from a given session's study group.</p>
+	<ul class="tags">
+				<li><span class="field">return:</span> removal of user studygroupenrollment data</li>
+				<li><span class="field">author:</span> Joseph Trapani</li>
+				<li><span class="field">version:</span> 1.0</li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result">XML</span>
+		<span class="method-name">
+			removeUserStudyGroupDAL
+		</span>
+					(<span class="var-type">integer</span>&nbsp;<span class="var-name">$user_id</span>, <span class="var-type"></span>&nbsp;<span class="var-name">$study_group_id</span>)
+			</div>
+
+			<ul class="parameters">
+					<li>
+				<span class="var-type">integer</span>
+				<span class="var-name">$user_id</span><span class="var-description">: user ID number, integer $study_group_id study group ID number</span>			</li>
+					<li>
+				<span class="var-type"></span>
+				<span class="var-name">$study_group_id</span>			</li>
+				</ul>
+		
+	
+</div>
+		</div>
+	</div>
+	
+	<p class="notes" id="credit">
+		Documentation generated on Mon, 07 Dec 2009 08:10:26 -0600 by <a href="http://www.phpdoc.org" target="_blank">phpDocumentor 1.4.1</a>
+	</p>
+	</div></body>
+</html>

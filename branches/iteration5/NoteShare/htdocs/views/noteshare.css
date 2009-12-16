@@ -1,0 +1,285 @@
+/*General styles that can be applied to anything */
+.fbFont     /* Gives text the "Facebook" font face */
+{
+  font-family:        "lucida grande",tahoma,verdana,arial,sans-serif;
+  font-size:          11px; 
+}
+
+.large
+{
+  font-size:          15px;
+}
+
+.noSpacing
+{
+  cellspacing:        0px;
+}
+
+.noPadding
+{
+  cellpadding:        0px;
+}
+
+.red
+{
+  background:   #FF0000;
+}
+
+.right
+{
+  text-align:         right;
+}
+
+/*Tag specific styles*/
+a
+{
+	font-family:        "lucida grande",tahoma,verdana,arial,sans-serif;
+  color:              #3B5998;
+  text-decoration:    none;
+}
+
+a:hover
+{
+  text-decoration:    underline;
+}
+
+button
+{
+  padding:            1px 3px 1px 4px;
+  font-size:          1em;
+  cursor:             pointer; 
+  background:         #3b5998; 
+  color:              #fff; 
+  border:             1px solid #0e1f5b; 
+  border-left-color:  #D9DFEA; 
+  border-top-color:   #D9DFEA;
+} 
+
+button.drop
+{
+  padding:            1px 3px 1px 4px;
+  font-size:          1em;
+  cursor:             pointer;
+  font-weight:        bold;
+}
+
+h1.title
+{
+  font-size:20px;
+  color: #333333;
+}
+
+h1.subtitle
+{
+  font-size:          16px;
+  color:              #333333;
+}
+
+h3.university
+{
+	font-family:        "lucida grande",tahoma,verdana,arial,sans-serif;
+  font-size:          16px; 
+}
+
+iframe.center
+{
+  
+}
+
+#DISCLAIMER
+{
+  border:             0px;
+  position:           absolute;
+  top:                100;
+  left:               100;
+  width:              760px;
+  height:             400px;
+}
+
+img.profile_pic_linked
+{
+  border:             1px solid #94A3C4;
+  background:         #3b5998;
+}
+
+input.submit
+{
+  padding:            1px 3px 1px 4px;
+  font-size:          1em;
+  cursor:             pointer; 
+  background:         #3b5998; 
+  color:              #fff; 
+  border:             1px solid #0e1f5b; 
+  border-left-color:  #D9DFEA; 
+  border-top-color:   #D9DFEA;
+}
+
+input.text
+{
+  width:              100%;
+  border:             1px dashed  #AAAAAA;
+}
+
+option.empty
+{
+
+}
+
+p.greeting
+{
+  font-size:                  12px;
+  color:                      #333333;
+}
+
+table
+{
+  width: 100%;
+  padding: 0px;
+}
+
+table.padded
+{
+  cellpadding:        10px 10px 10px 10px;
+  cellspacing:         0px;
+}
+
+table.sessionMetadata
+{
+  cellpadding:        0px;
+  cellspacing:        0px;
+}
+
+td.friend
+{
+  background-color:   #ECEFF5;
+  padding-top:        5px;
+}
+
+td.notFriend
+{
+  background-color:   #FFFFFF;
+  padding-top:        5px;
+  border:             1px solid #94A3C4;
+}
+
+td.header
+{
+  border-top:         1px solid #AAAAAA;
+  color:              #333333;
+  font-size:          11px;
+  font-weight:        bold;
+  padding:            0px 0px 0px 0px;
+  margin:             0px;
+}
+
+td.headingBar
+{
+  background-color:   #ECEFF5;
+  border-top:         1px solid #94A3C4;
+  color:              #333333;
+  font-size:          11px;
+  padding:            5px 0px 5px 6px;
+  margin:             0px;
+  font-weight:        bold;
+}
+td.one-third
+{
+  width:              33%;
+}
+td.sessionBBSHeadingBar
+{
+  background-color:   #ECEFF5;
+  border-top:         1px solid #94A3C4;
+  border-bottom:      1px solid #D8DFEA;
+  color:              #333333;
+  font-size:          11px;
+  padding:            5px 0px 5px 6px;
+  margin:             0em;
+}
+
+td.sessionBBSUserPic
+{
+  width:              50px;
+  padding:            0px 5px 0px 0px;
+}
+
+td.sessionTitleBar
+{
+  color:              #333333;
+  font-size:          11px;
+  margin:             0em;
+  padding:            0em;
+  font-weight:        bold;
+  border-bottom:      1px solid #D4DAE8;
+  width:              100%;
+}
+
+td.title
+{
+  color:              #333333;
+  font-size:          20px;
+  margin:             0em;
+  padding:            0em;
+  font-weight:        bold;
+}
+
+td.two-thirds
+{
+  width:              66%;
+}
+
+td.combo
+{
+  width:              50%;
+}
+
+textarea
+{
+  width:              100%;
+  border:             1px dashed  #AAAAAA;
+}
+
+input.addText
+{
+  width:              100%;
+  border:             1px dashed  #AAAAAA;
+}
+
+th
+{
+  padding:          10px 0px 0px 10px;
+  width:            20%;
+  text-align:       left;
+}
+
+select.combo
+{
+  padding: 0px 0px 0px 0px;
+  border-style: solid;
+  border-top-width: 1px;
+  border-left-width: 1px;
+  border-bottom-width: 1px;
+  border-right-width: 1px;
+  border-top-color: #D9DFEA;
+  border-left-color: #D9DFEA;
+  border-bottom-color: #0e1f5b;
+  border-right-color: #0e1f5b;
+  background-color: #3b5998;
+  color: #FFFFFF;
+  font-size: 11px;
+  font-family: "lucida grande", tahoma, verdana, arial, sans-serif;
+  text-align: center;
+  width:  50%;
+}
+
+div.university
+{
+	margin: 0px 10px 10px 10px;
+	padding: 0px 10px 10px 10px;
+	border-style: solid;
+	border-width: 1px;
+	
+}
+
+ul { list-style-type: none; }
+

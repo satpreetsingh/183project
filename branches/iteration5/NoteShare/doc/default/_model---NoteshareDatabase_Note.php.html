@@ -1,0 +1,161 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+  <html xmlns="http://www.w3.org/1999/xhtml">
+		<head>
+			<!-- template designed by Marco Von Ballmoos -->
+			<title>Docs for page NoteshareDatabase_Note.php</title>
+			<link rel="stylesheet" href="../media/stylesheet.css" />
+			<meta http-equiv='Content-Type' content='text/html; charset=iso-8859-1'/>
+		</head>
+		<body>
+			<div class="page-body">			
+<h2 class="file-name">/model/NoteshareDatabase_Note.php</h2>
+
+<a name="sec-description"></a>
+<div class="info-box">
+	<div class="info-box-title">Description</div>
+	<div class="nav-bar">
+					<span class="disabled">Description</span> |
+															<a href="#sec-functions">Functions</a>
+			</div>
+	<div class="info-box-body">	
+		<!-- ========== Info from phpDoc block ========= -->
+		
+			</div>
+</div>
+		
+
+	
+	
+	
+	<a name="sec-functions"></a>	
+	<div class="info-box">
+		<div class="info-box-title">Functions</div>
+		<div class="nav-bar">
+			<a href="#sec-description">Description</a> |
+															<span class="disabled">Functions</span>
+		</div>
+		<div class="info-box-body">	
+			<a name="functionaddSessionNoteDAL" id="functionaddSessionNoteDAL"><!-- --></a>
+<div class="evenrow">
+	
+	<div>
+		<span class="method-title">addSessionNoteDAL</span> (line <span class="line-number">8</span>)
+	</div> 
+
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">This function adds a note posting and physical upload location.</p>
+	<ul class="tags">
+				<li><span class="field">author:</span> Joseph Trapani</li>
+				<li><span class="field">version:</span> 1.0</li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result">void</span>
+		<span class="method-name">
+			addSessionNoteDAL
+		</span>
+					(<span class="var-type">integer</span>&nbsp;<span class="var-name">$user_id</span>, <span class="var-type"></span>&nbsp;<span class="var-name">$session_id</span>, <span class="var-type"></span>&nbsp;<span class="var-name">$header</span>, <span class="var-type"></span>&nbsp;<span class="var-name">$body</span>, <span class="var-type"></span>&nbsp;<span class="var-name">$file_path</span>, <span class="var-type"></span>&nbsp;<span class="var-name">$original_file_name</span>, <span class="var-type"></span>&nbsp;<span class="var-name">$file_size</span>)
+			</div>
+
+			<ul class="parameters">
+					<li>
+				<span class="var-type">integer</span>
+				<span class="var-name">$user_id</span><span class="var-description">: userID number, integer $session_id session ID, varchar $header header post title, varchar $body message body, varchar $file_path path to uploaded file,  varchar $original_file_name original file name, float $file_size size of file (in MB)</span>			</li>
+					<li>
+				<span class="var-type"></span>
+				<span class="var-name">$session_id</span>			</li>
+					<li>
+				<span class="var-type"></span>
+				<span class="var-name">$header</span>			</li>
+					<li>
+				<span class="var-type"></span>
+				<span class="var-name">$body</span>			</li>
+					<li>
+				<span class="var-type"></span>
+				<span class="var-name">$file_path</span>			</li>
+					<li>
+				<span class="var-type"></span>
+				<span class="var-name">$original_file_name</span>			</li>
+					<li>
+				<span class="var-type"></span>
+				<span class="var-name">$file_size</span>			</li>
+				</ul>
+		
+	
+</div>
+<a name="functiongetSessionNoteDAL" id="functiongetSessionNoteDAL"><!-- --></a>
+<div class="oddrow">
+	
+	<div>
+		<span class="method-title">getSessionNoteDAL</span> (line <span class="line-number">65</span>)
+	</div> 
+
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">This function returns a note posting with the physical file location.</p>
+	<ul class="tags">
+				<li><span class="field">author:</span> Joseph Trapani</li>
+				<li><span class="field">version:</span> 2.0</li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result">void</span>
+		<span class="method-name">
+			getSessionNoteDAL
+		</span>
+					(<span class="var-type">integer</span>&nbsp;<span class="var-name">$session_id</span>, [<span class="var-type"></span>&nbsp;<span class="var-name">$id</span> = <span class="var-default">0</span>], [<span class="var-type"></span>&nbsp;<span class="var-name">$latest_posts</span> = <span class="var-default">0</span>])
+			</div>
+
+			<ul class="parameters">
+					<li>
+				<span class="var-type">integer</span>
+				<span class="var-name">$session_id</span><span class="var-description">: session ID, integer $id unique ID number of post, integer $return_latest return latest X records</span>			</li>
+					<li>
+				<span class="var-type"></span>
+				<span class="var-name">$id</span>			</li>
+					<li>
+				<span class="var-type"></span>
+				<span class="var-name">$latest_posts</span>			</li>
+				</ul>
+		
+	
+</div>
+<a name="functionremoveSessionNoteDAL" id="functionremoveSessionNoteDAL"><!-- --></a>
+<div class="evenrow">
+	
+	<div>
+		<span class="method-title">removeSessionNoteDAL</span> (line <span class="line-number">190</span>)
+	</div> 
+
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">This function returns the result after removing a note from public view, then removes the physical note on the server.</p>
+	<ul class="tags">
+				<li><span class="field">return:</span> removal of note data</li>
+				<li><span class="field">author:</span> Joseph Trapani</li>
+				<li><span class="field">version:</span> 1.0</li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result">XML</span>
+		<span class="method-name">
+			removeSessionNoteDAL
+		</span>
+					(<span class="var-type">integer</span>&nbsp;<span class="var-name">$id</span>)
+			</div>
+
+			<ul class="parameters">
+					<li>
+				<span class="var-type">integer</span>
+				<span class="var-name">$id</span><span class="var-description">: note's database ID number</span>			</li>
+				</ul>
+		
+	
+</div>
+		</div>
+	</div>
+	
+	<p class="notes" id="credit">
+		Documentation generated on Mon, 07 Dec 2009 08:10:26 -0600 by <a href="http://www.phpdoc.org" target="_blank">phpDocumentor 1.4.1</a>
+	</p>
+	</div></body>
+</html>

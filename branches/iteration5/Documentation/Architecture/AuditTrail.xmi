@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<XMI verified="false" xmi.version="1.2" timestamp="2009-12-12T11:27:48" xmlns:UML="http://schema.omg.org/spec/UML/1.3" >
+ <XMI.header>
+  <XMI.documentation>
+   <XMI.exporter>umbrello uml modeller http://uml.sf.net</XMI.exporter>
+   <XMI.exporterVersion>1.5.8</XMI.exporterVersion>
+   <XMI.exporterEncoding>UnicodeUTF8</XMI.exporterEncoding>
+  </XMI.documentation>
+  <XMI.metamodel xmi.version="1.3" href="UML.xml" xmi.name="UML" />
+ </XMI.header>
+ <XMI.content>
+  <UML:Model isSpecification="false" isAbstract="false" isLeaf="false" xmi.id="m1" isRoot="false" name="UML Model" >
+   <UML:Namespace.ownedElement>
+    <UML:Stereotype visibility="public" isSpecification="false" namespace="m1" isAbstract="false" isLeaf="false" isRoot="false" xmi.id="folder" name="folder" />
+    <UML:Stereotype visibility="public" isSpecification="false" namespace="m1" isAbstract="false" isLeaf="false" isRoot="false" xmi.id="datatype" name="datatype" />
+    <UML:Model stereotype="folder" visibility="public" isSpecification="false" namespace="m1" isAbstract="false" isLeaf="false" isRoot="false" xmi.id="Logical View" name="Logical View" >
+     <UML:Namespace.ownedElement>
+      <UML:Package stereotype="folder" visibility="public" isSpecification="false" namespace="Logical View" isAbstract="false" isLeaf="false" isRoot="false" xmi.id="Datatypes" name="Datatypes" >
+       <UML:Namespace.ownedElement>
+        <UML:DataType stereotype="datatype" visibility="public" isSpecification="false" namespace="Datatypes" isAbstract="false" isLeaf="false" isRoot="false" xmi.id="ZDfjp6O3phGn" name="int" />
+        <UML:DataType stereotype="datatype" visibility="public" isSpecification="false" namespace="Datatypes" isAbstract="false" isLeaf="false" isRoot="false" xmi.id="tkVH9ufXpOO7" name="char" />
+        <UML:DataType stereotype="datatype" visibility="public" isSpecification="false" namespace="Datatypes" isAbstract="false" isLeaf="false" isRoot="false" xmi.id="cqCBB5d6mVCb" name="bool" />
+        <UML:DataType stereotype="datatype" visibility="public" isSpecification="false" namespace="Datatypes" isAbstract="false" isLeaf="false" isRoot="false" xmi.id="TgFtqWajf9Vt" name="float" />
+        <UML:DataType stereotype="datatype" visibility="public" isSpecification="false" namespace="Datatypes" isAbstract="false" isLeaf="false" isRoot="false" xmi.id="qSnTqluU4yHh" name="double" />
+        <UML:DataType stereotype="datatype" visibility="public" isSpecification="false" namespace="Datatypes" isAbstract="false" isLeaf="false" isRoot="false" xmi.id="KO6CjGiBaPpd" name="short" />
+        <UML:DataType stereotype="datatype" visibility="public" isSpecification="false" namespace="Datatypes" isAbstract="false" isLeaf="false" isRoot="false" xmi.id="WJ6sp9cJQZyR" name="long" />
+        <UML:DataType stereotype="datatype" visibility="public" isSpecification="false" namespace="Datatypes" isAbstract="false" isLeaf="false" isRoot="false" xmi.id="cmtaSmq3b1dB" name="unsigned int" />
+        <UML:DataType stereotype="datatype" visibility="public" isSpecification="false" namespace="Datatypes" isAbstract="false" isLeaf="false" isRoot="false" xmi.id="Yfs7g99oOaSD" name="unsigned short" />
+        <UML:DataType stereotype="datatype" visibility="public" isSpecification="false" namespace="Datatypes" isAbstract="false" isLeaf="false" isRoot="false" xmi.id="vBUCyA6QpiiN" name="unsigned long" />
+        <UML:DataType stereotype="datatype" visibility="public" isSpecification="false" namespace="Datatypes" isAbstract="false" isLeaf="false" isRoot="false" xmi.id="WsO8VRGuHFU1" name="string" />
+       </UML:Namespace.ownedElement>
+      </UML:Package>
+      <UML:Class visibility="public" isSpecification="false" namespace="Logical View" isAbstract="false" isLeaf="false" isRoot="false" xmi.id="zY9aUFJHUO37" name="admin/AuditTrail.php" />
+      <UML:Class visibility="public" isSpecification="false" namespace="Logical View" isAbstract="false" isLeaf="false" isRoot="false" xmi.id="S6iVWuFXaquc" name=".htaccess authentication" />
+     </UML:Namespace.ownedElement>
+     <XMI.extension xmi.extender="umbrello" >
+      <diagrams>
+       <diagram showopsig="1" linecolor="#ff0000" snapx="10" showattribassocs="1" snapy="10" linewidth="0" showattsig="1" showpubliconly="1" showpackage="1" showstereotype="1" name="Audit Trail Sequence Diagram" font="Sans Serif,10,-1,0,50,0,0,0,0,0" canvasheight="588" canvaswidth="1096" localid="3M1kC2ITfZpr" snapcsgrid="0" showgrid="0" showops="1" usefillcolor="1" fillcolor="#ffff00" zoom="100" xmi.id="TnsmMQZYRbOB" documentation="" showscope="1" snapgrid="0" showatts="1" type="3" >
+        <widgets>
+         <objectwidget linecolor="#ff0000" usesdiagramfillcolor="0" linewidth="none" usesdiagramusefillcolor="1" instancename="" x="261" decon="0" showstereotype="1" y="48" font="Sans Serif,10,-1,0,50,0,1,0,0,0" localid="ekfeTYEQiweQ" width="139" isinstance="0" multipleinstance="0" usefillcolor="1" fillcolor="#ffff00" xmi.id="zY9aUFJHUO37" height="27" drawasactor="0" />
+         <objectwidget linecolor="#ff0000" usesdiagramfillcolor="0" linewidth="none" usesdiagramusefillcolor="1" instancename="" x="574" decon="0" showstereotype="1" y="48" font="Sans Serif,10,-1,0,50,0,1,0,0,0" localid="3M1kC2ITfZpr" width="164" isinstance="0" multipleinstance="0" usefillcolor="1" fillcolor="#ffff00" xmi.id="S6iVWuFXaquc" height="27" drawasactor="0" />
+        </widgets>
+        <messages>
+         <messagewidget linecolor="none" usesdiagramfillcolor="1" widgetbid="ekfeTYEQiweQ" textid="xQgTJUccEkM5" operation="User enters in URL, enters username/password" linewidth="none" seqnum="" xclicked="10" usesdiagramusefillcolor="1" x="11" showstereotype="1" y="101" widgetaid="ekfeTYEQiweQ" yclicked="101" font="Sans Serif,10,-1,0,50,0,0,0,0,0" width="320" isinstance="0" usefillcolor="1" fillcolor="none" xmi.id="NJzm3Ys2Scq9" height="10" sequencemessagetype="1004" >
+          <floatingtext linecolor="none" usesdiagramfillcolor="1" linewidth="none" usesdiagramusefillcolor="1" x="16" showstereotype="1" y="80" text=": User enters in URL, enters username/password" font="Sans Serif,10,-1,0,50,0,0,0,0,0" pretext="" role="705" width="290" isinstance="0" posttext="" usefillcolor="1" fillcolor="none" xmi.id="xQgTJUccEkM5" height="21" />
+         </messagewidget>
+         <messagewidget linecolor="none" usesdiagramfillcolor="1" widgetbid="3M1kC2ITfZpr" textid="S49Y7Fx7kNZG" operation="Checks admin/.htaccess" linewidth="none" seqnum="" usesdiagramusefillcolor="1" x="330" showstereotype="1" y="134" widgetaid="ekfeTYEQiweQ" font="Sans Serif,10,-1,0,50,0,0,0,0,0" width="334" isinstance="0" usefillcolor="1" fillcolor="none" xmi.id="yrIgnT4dibsy" height="32" sequencemessagetype="1000" >
+          <floatingtext linecolor="none" usesdiagramfillcolor="1" linewidth="none" usesdiagramusefillcolor="1" x="336" showstereotype="1" y="113" text=": Checks admin/.htaccess" font="Sans Serif,10,-1,0,50,0,0,0,0,0" pretext="" role="704" width="160" isinstance="0" posttext="" usefillcolor="1" fillcolor="none" xmi.id="S49Y7Fx7kNZG" height="21" />
+         </messagewidget>
+         <messagewidget linecolor="none" usesdiagramfillcolor="1" widgetbid="3M1kC2ITfZpr" textid="QMTd8jFUGYcN" operation="If accepted, user selects UserID, clicks query button" linewidth="none" seqnum="" usesdiagramusefillcolor="1" x="330" showstereotype="1" y="183" widgetaid="ekfeTYEQiweQ" font="Sans Serif,10,-1,0,50,0,0,0,0,0" width="334" isinstance="0" usefillcolor="1" fillcolor="none" xmi.id="tCLTZ2krpLFj" height="32" sequencemessagetype="1000" >
+          <floatingtext linecolor="none" usesdiagramfillcolor="1" linewidth="none" usesdiagramusefillcolor="1" x="335" showstereotype="1" y="162" text=": If accepted, user selects UserID, clicks query button" font="Sans Serif,10,-1,0,50,0,0,0,0,0" pretext="" role="704" width="319" isinstance="0" posttext="" usefillcolor="1" fillcolor="none" xmi.id="QMTd8jFUGYcN" height="21" />
+         </messagewidget>
+         <messagewidget linecolor="none" usesdiagramfillcolor="1" widgetbid="ekfeTYEQiweQ" textid="F8InUL60O7Z7" operation="HTML displayed to user showing all UserID's input" linewidth="none" seqnum="" xclicked="17" usesdiagramusefillcolor="1" x="18" showstereotype="1" y="223" widgetaid="ekfeTYEQiweQ" yclicked="223" font="Sans Serif,10,-1,0,50,0,0,0,0,0" width="313" isinstance="0" usefillcolor="1" fillcolor="none" xmi.id="42tCphDHspcw" height="10" sequencemessagetype="1003" >
+          <floatingtext linecolor="none" usesdiagramfillcolor="1" linewidth="none" usesdiagramusefillcolor="1" x="23" showstereotype="1" y="202" text=": HTML displayed to user showing all UserID's input" font="Sans Serif,10,-1,0,50,0,0,0,0,0" pretext="" role="705" width="304" isinstance="0" posttext="" usefillcolor="1" fillcolor="none" xmi.id="F8InUL60O7Z7" height="21" />
+         </messagewidget>
+        </messages>
+        <associations/>
+       </diagram>
+      </diagrams>
+     </XMI.extension>
+    </UML:Model>
+    <UML:Model stereotype="folder" visibility="public" isSpecification="false" namespace="m1" isAbstract="false" isLeaf="false" isRoot="false" xmi.id="Use Case View" name="Use Case View" >
+     <UML:Namespace.ownedElement/>
+    </UML:Model>
+    <UML:Model stereotype="folder" visibility="public" isSpecification="false" namespace="m1" isAbstract="false" isLeaf="false" isRoot="false" xmi.id="Component View" name="Component View" >
+     <UML:Namespace.ownedElement/>
+    </UML:Model>
+    <UML:Model stereotype="folder" visibility="public" isSpecification="false" namespace="m1" isAbstract="false" isLeaf="false" isRoot="false" xmi.id="Deployment View" name="Deployment View" >
+     <UML:Namespace.ownedElement/>
+    </UML:Model>
+    <UML:Model stereotype="folder" visibility="public" isSpecification="false" namespace="m1" isAbstract="false" isLeaf="false" isRoot="false" xmi.id="Entity Relationship Model" name="Entity Relationship Model" >
+     <UML:Namespace.ownedElement/>
+    </UML:Model>
+   </UML:Namespace.ownedElement>
+  </UML:Model>
+ </XMI.content>
+ <XMI.extensions xmi.extender="umbrello" >
+  <docsettings viewid="TnsmMQZYRbOB" uniqueid="F8InUL60O7Z7" documentation="" />
+  <listview>
+   <listitem open="1" type="800" label="Views" >
+    <listitem open="1" type="801" id="Logical View" >
+     <listitem open="0" type="810" id="TnsmMQZYRbOB" label="Audit Trail Sequence Diagram" />
+     <listitem open="1" type="813" id="S6iVWuFXaquc" />
+     <listitem open="1" type="813" id="zY9aUFJHUO37" />
+     <listitem open="0" type="830" id="Datatypes" >
+      <listitem open="1" type="829" id="cqCBB5d6mVCb" />
+      <listitem open="1" type="829" id="tkVH9ufXpOO7" />
+      <listitem open="1" type="829" id="qSnTqluU4yHh" />
+      <listitem open="1" type="829" id="TgFtqWajf9Vt" />
+      <listitem open="1" type="829" id="ZDfjp6O3phGn" />
+      <listitem open="1" type="829" id="WJ6sp9cJQZyR" />
+      <listitem open="1" type="829" id="KO6CjGiBaPpd" />
+      <listitem open="1" type="829" id="WsO8VRGuHFU1" />
+      <listitem open="1" type="829" id="cmtaSmq3b1dB" />
+      <listitem open="1" type="829" id="vBUCyA6QpiiN" />
+      <listitem open="1" type="829" id="Yfs7g99oOaSD" />
+     </listitem>
+    </listitem>
+    <listitem open="1" type="802" id="Use Case View" />
+    <listitem open="1" type="821" id="Component View" />
+    <listitem open="1" type="827" id="Deployment View" />
+    <listitem open="1" type="836" id="Entity Relationship Model" />
+   </listitem>
+  </listview>
+  <codegeneration>
+   <codegenerator language="C++" />
+  </codegeneration>
+ </XMI.extensions>
+</XMI>
