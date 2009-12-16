@@ -11,13 +11,13 @@
    * @return group notes in XML format containing note titles, descriptions,
    *           and active links
    */
-  function getStudyGroupNotes( $groupId, $userId )
+  function getStudyGroupNotes( $groupId, $userId, $sessionId )
   {
     // Request the five most recent note postings for this group.
     $groupNotesXML = getStudyGroupNoteDAL( $groupId, 0, 0 );
-    $tags = array( 'UserId' );
-    $values = array( $userId );
-    return insertXMLTags( $tags, $values, $groupNotesXML, 'getStudyGroupNotes' );
+    $tags = array( 'UserId', 'SessionId', 'StudyGroupId' );
+    $values = array( $userId, $sessionId, $groupId );
+    return insertXMLTags( $tags, $values, $groupNotesXML );
   }
 
 
@@ -25,7 +25,7 @@
    * Get Response -- Handles get requests made from the Course Home Page.
    *
    * Expected responses:
-   *  To remove a session
+   *  To remove a note post from a study group
   **/
   if( isset( $_GET['funct'] ))
   {
@@ -34,7 +34,7 @@
       $sessionId = $_GET['ns_session'];
       $groupId = $_GET['nsStudyGroup'];
       $noteId = $_GET['noteId'];
-      removeSessionNoteDAL( $noteId );
+      removeStudyGroupNoteDAL ( $noteId );
 
       $facebook->redirect( "http://apps.facebook.com/notesharesep/views/GroupNotes.php?ns_session=" . $sessionId . "&nsStudyGroup=" . $groupId );
     }

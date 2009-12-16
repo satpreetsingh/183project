@@ -13,7 +13,7 @@
     $bbsPostsXML = getSessionBBSPostsDAL( $parentId, $facebook );
     $tags = array( 'UserId', 'ParentId' );
     $values = array( $userId, $parentId );
-    return insertXMLTags( $tags, $values, $bbsPostsXML, 'SessionBBSThread' );
+    return insertXMLTags( $tags, $values, $bbsPostsXML );
   }
 
   /** Post reply**/
@@ -31,11 +31,12 @@
   elseif( isset( $_GET['sessionBBSDEL'] ))
   {
     $sessionId = $_GET['ns_session'];
-    $postId = $_GET['post_id'];
     $parentId = $_GET['parentId'];
+    $postId = $_GET['postId'];
 
     removeSessionBBSDAL( $postId );
-    if( $postId == $parentId )
+
+    if( $postId == $parentId ) 
     {
       $facebook->redirect( 'http://apps.facebook.com/notesharesep/views/CoursePage.php?ns_session=' . $sessionId );
     }

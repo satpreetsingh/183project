@@ -4,9 +4,13 @@
 
   if( isset( $_GET[ 'Create_Group' ] ))
   {
-    $header = $_GET[ 'header' ];
+    $header = urldecode(stripslashes($_GET[ 'header' ]));
     $sessionId = $_GET[ 'ns_session' ];
-    $post = $_GET[ 'post' ];
+    $post = urldecode(stripslashes($_GET[ 'post' ]));
+    
+    $header = preg_replace('/\<\s*(?!\/?\s*(i|b|code|del)).*?\/?\s*\>/','',$header);
+    $post = preg_replace('/\<\s*(?!\/?\s*(i|b|code|del)).*?\/?\s*\>/','',$post);
+    
     if( !createStudyGroupDAL( $sessionId, $header, $post ))
     {
       echo '<script type="text/javascript">';

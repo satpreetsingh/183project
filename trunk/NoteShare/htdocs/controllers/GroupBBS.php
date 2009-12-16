@@ -13,7 +13,7 @@
     $bbsPostsXML = getStudyGroupBBSPostsDAL( $parentId, $facebook );
     $tags = array( 'UserId', 'ParentId', 'SessionId' );
     $values = array( $userId, $parentId, $sessionId );
-    return insertXMLTags( $tags, $values, $bbsPostsXML, 'StudyGroupBBSThread' );
+    return insertXMLTags( $tags, $values, $bbsPostsXML );
   }
 
   function getThreadWall( $threadID )
@@ -59,10 +59,13 @@
   {
     $sessionId = $_GET['ns_session'];
     $groupId = $_GET['nsStudyGroup'];
-    $postId = $_GET['post_id'];
+    $postId = $_GET['postId'];
     $parentId = $_GET['parentId'];
 
+
     removeStudyGroupBBSDAL( $postId );
+
+
     if( $postId == $parentId )
     {
       $facebook->redirect( 'http://apps.facebook.com/notesharesep/views/GroupPage.php?ns_session=' . $sessionId . '&nsStudyGroup=' . $groupId );
@@ -71,5 +74,7 @@
     {
       $facebook->redirect( 'http://apps.facebook.com/notesharesep/views/GroupBBS.php?ns_session=' . $sessionId . '&parentId=' . $parentId . '&nsStudyGroup=' . $groupId );
     }
+
+
   }
 ?>

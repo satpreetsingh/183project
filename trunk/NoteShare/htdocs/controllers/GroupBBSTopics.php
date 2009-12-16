@@ -17,7 +17,7 @@
     $bbsTopicsXML = getStudyGroupBBSTopicsDAL( $groupId );
     $tags = array( "UserId", "SessionId" );
     $values = array( $userId, $sessionId );
-    return insertXMLTags( $tags, $values, $bbsTopicsXML, 'StudyGroupBBSTopics' );
+    return insertXMLTags( $tags, $values, $bbsTopicsXML );
   }
 
   /**
@@ -26,13 +26,21 @@
    * Expected responses:
    *  To remove a group
   **/
-  if( isset( $_GET['parentId'] ))
+  if( isset( $_GET['postId'] ))
   {
-    $groupId = $_GET['ns_group'];
-    $parentId = $_GET['parentId'];
-    removeGroupBBSDAL( $parentId );
+
+
+    if( $_GET['funct'] == "DELETEBBS" )
+    { 
+   
+      $sessionId = $_GET['ns_session'];
+      $groupId = $_GET['nsStudyGroup'];
+      $postId = $_GET['postId'];
+
+      removeStudyGroupBBSDAL( $postId );
     
-    $facebook->redirect( "http://apps.facebook.com/notesharesep/views/GroupBBSTopics.php?ns_group=" . $groupId );
+      $facebook->redirect( "http://apps.facebook.com/notesharesep/views/GroupBBSTopics.php?ns_session=" . $sessionId . "&nsStudyGroup=" . $groupId );
+    }
   }
 
 ?>

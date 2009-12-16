@@ -126,7 +126,7 @@
   echo genButtons();
   echo closeEditor();
 
-  echo '<div id="debug" name="debug" style="border: 1px dashed #000000;">debug</div>';
+  echo '<div id="debug" name="debug" style="visibility:hidden; border: 1px dashed #000000;">debug</div>';
 
   genViewFooter();
 ?>

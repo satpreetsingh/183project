@@ -496,8 +496,8 @@ function getSessionMembersDAL ($session_id, $user_id, $facebook, $get_members = 
   $list = $doc->createElement('SessionUserList');
   $doc->appendChild($list);
 
-  while($row = mysql_fetch_assoc($result)) {
-
+  while( $row = mysql_fetch_assoc( $result ))
+  {
     $SessionUserItem = $doc->createElement('SessionUserItem');
     $list->appendChild($SessionUserItem);
 
@@ -509,34 +509,40 @@ function getSessionMembersDAL ($session_id, $user_id, $facebook, $get_members = 
 
     // Use Facebook API to check if session member is a friend 1(friend)/0(not friend)
     $check = $facebook->api_client->friends_areFriends($user_id,$row['User_Ptr']);
+    if( isset( $check ) && isset( $check[0] ))
+    {
+      $friend_attr = $doc->createAttribute('isFriend');
+      $SessionUserItem->appendChild($friend_attr);
+      $friend_text = $doc->createTextNode($check[0]['are_friends']);
+      $friend_attr->appendChild($friend_text);
+    }
 
-    // get user facebook information
+    // Use Facebook API to retrieve profile name and information
     $user_details = $facebook->api_client->users_getInfo($row['User_Ptr'], 'last_name, first_name, pic_square');
+    if( isset( $user_details ) && isset( $user_details[0] ))
+    {
+      // Add facebook profile name
+      $SessionUserItem_userName = $doc->createAttribute('UserName');
+      $SessionUserItem->appendChild($SessionUserItem_userName);
+      $SessionUserItem_userName_text = $doc->createTextNode( $user_details[0]['first_name'] . ' ' . $user_details[0]['last_name'] );
+      $SessionUserItem_userName->appendChild($SessionUserItem_userName_text );
 
-    // Add the Facebook User name attribute UserName=""
-    $SessionUserItem_userName = $doc->createAttribute('UserName');
-    $SessionUserItem->appendChild($SessionUserItem_userName);
-    $SessionUserItem_userName_text = $doc->createTextNode( $user_details[0]['first_name'] . ' ' . $user_details[0]['last_name'] );
-    $SessionUserItem_userName->appendChild($SessionUserItem_userName_text );
-
-    // Add the facebook profile pic url
-    $SessionUserItem_pic = $doc->createAttribute('PicURL');
-    $SessionUserItem->appendChild($SessionUserItem_pic);
-    $SessionUserItem_picURL = $doc->createTextNode( $user_details[0]['pic_square'] );
-    $SessionUserItem_pic->appendChild($SessionUserItem_picURL );
-
-    $friend_attr = $doc->createAttribute('isFriend');
-    $SessionUserItem->appendChild($friend_attr);
-
-    $friend_text = $doc->createTextNode($check[0]['are_friends']);
-    $friend_attr->appendChild($friend_text);
+      // Add the facebook profile pic url
+      $SessionUserItem_pic = $doc->createAttribute('PicURL');
+      $SessionUserItem->appendChild($SessionUserItem_pic);
+      $SessionUserItem_picURL = $doc->createTextNode( $user_details[0]['pic_square'] );
+      $SessionUserItem_pic->appendChild($SessionUserItem_picURL );
+    }
 
     // Return the Facebook User ID to the controller.
     $SessionUserItem->appendChild($doc->createTextNode($row['User_Ptr']));
   }
+
   $out = $doc->saveXML();
- 
+
+
   closeDB ($result, $conn);
+
 
   return $out;
 }
@@ -661,8 +667,6 @@ function addUserSessionDAL ($user_id, $session_id)
 
 
     $result = mysql_query($query);
-
-
 
     $doc = new DOMDocument('1.0');
 

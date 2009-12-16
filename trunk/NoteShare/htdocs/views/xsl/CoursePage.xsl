@@ -18,6 +18,7 @@ xmlns:fb="http://www.facebook.com/2008/fbml"
 
 <xsl:template match="sessionWallPosts">
   <xsl:variable name="viewUserId"><xsl:value-of select="UserId" /></xsl:variable>
+  <xsl:variable name="sessionId"><xsl:value-of select="SessionId" /></xsl:variable>
 	<table cellpadding="0" cellspacing="0" class="sessionBBSPost">
     <xsl:for-each select="post">
     <tr class="sessionBBSHeaderRow">
@@ -57,20 +58,18 @@ xmlns:fb="http://www.facebook.com/2008/fbml"
       <td class="fbFont sessionBBSHeadingBar right">
         <xsl:value-of select="@time" />
       </td>
-<!--
       <td rowspan="2" class="fbFont right" valign="top">
         <br />
         <xsl:if test="$viewUserId=@user">
           [
           <a target="_top" onclick="return confirm('Really delete this post?');">
             <xsl:attribute name="href">
-              http://apps.facebook.com/notesharesep/controllers/SessionBBS.php?sessionBBSDEL=1&amp;ns_session=<xsl:value-of select="@SessionId" />&amp;post_i$
+              http://apps.facebook.com/notesharesep/controllers/CourseHomePage.php?funct=DELETEBBS&amp;ns_session=<xsl:value-of select="$sessionId" />&amp;postId=<xsl:value-of select="@PostId" />
             </xsl:attribute>
             X
           </a>]
         </xsl:if>
       </td>
--->
     </tr>
     <tr>
       <td class="fbFont sessionBBSPost" colspan="2">
@@ -126,7 +125,7 @@ xmlns:fb="http://www.facebook.com/2008/fbml"
         <div align="center">
 				  <a target="_blank">
           <xsl:attribute name="href">
-            http://www.facebook.com/profile.php?id=<xsl:value-of select="@user" />
+            http://www.facebook.com/profile.php?id=<xsl:value-of select="." />
           </xsl:attribute>
           <img class="profile_pic_linked" height="50" width="50">
             <xsl:attribute name="src">
@@ -182,7 +181,7 @@ xmlns:fb="http://www.facebook.com/2008/fbml"
           [
           <a target="_top">
             <xsl:attribute name="href">
-              http://apps.facebook.com/notesharesep/controllers/CourseHomePage.php?ns_session=<xsl:value-of select="@SessionId" />&amp;parentId=<xsl:value-of select="@Id" />&amp;funct=DELETEBBS
+              http://apps.facebook.com/notesharesep/controllers/CourseHomePage.php?ns_session=<xsl:value-of select="@SessionId" />&amp;postId=<xsl:value-of select="@Id" />&amp;funct=DELETEBBS
             </xsl:attribute>
             X
           </a>

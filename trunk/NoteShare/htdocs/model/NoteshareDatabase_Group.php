@@ -8,7 +8,7 @@
  * @return XML Group data
  */
 
-function createStudyGroupDAL($user_id, $session_id, $name, $desc)
+function createStudyGroupDAL( $study_group_id, $name, $desc)
 {
   $conn = openDB();
 
@@ -16,7 +16,7 @@ function createStudyGroupDAL($user_id, $session_id, $name, $desc)
   $name = mysql_real_escape_string( $name );
   $desc = mysql_real_escape_string( $desc );
   $query = "Insert Into StudyGroup (NAME, Session_Ptr, ACTIVE, DESCRIPTION) " . 
-		    "Values ('" . $name . "'," . $session_id . ",1,'" . $desc . "');"; 
+		    "Values ('" . $name . "'," . $study_group_id . ",1,'" . $desc . "');"; 
   $result = mysql_query($query);
 
   // Check if SQL succeeded
@@ -321,15 +321,10 @@ function getStudyGroupMetadataDAL ($study_group_id)
 
 function getStudyGroupMembersDAL ($study_group_id, $user_id, $facebook, $get_members = 0)
 {
-    
   $conn = openDB();
-
-
 
   // Only select the latest X members.
   if ($get_members <> 0) {
-    
-
     $query = "Select StudyGroup.Id                 As StudyGroup_Id,  " .
                     "StudyGroupEnrollment.User_Ptr As User_Ptr        " .
 
@@ -340,8 +335,8 @@ function getStudyGroupMembersDAL ($study_group_id, $user_id, $facebook, $get_mem
              "Where (StudyGroup.Id = " . $study_group_id . ") " . 
              "Order By StudyGroupEnrollment.ID Desc " . 
              "Limit 0," . $get_members . ";";	
-  } 
-  else { 
+  }
+  else {
     $query = "Select StudyGroup.Id                 As StudyGroup_Id,  " .
                     "StudyGroupEnrollment.User_Ptr As User_Ptr        " .
 
@@ -364,43 +359,44 @@ function getStudyGroupMembersDAL ($study_group_id, $user_id, $facebook, $get_mem
   $list = $doc->createElement('StudyGroupUserList');
   $doc->appendChild($list);
 
-
-
+  // Assemble XML
   while($row = mysql_fetch_assoc($result)) {
 
     $StudyGroupUserItem = $doc->createElement('StudyGroupUserItem');
     $list->appendChild($StudyGroupUserItem);
-	
 
     $id_attr = $doc->createAttribute('Id');
     $StudyGroupUserItem->appendChild($id_attr);
-	
     $id_text = $doc->createTextNode($row['StudyGroup_Id']);
     $id_attr->appendChild($id_text);
 
 
     // Use Facebook API to check if the study group member is a friend 1(friend)/0(not friend) 
     $check = $facebook->api_client->friends_areFriends($user_id,$row['User_Ptr']);    
-
-    $friend_attr = $doc->createAttribute('isFriend');
-    $StudyGroupUserItem->appendChild($friend_attr);
-    $friend_text = $doc->createTextNode($check[0]['are_friends']);
-    $friend_attr->appendChild($friend_text);
+    if( isset( $check ) && isset( $check[0] ))
+    {
+      $friend_attr = $doc->createAttribute('isFriend');
+      $StudyGroupUserItem->appendChild($friend_attr);
+      $friend_text = $doc->createTextNode($check[0]['are_friends']);
+      $friend_attr->appendChild($friend_text);
+    }
 
     // get user facebook information
     $user_details = $facebook->api_client->users_getInfo($row['User_Ptr'], 'last_name, first_name, pic_square');
+    if( isset( $user_details ) && isset( $user_details[0] ))
+    {
+      // Add the Facebook User name attribute UserName=""
+      $StudyGroupUserItem_userName = $doc->createAttribute('UserName');
+      $StudyGroupUserItem->appendChild($StudyGroupUserItem_userName);
+      $StudyGroupUserItem_userName_text = $doc->createTextNode( $user_details[0]['first_name'] . ' ' . $user_details[0]['last_name'] );
+      $StudyGroupUserItem_userName->appendChild($StudyGroupUserItem_userName_text );
 
-    // Add the Facebook User name attribute UserName=""
-    $StudyGroupUserItem_userName = $doc->createAttribute('UserName');
-    $StudyGroupUserItem->appendChild($StudyGroupUserItem_userName);
-    $StudyGroupUserItem_userName_text = $doc->createTextNode( $user_details[0]['first_name'] . ' ' . $user_details[0]['last_name'] );
-    $StudyGroupUserItem_userName->appendChild($StudyGroupUserItem_userName_text );
-
-    // Add the facebook profile pic url
-    $StudyGroupUserItem_pic = $doc->createAttribute('PicURL');
-    $StudyGroupUserItem->appendChild($StudyGroupUserItem_pic);
-    $StudyGroupUserItem_picURL = $doc->createTextNode( $user_details[0]['pic_square'] );
-    $StudyGroupUserItem_pic->appendChild($StudyGroupUserItem_picURL );
+      // Add the facebook profile pic url
+      $StudyGroupUserItem_pic = $doc->createAttribute('PicURL');
+      $StudyGroupUserItem->appendChild($StudyGroupUserItem_pic);
+      $StudyGroupUserItem_picURL = $doc->createTextNode( $user_details[0]['pic_square'] );
+      $StudyGroupUserItem_pic->appendChild($StudyGroupUserItem_picURL );
+    }
 
     // Return the Facebook User ID to the controller.
     $StudyGroupUserItem_Name = $doc->createTextNode($row['User_Ptr']);
@@ -690,52 +686,63 @@ function getStudyGroupWallPostsDAL($study_group_id, $facebook)
 {
 	// Get parent
 	$wall_parent = getStudyGroupWallParentDAL($study_group_id);
+
 	$conn = openDB();
 	$query = "Select * " .
 		  "From StudyGroupBBS " .
  		  "Where (SG_Ptr = " . $study_group_id . ") And " .
-          "(Prev_Post_Ptr = " . $wall_parent . ") " .
-	      "Order By Post_Date Desc " .
-	      "Limit 0, 5";
-	
+            "(Prev_Post_Ptr = " . $wall_parent . ") And " .
+            "(REMOVAL_DATE IS NULL) " .
+	          "Order By Post_Date Desc " .
+	          "Limit 0, 5";
+
 	$result =  mysql_query($query);
 	echo mysql_error();
 	$doc = new DOMDocument('1.0');
 	$wall_posts = $doc->createElement("study_groupWallPosts");
-	
-	
+
 	while($row = mysql_fetch_assoc($result))
 	{
 		$post = $doc->createElement("post");
-		
+
 		// Add user attribute
 		$user_id = $doc->createAttribute("user");
 		$user_id->appendChild($doc->createTextNode($row['User_Ptr']));
 		$post->appendChild($user_id);
-		
-		// Add time attribute
-		/*$date_Array = strptime($row['POST_DATE'],"%Y-%m-%d %H:%M:%S");
 
-		$time_Stamp = mktime($date_Array['tm_hour'], $date_Array['tm_min'],
-				$date_Array['tm_sec'], $date_Array['tm_mon']+1, 
-				$date_Array['tm_mday'], $date_Array['tm_year']+1900 );
-    */
+		// Add time attribute
+		//$date_Array = strptime($row['POST_DATE'],"%Y-%m-%d %H:%M:%S");
+
+		//$time_Stamp = mktime($date_Array['tm_hour'], $date_Array['tm_min'],
+		//		$date_Array['tm_sec'], $date_Array['tm_mon']+1, 
+		//		$date_Array['tm_mday'], $date_Array['tm_year']+1900 );
+
 		$time = $doc->createAttribute("time");
 		$time->appendChild($doc->createTextNode($row['POST_DATE']));
 		$post->appendChild($time);
 
-    // Add the Facebook User name attribute UserName=""
+    // Retrive Facebook information
     $user_details = $facebook->api_client->users_getInfo($row['User_Ptr'], 'last_name, first_name, pic_square');
-    $post_userName = $doc->createAttribute('UserName');
-    $post->appendChild($post_userName);
-    $post_userName_text = $doc->createTextNode( $user_details[0]['first_name'] . ' ' . $user_details[0]['last_name'] );
-    $post_userName->appendChild($post_userName_text );
+    if( isset( $user_details ) && isset( $user_details[0] ))
+    {
+      // Add the Facebook User name attribute UserName=""
+      $post_userName = $doc->createAttribute('UserName');
+      $post->appendChild($post_userName);
+      $post_userName_text = $doc->createTextNode( $user_details[0]['first_name'] . ' ' . $user_details[0]['last_name'] );
+      $post_userName->appendChild($post_userName_text );
 
-    // Add the facebook profile pic url
-    $post_pic = $doc->createAttribute('PicURL');
-    $post->appendChild($post_pic);
-    $post_picURL = $doc->createTextNode( $user_details[0]['pic_square'] );
-    $post_pic->appendChild($post_picURL );
+      // Add the facebook profile pic url
+      $post_pic = $doc->createAttribute('PicURL');
+      $post->appendChild($post_pic);
+      $post_picURL = $doc->createTextNode( $user_details[0]['pic_square'] );
+      $post_pic->appendChild($post_picURL );
+    }
+
+    // Add Post ID
+    $post_id = $doc->createAttribute('PostID');
+    $post->appendChild($post_id);
+    $post_id_text = $doc->createTextNode( $row['ID'] );
+    $post_id->appendChild($post_id_text );
 
 		// Add the post body
 		$post->appendChild($doc->createTextNode($row['BODY']));
@@ -749,6 +756,7 @@ function getStudyGroupWallPostsDAL($study_group_id, $facebook)
 	closeDB($result,$conn);
 	
 	return stripslashes($doc->saveXML());
+
 }
 
 /**
@@ -903,7 +911,7 @@ function getStudyGroupBBSPostsDAL ($parentId, $facebook)
   //  parent thread
   $query = "Select * " . 
 	    "From StudyGroupBBS " .
-           "Where (StudyGroupBBS.Removal_Date Is Null) And " .
+           "Where (StudyGroupBBS.REMOVAL_DATE IS NULL) And " .
                  "((StudyGroupBBS.Prev_Post_Ptr = " . $parentId . ") Or " .
                   "(StudyGroupBBS.ID = " . $parentId . " ));";
 
@@ -962,16 +970,19 @@ function getStudyGroupBBSPostsDAL ($parentId, $facebook)
 
       // Add the Facebook User name attribute UserName=""
       $user_details = $facebook->api_client->users_getInfo($row['User_Ptr'], 'last_name, first_name, pic_square');
-      $study_groupBBSPost_userName = $doc->createAttribute('UserName');
-      $study_groupBBSPost->appendChild($study_groupBBSPost_userName);
-      $study_groupBBSPost_userName_text = $doc->createTextNode( $user_details[0]['first_name'] . ' ' . $user_details[0]['last_name'] );
-      $study_groupBBSPost_userName->appendChild($study_groupBBSPost_userName_text );
+      if( isset( $user_details ) && isset( $user_details[0] ))
+      {
+        $study_groupBBSPost_userName = $doc->createAttribute('UserName');
+        $study_groupBBSPost->appendChild($study_groupBBSPost_userName);
+        $study_groupBBSPost_userName_text = $doc->createTextNode( $user_details[0]['first_name'] . ' ' . $user_details[0]['last_name'] );
+        $study_groupBBSPost_userName->appendChild($study_groupBBSPost_userName_text );
 
-      // Add the facebook profile pic url
-      $study_groupBBSPost_pic = $doc->createAttribute('PicURL');
-      $study_groupBBSPost->appendChild($study_groupBBSPost_pic);
-      $study_groupBBSPost_picURL = $doc->createTextNode( $user_details[0]['pic_square'] );
-      $study_groupBBSPost_pic->appendChild($study_groupBBSPost_picURL );
+        // Add the facebook profile pic url
+        $study_groupBBSPost_pic = $doc->createAttribute('PicURL');
+        $study_groupBBSPost->appendChild($study_groupBBSPost_pic);
+        $study_groupBBSPost_picURL = $doc->createTextNode( $user_details[0]['pic_square'] );
+        $study_groupBBSPost_pic->appendChild($study_groupBBSPost_picURL );
+      }
 
       // Fill in the Post study_groupBBSPost (subject) <>study_groupBBSPost</>
       $study_groupBBSPost_text = $doc->createTextNode($row['BODY']);
@@ -984,7 +995,6 @@ function getStudyGroupBBSPostsDAL ($parentId, $facebook)
   closeDB ($result, $conn);
 
   return $out;
-
 }
 
 
@@ -1007,8 +1017,6 @@ function removeStudyGroupBBSDAL ($id)
 
   $result = mysql_query($query);
 
-
-
   $doc = new DOMDocument('1.0');
 
   $style = $doc->createProcessingInstruction('xml-stylesheet', 'type="text/xsl" href="test.xsl"');
@@ -1016,13 +1024,11 @@ function removeStudyGroupBBSDAL ($id)
   $EndResult = $doc->createElement('RemoveStudyGroupBBSResult');
   $doc->appendChild($EndResult);
 
-
   $RemoveStudyGroupBBSResult= $doc->createElement('RemoveStudyGroupBBSResult');
   $doc->appendChild($RemoveStudyGroupBBSResult);
 
   $RemoveStudyGroupBBS_Name = $doc->createTextNode($result);
   $RemoveStudyGroupBBSResult->appendChild($RemoveStudyGroupBBS_Name);
-   
 
   $out = $doc->saveXML();
 
@@ -1109,8 +1115,8 @@ function getStudyGroupNoteDAL ($study_group_id, $noteid = 0, $latest_posts = 0)
   // Only select the latest X posts.
   if ($latest_posts <> 0) {
     $query = "Select * " .            
-             "From StudyGroupNotes " .  
-              $WhereClause ." And " .
+             "From StudyGroupNotes " .
+	       $WhereClause ." And " .
              "(StudyGroupNotes.Path Is Not Null) And " .
              "(StudyGroupNotes.Prev_Post_Ptr Is Null) " .		
              "Order By ID Desc " .
@@ -1159,7 +1165,7 @@ function getStudyGroupNoteDAL ($study_group_id, $noteid = 0, $latest_posts = 0)
     $StudyGroup_text = $doc->createTextNode($row['SG_Ptr']);
     $StudyGroup_attr->appendChild($StudyGroup_text);
 
-
+	
     $header_attr = $doc->createAttribute('Header');
     $getStudyGroupNote->appendChild($header_attr);
    
@@ -1200,6 +1206,7 @@ function getStudyGroupNoteDAL ($study_group_id, $noteid = 0, $latest_posts = 0)
     $getStudyGroupNote->appendChild($getStudyGroupNote_Name);  
 
   }
+
 
   $out = $doc->saveXML();
 

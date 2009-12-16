@@ -54,6 +54,7 @@
   // Gen Session BBS Table
   $parentId = $_GET['parentId'];
   $sessionId = $_GET['ns_session'];
+
   genSessionBBSTable( $parentId, $user_id, $facebook );
   genSessionBBSPost( $parentId, $sessionId );
 

@@ -62,7 +62,12 @@ function memTest_getUniversityDAL( $bruteTest )
 //getSessionsDAL(1);
 //getDepartmentsDAL(1);
 //getSessionMetadataDAL(1);
-//getSessionMembersDAL(2,66000948,$facebook,5);
+
+// Create the facebook session
+//require_once $_SERVER['DOCUMENT_ROOT'] . '../php/facebook.php';
+//$facebook2 = new Facebook('20f5b69813b87ffd25e42744b326a112', '9c30a702413dccd1856b58d2fab4c992', true);
+//getSessionMembersDAL(2,66000948,$facebook2,5);
+
 //removeUserSessionDAL(2,1);
 //addUserSessionDAL(66000948,2);
 //addSessionBBSPostDAL( 66000948, 2, 'testing header', 'testing body', null );
@@ -108,11 +113,12 @@ function RemoveNoteFromServer()
 //getStudyGroupsDAL(4);
 //addStudyGroupUserGroupDAL(66000948,2,2);
 //getStudyGroupsDAL(1,66000948);
+//getStudyGroupNoteDAL(2,0,5);
 //createUnversityDAL('Clarke College','Liberal Arts Institution located in Dubuque, Iowa');
 //echo createDepartmentDAL(5,'Computer Science');
 //echo createCourseDAL(5, 'Data Structures and Algorithms', 'This course covers the topics of various data structures commonly used in Computer Science');
 //echo createSessionDAL(11, 'Fall 2009', '2009-08-11', '2009-12-11');
 //echo createStudyGroupDAL( 1, "Test Header", "Description" );
-phpinfo();
+//phpinfo();
 
 ?>

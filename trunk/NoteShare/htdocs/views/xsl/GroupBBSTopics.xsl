@@ -12,7 +12,7 @@ xmlns:fb="http://www.facebook.com/2008/fbml"
 <xsl:template match="StudyGroupBBSTopics">
   <xsl:variable name="viewUserId"><xsl:value-of select="UserId" /></xsl:variable>
   <xsl:variable name="sessionId"><xsl:value-of select="SessionId" /></xsl:variable>
-  <table class="sessionBBS">
+  <table class="GroupBBS">
     <xsl:for-each select="StudyGroupBBSTopic">
     <tr>
       <td class="GroupBBSTopic fbFont">
@@ -30,7 +30,7 @@ xmlns:fb="http://www.facebook.com/2008/fbml"
           [
           <a target="_top">
             <xsl:attribute name="href">
-              http://apps.facebook.com/notesharesep/controllers/GroupHomePage.php?nsStudyGroup=<xsl:value-of select="@StudyGroupId" />&amp;parentId=<xsl:value-of select="@Id" />&amp;ns_session=<xsl:value-of select="$sessionId" />
+              http://apps.facebook.com/notesharesep/controllers/GroupBBSTopics.php?ns_session=<xsl:value-of select="$sessionId" />&amp;nsStudyGroup=<xsl:value-of select="@StudyGroupId" />&amp;postId=<xsl:value-of select="@Id" />&amp;funct=DELETEBBS
             </xsl:attribute>
             X
           </a>

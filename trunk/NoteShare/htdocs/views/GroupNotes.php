@@ -14,9 +14,9 @@
    *
    * @return displays table of session's notes
   **/
-  function genGroupNotes( $user_id, $groupId )
+  function genGroupNotes( $user_id, $groupId, $sessionId )
   {
-    $notesXML = getStudyGroupNotes( $groupId, $user_id );
+    $notesXML = getStudyGroupNotes( $groupId, $user_id, $sessionId );
     echo XSLTransform( $notesXML, 'GroupNotes.xsl' );
   }
 
@@ -37,7 +37,7 @@
 
   // Uploaded Notes?
   genHeadingBar( "Group Notes", "Add New Note Set", "/views/NewNote_Group.php?ns_session=" . $sessionId . "&nsStudyGroup=" . $groupId );
-  genGroupNotes( $user_id, $groupId );
+  genGroupNotes( $user_id, $groupId, $sessionId );
   echo '<br /><br />';
 
   // Close out page

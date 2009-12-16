@@ -45,9 +45,10 @@
 	*
 	* @return displays table of group's notes
 	**/
-	function genGroupNotes( $sessionId, $groupId, $user_id )
+	function genGroupNotes( $groupId, $user_id, $sessionId )
 	{
-  	  $notesXML = getGroupNotes( $user_id, $groupId );
+
+  	  $notesXML = getGroupNotes( $user_id, $groupId, $sessionId );
   	  echo XSLTransform( $notesXML, 'GroupPage.xsl' );
   	  echo '<a href="http://apps.facebook.com/notesharesep/views/GroupNotes.php?nsStudyGroup=' . $groupId . '&ns_session=' . $sessionId . '" target="_top" class="fbFont left">View all Notes</a>';
 	}
@@ -74,7 +75,7 @@
     echo "<br />\n";
 
 	  // Group Wall
-		$wall = getGroupWall( $groupId, $facebook );
+		$wall = getGroupWall( $user_id, $sessionId, $groupId, $facebook );
 		echo XSLTransform( $wall,'GroupPage.xsl' );
 	}
 
@@ -115,7 +116,7 @@
 
 	// Uploaded Notes?
 	genHeadingBar( "Group Notes", "Add New Note Set", "/views/NewNote_Group.php?nsStudyGroup=" . $groupId . "&ns_session=" . $sessionId );
-	genGroupNotes( $sessionId, $groupId, $user_id );
+	genGroupNotes( $groupId, $user_id, $sessionId );
 	echo '<br /><br />';
 
 	// GroupBBS

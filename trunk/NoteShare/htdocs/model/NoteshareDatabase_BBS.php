@@ -112,16 +112,18 @@ function getSessionWallPostsDAL($session_id, $limit = 5, $facebook )
 {
 	// Get parent
 	$wall_parent = getSessionWallParentDAL($session_id);
+	
 	$conn = openDB();
 	$query = "Select * " .
 		  "From SessionBBS " .
  		  "Where (Session_Ptr = $session_id) And " .
-            "(Prev_Post_Ptr = $wall_parent) " .
+            "(Prev_Post_Ptr = $wall_parent) And " .
+            "(Removal_Date IS NULL ) " .
 	    "Order By Post_Date Desc " .
 	    "Limit 0," . $limit;
 	
 	$result =  mysql_query($query);
-	echo mysql_error();
+//	echo mysql_error();
 	$doc = new DOMDocument('1.0');
 	$wall_posts = $doc->createElement("sessionWallPosts");
 	while($row = mysql_fetch_assoc($result))
@@ -161,6 +163,11 @@ function getSessionWallPostsDAL($session_id, $limit = 5, $facebook )
       $post_picURL = $doc->createTextNode( $user_details[0]['pic_square'] );
       $post_pic->appendChild($post_picURL );
     }
+
+    $post_id = $doc->createAttribute( 'PostId' );
+    $post->appendChild( $post_id );
+    $post_id_text = $doc->createTextNode( $row['ID'] );
+    $post_id->appendChild( $post_id_text );
 
 		// Add the post body
 		$post->appendChild($doc->createTextNode($row['BODY']));
@@ -416,7 +423,7 @@ function getSessionBBSPostsDAL ($parentId, $facebook)
 
   closeDB ($result, $conn);
 
-  return $out;
+  return stripslashes( $out );
 
 }
 

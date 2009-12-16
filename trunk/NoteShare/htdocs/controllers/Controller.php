@@ -78,17 +78,16 @@
    * @param array strings $tags   Contains the tags to insert as XML
    * @param array strings $values Contains the values to insert as XML
    * @param XML $xml              the XML to insert into
-   * @param string $parentTag     Name of the parent tag to insert under
    *
    * @return XML on success
    *         -1 on null parameter
    *         -2 on tag/values size mismatch
-   *         -3 on missing or multiple parent tags
+   *         -3 on missing parent tag
   **/
-  function insertXMLTags( $tags, $values, $xml, $parentTag )
+  function insertXMLTags( $tags, $values, $xml )
   {
     // check for null parameters
-    if( $tags == NULL || $values == NULL || $xml == NULL || $parentTag == NULL )
+    if( $tags == NULL || $values == NULL || $xml == NULL )
     {
       return -1;
     }
@@ -105,14 +104,11 @@
     $tempDOM->loadXML( $xml );
 
     // check for parent tag existance or multiple tags
-    $parentTag  = $tempDOM->getElementsByTagName( $parentTag );
-    if( $parentTag == null || $parentTag->length != 1 )
+    $parentTag  = $tempDOM->documentElement;
+    if( $parentTag == null )
     {
       return -3;
     }
-    //NOTE: Originally, the tag is returned as a list.  Here we grab the actual
-    //      tag object itself.
-    $parentTag = $parentTag->item(0);
 
     // load tags into XML
     for( $i = 0; $i < $upperBound; $i++ )
