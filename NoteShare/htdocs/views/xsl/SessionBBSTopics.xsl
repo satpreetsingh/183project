@@ -30,7 +30,7 @@ xmlns:fb="http://www.facebook.com/2008/fbml"
           [
           <a target="_top">
             <xsl:attribute name="href">
-              http://apps.facebook.com/notesharesep/controllers/CourseHomePage.php?ns_session=<xsl:value-of select="@SessionId" />&amp;parentId=<xsl:value-of select="@Id" />
+              http://apps.facebook.com/notesharesep/controllers/SessionBBSTopics.php?ns_session=<xsl:value-of select="@SessionId" />&amp;postId=<xsl:value-of select="@Id" />&amp;funct=DELETEBBS
             </xsl:attribute>
             X
           </a>

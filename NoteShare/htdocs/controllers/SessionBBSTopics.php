@@ -36,13 +36,17 @@
    * Expected responses:
    *  To remove a session
   **/
-  if( isset( $_GET['parentId'] ))
+  if( isset( $_GET['postId'] ))
   {
-    $sessionId = $_GET['ns_session'];
-    $parentId = $_GET['parentId'];
-    removeSessionBBSDAL( $parentId );
-    
-    $facebook->redirect( "http://apps.facebook.com/notesharesep/views/SessionBBSTopics.php?ns_session=" . $sessionId );
+
+    if( $_GET['funct'] == "DELETEBBS" )
+    {   
+      $sessionId = $_GET['ns_session'];
+      $postId = $_GET['postId'];
+      removeSessionBBSDAL( $postId );
+ 
+      $facebook->redirect( "http://apps.facebook.com/notesharesep/views/SessionBBSTopics.php?ns_session=" . $sessionId );
+    }
   }
 
 ?>

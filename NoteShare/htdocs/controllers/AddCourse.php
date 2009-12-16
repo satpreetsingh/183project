@@ -62,7 +62,7 @@
   		if( $sessionId == -1 ) { echo "ERROR: Could not create Session"; exit();}
   	}
   	else
-  		$sessionId = $_GET['ns_course']; 	
+  		$sessionId = $_GET['ns_session']; 	
   	
     addCourse( $user_id, $sessionId );
   }
@@ -125,6 +125,7 @@
   **/
   function addCourse( $userId, $sessionId )
   {
+  	
     if( $userId && $sessionId )
     {
       $out = addUserSessionDAL( $userId, $sessionId );
@@ -139,6 +140,6 @@
     // Create the facebook session
     $facebook = new Facebook($appapikey, $appsecret, true);
 
-    $facebook->redirect( 'http://apps.facebook.com/notesharesep/views/UserHomePage.php' );
+   $facebook->redirect( 'http://apps.facebook.com/notesharesep/views/UserHomePage.php' );
   }
 ?>

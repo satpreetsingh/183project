@@ -20,9 +20,12 @@
 	  return getStudyGroupMetadataDAL( $groupid );
   }
   
-  function getGroupWall( $groupID, $facebook )
+  function getGroupWall( $userId, $sessionId, $groupID, $facebook )
   {
-	  return getStudyGroupWallPostsDAL( $groupID, $facebook );
+	  $XML = getStudyGroupWallPostsDAL( $groupID, $facebook );
+    $tags = array( 'UserId', 'SessionId', 'GroupId' );
+    $values = array( $userId, $sessionId, $groupID );
+    return insertXMLTags( $tags, $values, $XML );
   }
 
 
@@ -34,13 +37,13 @@
    * @return session notes in XML format containing note titles, descriptions,
    *           and active links
    */
-  function getGroupNotes( $userId, $groupId )
-  {
+  function getGroupNotes( $userId, $groupId, $sessionId )
+  { 
     // Request the five most recent note postings for this session.
     $groupNotesXML = getStudyGroupNoteDAL( $groupId, 0, 5 );
-    $tags = array( 'UserId' );
-    $values = array( $userId );
-    return insertXMLTags( $tags, $values, $groupNotesXML, 'getStudyGroupNotes' );
+    $tags = array( 'UserId', 'SessionId', 'StudyGroupId' );
+    $values = array( $userId, $sessionId, $groupId );
+    return insertXMLTags( $tags, $values, $groupNotesXML );
   }
 
 
@@ -59,7 +62,7 @@
     $bbsTopicsXML = getStudyGroupBBSTopicsDAL( $groupId, 5 );
     $tags = array( "UserId", "SessionId" );
     $values = array( $userId, $sessionId );
-    return insertXMLTags( $tags, $values, $bbsTopicsXML, 'StudyGroupBBSTopics' );
+    return insertXMLTags( $tags, $values, $bbsTopicsXML );
   }
 
   /*
@@ -88,8 +91,9 @@
     {
       $sessionId = $_GET['ns_session'];
       $groupId = $_GET['nsStudyGroup'];
-      $parentId = $_GET['parentId'];
-      removeStudyGroupBBSDAL( $parentId );
+      $postId = $_GET['postId'];
+    
+      echo removeStudyGroupBBSDAL( $postId );
 
       $facebook->redirect( "http://apps.facebook.com/notesharesep/views/GroupPage.php?ns_session=" . $sessionId . "&nsStudyGroup=" . $groupId );
     }

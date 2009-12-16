@@ -73,7 +73,7 @@ xmlns:fb="http://www.facebook.com/2008/fbml"
           [
           <a target="_top" onclick="return confirm('Really delete this post?');">
             <xsl:attribute name="href">
-              http://apps.facebook.com/notesharesep/controllers/GroupBBS.php?groupBBSDEL=1&amp;ns_session=<xsl:value-of select="$sessionId" />&amp;post_id=<xsl:value-of select="@Id" />&amp;nsStudyGroup=<xsl:value-of select="@StudyGroupId" />&amp;parentId=<xsl:value-of select="$parentId" />
+              http://apps.facebook.com/notesharesep/controllers/GroupBBS.php?groupBBSDEL=1&amp;ns_session=<xsl:value-of select="$sessionId" />&amp;nsStudyGroup=<xsl:value-of select="@StudyGroupId" />&amp;parentId=<xsl:value-of select="$parentId" />&amp;postId=<xsl:value-of select="@Id" />
             </xsl:attribute>
             X
           </a>]

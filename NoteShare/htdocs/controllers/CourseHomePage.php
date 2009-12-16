@@ -23,8 +23,8 @@
     if( $_GET['funct'] == "DELETEBBS" )
     {
       $sessionId = $_GET['ns_session'];
-      $parentId = $_GET['parentId'];
-      removeSessionBBSDAL( $parentId );
+      $postId = $_GET['postId'];
+      removeSessionBBSDAL( $postId );
 
       $facebook->redirect( "http://apps.facebook.com/notesharesep/views/CoursePage.php?ns_session=" . $sessionId );
     }
@@ -96,7 +96,7 @@ function removeSession($sessionID)
     // Add the user id into the xml return
     $tags = array( "UserId" );
     $values = array( $userId );
-    return insertXMLTags( $tags, $values, $bbsTopicsXML, "SessionBBSTopics" );
+    return insertXMLTags( $tags, $values, $bbsTopicsXML );
   }
 
   /**
@@ -112,9 +112,9 @@ function removeSession($sessionID)
     $sessionWallXML = getSessionWallPostsDAL( $sessionID, 5, $facebook );
 
     // Add the user id into the xml return
-    $tags = array( "UserId" );
-    $values = array( $userId );
-    return insertXMLTags( $tags, $values, $sessionWallXML, "sessionWallPosts" );
+    $tags = array( "UserId", "SessionId" );
+    $values = array( $userId, $sessionID );
+    return insertXMLTags( $tags, $values, $sessionWallXML );
   }
 
   /*

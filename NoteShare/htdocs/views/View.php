@@ -61,6 +61,7 @@
          "      {\n" .
          "        FB.Facebook.init( \"20f5b69813b87ffd25e42744b326a112\", \"/xd_receiver.html\");\n" .
          "        FB.XdComm.Server.init(\"/xd_receiver.htm\");\n" .
+         "        FB.CanvasClient.set_timerInterval( \"20\");\n" .
          "        FB.CanvasClient.startTimerToSizeToContent();\n" .
          "        FB.CanvasClient.scrollTo( 0, 0 );\n" .
          "      });\n" .
@@ -80,9 +81,10 @@
    * @param string[] $links  web addresses of the nav links
    *                          in order from main page to current page
    *                          (paths relative from document root)
+   * @param string $help  anchor to help section. Defaults to none.
    *
   **/
-  function genPageHeader( $titles, $links )
+  function genPageHeader( $titles, $links, $help="")
   {
     echo '<table cellspacing="0" cellpadding="0">' .
          '  <tr><td class="title fbFont">NoteShare (Beta)</td></tr>' .
@@ -99,7 +101,7 @@
       echo '<a href="http://apps.facebook.com/notesharesep' . $links[ $i ] . '" target="_top" class="fbFont">' . $titles[ $i ] . '</a>';
     }
 
-    echo '</td><td class="headingBar right fbFont"><a href="http://apps.facebook.com/notesharesep/views/UserManual.php">Help</a></td></tr></table>';
+    echo '</td><td class="headingBar right fbFont"><a href="http://noteshare.homelinux.net/views/UserManual.php" target="_top">Help</a></td></tr></table>';
     echo '<br><br>';
   }
 
